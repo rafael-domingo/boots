@@ -1,24 +1,24 @@
-import logo from './logo.svg';
 import './App.css';
-
+import Home from './containers/home';
+import {React, useRef} from 'react'
+import { Loader } from '@googlemaps/js-api-loader';
+import Maps from './components/Maps';
+import DayTripList from './containers/dayTripList';
 function App() {
+  const divStyle = {
+    height: '100vh',
+    width: '100vw',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(64, 112, 191, 0.6)'
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+     {/* <Home /> */}
+     <DayTripList />
     </div>
+  
   );
 }
 

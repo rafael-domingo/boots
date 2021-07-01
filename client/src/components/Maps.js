@@ -99,16 +99,16 @@ export default class Maps extends Component {
 
   render() {
     return (
-      <div>
-      <div
-        id="google-map"
-        ref={this.googleMapRef}
-        style={{ width: '50%', height: '50%', zIndex: '-1', borderRadius: '20px', position: 'absolute' }}
-      />
+      <div style={{ height: '100%'}}>
       <div
         id="google-map"
         ref={this.googleMapRef1}
-        style={{ width: '50%', height: '50%', zIndex: '-1', right: '0', borderRadius: '20px', position: 'absolute' }}
+        style={{ width: '30%', height: '80%', zIndex: '-1', left: '35vw', borderRadius: '20px', position: 'absolute' }}
+      />
+      <div
+        id="google-map"
+        ref={this.googleMapRef}
+        style={{ width: '30%', height: '80%', zIndex: '-1', left: '0', borderRadius: '20px', position: 'absolute' }}
       />
       </div>
      

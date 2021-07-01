@@ -14,7 +14,7 @@ export default function DayTripList() {
 
     }
     const cityDivStyle = {
-        height: '100px',
+        height: '100vh',
         width: '300px',
         display: 'flex',
         justifyContent: 'center',

@@ -2,25 +2,27 @@ import React, { Component, createRef } from 'react'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { AmbientLight, DirectionalLight, Scene } from "three";
 import { ThreeJSOverlayView } from "@googlemaps/three";
-
+import { Loader } from "@googlemaps/js-api-loader"
 export default class Maps extends Component {
   googleMapRef = React.createRef()
-  googleMapRef1 = React.createRef()
- 
+  
   componentDidMount() {
-    const googleScript = document.createElement('script')
-    googleScript.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyCSlcbviYPukMnDgd9uEy3D87gqFlP2nEo&v=beta`
-    window.document.body.appendChild(googleScript)
-
-    googleScript.addEventListener('load', () => {
+    // Load Google Maps API before drawing the map
+    const loader = new Loader({
+      apiKey: "AIzaSyCSlcbviYPukMnDgd9uEy3D87gqFlP2nEo",
+      version: "beta",
+      
+    });
+    // Draw the map once the promise is fulfilled
+    loader.load().then(() => {
       this.googleMap = this.createGoogleMap()
-      // this.marker = this.createMarker()
-    })
+    });
+
   }
 
   createGoogleMap = () => {
 
-  let map, map1;
+  let map;
   const mapOptions = {
     tilt: 0,
     heading: 0,
@@ -29,13 +31,15 @@ export default class Maps extends Component {
     mapId: "15431d2b469f209e",
     // disable interactions due to animation loop and moveCamera
     disableDefaultUI: true,
-    gestureHandling: "none",
+    gestureHandling: "greedy",
     keyboardShortcuts: false,
   };
 
+
   map = new window.google.maps.Map(this.googleMapRef.current, mapOptions);
-  map1 = new window.google.maps.Map(this.googleMapRef1.current, mapOptions)
+  
   const scene = new Scene();
+  
   const ambientLight = new AmbientLight(0xffffff, 0.75);
   scene.add(ambientLight);
   const directionalLight = new DirectionalLight(0xffffff, 0.25);
@@ -64,8 +68,7 @@ export default class Maps extends Component {
       }
       
       map.moveCamera({ tilt, heading, zoom });
-      map1.moveCamera({ tilt, heading, zoom });
-
+   
       requestAnimationFrame(animate);
     };
     requestAnimationFrame(animate);
@@ -73,22 +76,9 @@ export default class Maps extends Component {
   new ThreeJSOverlayView({
     map,
     scene,
-    anchor: { ...mapOptions.center, altitude: 100 },
+    anchor: { ...mapOptions.center, altitude: 50 },
   });
-  new ThreeJSOverlayView({
-    map1,
-    scene,
-    anchor: { ...mapOptions.center, altitude: 100 },
-  });
-    // new window.google.maps.Map(this.googleMapRef.current, {
-    //   zoom: 20,
-    //   mapId: '29a0d968ac095d5f',
-    //   center: {
-    //     lat: 35.6594945,
-    //     lng: 139.6999859,
-    //   },
-    //   disableDefaultUI: true,
-    // })
+ 
   }
 
   createMarker = () =>
@@ -99,18 +89,15 @@ export default class Maps extends Component {
 
   render() {
     return (
-      <div style={{ height: '100%'}}>
-      <div
-        id="google-map"
-        ref={this.googleMapRef1}
-        style={{ width: '30%', height: '80%', zIndex: '-1', left: '35vw', borderRadius: '20px', position: 'absolute' }}
-      />
+      // <div style={{ height: '100%'}}>
+    
       <div
         id="google-map"
         ref={this.googleMapRef}
-        style={{ width: '30%', height: '80%', zIndex: '-1', left: '0', borderRadius: '20px', position: 'absolute' }}
+        style={{ width: '100%', height: '100%', zIndex: '-1', position: 'absolute' }}
       />
-      </div>
+     
+      // </div>
      
      
     )

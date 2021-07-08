@@ -4,6 +4,7 @@ import {React, useRef} from 'react'
 import { Loader } from '@googlemaps/js-api-loader';
 import Maps from './components/Maps';
 import DayTripList from './containers/dayTripList';
+import Logo from './components/Logo';
 function App() {
   const divStyle = {
     height: '100vh',
@@ -15,6 +16,7 @@ function App() {
   }
   return (
     <div className="App">
+      <Logo />
      {/* <Home /> */}
      <DayTripList />
     </div>

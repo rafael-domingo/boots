@@ -5,6 +5,7 @@ import { Loader } from '@googlemaps/js-api-loader';
 import Maps from './components/Maps';
 import DayTripList from './containers/dayTripList';
 import Logo from './components/Logo';
+import DayTripView from './containers/dayTripView';
 function App() {
   const divStyle = {
     height: '100vh',
@@ -18,7 +19,8 @@ function App() {
     <div className="App">
       <Logo />
      {/* <Home /> */}
-     <DayTripList />
+     {/* <DayTripList /> */}
+     <DayTripView />
     </div>
   
   );

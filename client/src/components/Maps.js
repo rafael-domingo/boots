@@ -4,6 +4,7 @@ import { AmbientLight, DirectionalLight, Scene } from "three";
 import { ThreeJSOverlayView } from "@googlemaps/three";
 import { Loader } from "@googlemaps/js-api-loader"
 export default class Maps extends Component {
+
   googleMapRef = React.createRef()
   
   componentDidMount() {
@@ -88,13 +89,31 @@ export default class Maps extends Component {
     })
 
   render() {
+    const largeMapStyle = {
+      width: '100%',
+      height: '100%',
+      zIndex: '-1',
+      position: 'absolute'
+    }
+
+    const smallMapStyle = {
+      width: '50%',
+      height: '85%',
+      top: '7.5%',
+      left: '20px',
+      borderRadius: '50px',
+      zIndex: '-1',
+      position: 'absolute',
+      boxShadow: '0px 2px 4px 0px rgba(0,0,0,0.5)'
+
+    }
     return (
       // <div style={{ height: '100%'}}>
     
       <div
         id="google-map"
         ref={this.googleMapRef}
-        style={{ width: '100%', height: '100%', zIndex: '-1', position: 'absolute' }}
+        style={smallMapStyle}
       />
      
       // </div>

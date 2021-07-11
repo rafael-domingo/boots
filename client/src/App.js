@@ -6,6 +6,8 @@ import Maps from './components/Maps';
 import DayTripList from './containers/dayTripList';
 import Logo from './components/Logo';
 import DayTripView from './containers/dayTripView';
+import Drawer from './containers/drawer';
+import LocationDetail from './components/LocationDetail';
 function App() {
   const divStyle = {
     height: '100vh',
@@ -20,7 +22,9 @@ function App() {
       <Logo />
      {/* <Home /> */}
      {/* <DayTripList /> */}
-     <DayTripView />
+     {/* <Drawer /> */}
+     {/* <DayTripView /> */}
+     <LocationDetail/>
     </div>
   
   );

@@ -113,7 +113,7 @@ export default class Maps extends Component {
       <div
         id="google-map"
         ref={this.googleMapRef}
-        style={smallMapStyle}
+        style={largeMapStyle}
       />
      
       // </div>

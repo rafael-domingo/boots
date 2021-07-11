@@ -9,6 +9,9 @@ export default function DayTripView() {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'flex-start',
+        position: 'absolute',
+        top: '0',
+        right: '0'
         // flexWrap: 'wrap'
     }
 

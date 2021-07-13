@@ -1,5 +1,5 @@
 import React from 'react';
-import Maps from '../components/Maps';
+import LargeMap from '../components/LargeMap';
 
 export default function Home() {
     const divStyle = {
@@ -13,7 +13,7 @@ export default function Home() {
       return (
         <div className="App">
           <div style={divStyle}>
-            <Maps />
+            <LargeMap />
             <div style={{color: 'white', fontFamily: 'phosphate'}}>
               <h1>Boots</h1>
               <p>Plan your day trip</p>

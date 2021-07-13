@@ -1,6 +1,6 @@
 import React from 'react';
 import LocationCard from '../components/LocationCard';
-import Maps from '../components/Maps';
+import SmallMap from '../components/SmallMap';
 
 export default function DayTripView() {
     const divStyle = {
@@ -39,7 +39,7 @@ export default function DayTripView() {
     return (
         <div style={divStyle}>
             <div style={mapDivStyle}>
-                <Maps />
+                <SmallMap />
             </div>
             <div style={locationsDivStyle}>
                 <h1 style={cityNameStyle}>Baton Rouge</h1>

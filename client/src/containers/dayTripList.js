@@ -1,6 +1,5 @@
 import React from 'react';
-import FlatMaps from '../components/FlatMaps';
-import Maps from '../components/Maps';
+import LargeMap from '../components/LargeMap';
 import TripCard from '../components/TripCard';
 
 
@@ -35,7 +34,7 @@ export default function DayTripList() {
     }
     return (
         <div style={divStyle}>
-            <Maps />
+            <LargeMap />
             <div style={tripCardStyle}>
                 <TripCard />
                 <TripCard />

@@ -8,7 +8,7 @@ import Logo from './components/Logo';
 import DayTripView from './containers/dayTripView';
 import Drawer from './containers/drawer';
 import Location from './containers/location';
-
+import Questions from './components/Questions';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 function App() {
@@ -29,6 +29,9 @@ function App() {
         </Route>
         <Route path="/location">
           <Location />
+        </Route>
+        <Route path="/questions">
+          <Questions />
         </Route>
         <Route path="/">
           <Home />

@@ -14,7 +14,7 @@ import Sightsee from '../assets/sightsee.png';
 import Drink from '../assets/drink.png';
 
 export default function Questions() {
-    const [city, setCity] = React.useState(false);
+    const [city, setCity] = React.useState(true);
     const [travel, setTravel] = React.useState(true);
     const [proceed, setProceed] = React.useState(false);
     const [time, setTime] = React.useState(false);
@@ -27,10 +27,14 @@ export default function Questions() {
         flexWrap: 'wrap',
     }
 
+    const questionsDivStyle = {
+        padding: '2em'
+    }
+
     return (
         <div style={divStyle}>
             <img src={LeftArrow}/>
-            <div>
+            <div style={questionsDivStyle}>
                 {
                     city && <City />
                 }

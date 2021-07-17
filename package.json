@@ -7,6 +7,25 @@
     "express": "^4.17.1",
     "firebase": "^8.6.8",
     "node-fetch": "^2.6.1",
-    "nodemon": "^2.0.7"
-  }
+    "nodemon": "^2.0.7",
+    "yelp-fusion": "^3.0.0"
+  },
+  "name": "boots",
+  "description": "Daytrip planner",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rafael-domingo/boots.git"
+  },
+  "author": "Rafael Domingo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rafael-domingo/boots/issues"
+  },
+  "homepage": "https://github.com/rafael-domingo/boots#readme"
 }

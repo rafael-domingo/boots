@@ -25,6 +25,8 @@ export const userSlice = createSlice({
             },
         },
         locationDetail: {},
+        searchTerm: {},
+        searchResults: {},
     },
     reducers: {
         setUserName: (state, action) => {
@@ -44,10 +46,25 @@ export const userSlice = createSlice({
         },
         setLocationDetail: (state, action) => {
             state.locationDetail = action.payload
+        },
+        setSearchTerm: (state, action) => {
+            state.searchTerm = action.payload
+        },
+        setSearchResults: (state, action) => {
+            state.searchResults = action.payload
         }
 
     }
 })
 
-export const { setUserName, setProfilePicture, setTripList, setCurrentTrip, setTripBuilder, setLocationDetail } = userSlice.actions;
+export const { 
+    setUserName, 
+    setProfilePicture, 
+    setTripList, 
+    setCurrentTrip, 
+    setTripBuilder, 
+    setLocationDetail, 
+    setSearchTerm,
+    setSearchResults
+} = userSlice.actions;
 export default userSlice.reducer

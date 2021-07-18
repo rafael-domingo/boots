@@ -1,6 +1,6 @@
 import React from 'react';
 import FrenchTruck from '../assets/frenchtruck.jpg';
-export default function LocationCard() {
+export default function LocationCard({ name = "French Truck", picture = FrenchTruck, location = '4950 Government St' }) {
     const divStyle = {
         height: '100%',
         width: '90%',
@@ -37,7 +37,7 @@ export default function LocationCard() {
 
     const imgStyle = {
         borderRadius: '2em',
-        width: 'auto',
+        width: '100%',
         height: '100%',
         objectFit: 'cover'
 
@@ -52,11 +52,11 @@ export default function LocationCard() {
     return (
         <div style={divStyle}>
             <div style={imgDivStyle}>
-                <img style={imgStyle}src={FrenchTruck} />
+                <img style={imgStyle}src={picture} />
             </div>
             <div style={textDivStyle}>
-                <p style={nameStyle}>French Truck Coffee</p>
-                <p style={addressStyle}>4950 Government St</p>
+                <p style={nameStyle}>{name}</p>
+                <p style={addressStyle}>{location}</p>
             </div>
            
         </div>

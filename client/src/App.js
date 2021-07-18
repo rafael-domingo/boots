@@ -10,6 +10,7 @@ import Drawer from './containers/drawer';
 import Location from './containers/location';
 import Questions from './components/Questions';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import SearchView from './containers/searchView';
 
 function App() {
   const [drawer, setDrawer] = React.useState(false)
@@ -32,6 +33,9 @@ function App() {
         </Route>
         <Route path="/questions">
           <Questions />
+        </Route>
+        <Route path="/search">
+          <SearchView />
         </Route>
         <Route path="/">
           <Home />

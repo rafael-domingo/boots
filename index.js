@@ -2,26 +2,21 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
-const {Client} = require("@googlemaps/google-maps-services-js");
-const yelp = require('yelp-fusion');
-const yelp_api_key = process.env.YELP_API_KEY;
-const client = yelp.client(yelp_api_key);
+// const {Client} = require("@googlemaps/google-maps-services-js");
+const yelp = require('./yelp');
 const port = process.env.PORT || 5000;
 
 const app = express();
+app.use(cors());
+
 app.use(express.json());
+app.use('/yelp', yelp);
 
-const path = require('path')
+// var google_api_key = process.env.GOOGLE_MAPS_API_KEY;
 
-var google_api_key = process.env.GOOGLE_MAPS_API_KEY;
-client.search({
-    term: 'Four Barrel Coffee',
-    location: 'san francisco, ca',
-  }).then(response => {
-    console.log(response.jsonBody.businesses);
-  }).catch(e => {
-    console.log(e);
-  });
+
+
+
 // Google Maps Places API
 // async function makeRequest() {
 //     try {

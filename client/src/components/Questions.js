@@ -13,8 +13,8 @@ import Caffeinate from '../assets/caffeinate.png';
 import Sightsee from '../assets/sightsee.png';
 import Drink from '../assets/drink.png';
 
-import { useDispatch } from 'react-redux';
-import { setTripBuilder } from '../redux/user';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCity, setTransportation, setAutoBuild, setTimeDay, setActivities } from '../redux/tripBuilder';
 
 export default function Questions() {
     // Handle which question to show based on flow
@@ -25,28 +25,22 @@ export default function Questions() {
     const [formComplete, setFormComplete] = React.useState(false);
 
     const dispatch = useDispatch();
-
+    const autoBuild = useSelector(state => state.tripBuilder.autoBuild)
     // Event handlers for children functions
-    var tripBuilder = {}
     const cityInput = (e) => {
-        tripBuilder.city = e.target.value
-        console.log(tripBuilder)
+        dispatch(setCity(e.target.value))
     }
     const transportationInput = (transport) => {
-        tripBuilder.transportation = transport
-        console.log(tripBuilder)
+        dispatch(setTransportation(transport))
     }
     const proceedInput = (autoBuild) => {
-        tripBuilder.autoBuild = autoBuild
-        console.log(tripBuilder)
+        dispatch(setAutoBuild(autoBuild))
     }
     const timeInput = (timeInput) => {
-        tripBuilder.timeDay = timeInput
-        console.log(tripBuilder)
+        dispatch(setTimeDay(timeInput))
     }
     const activityInput = (activityInput) => {
-        tripBuilder.activities = activityInput
-        console.log(tripBuilder)
+        dispatch(setActivities(activityInput))
     }
     
     const divStyle = {
@@ -84,7 +78,7 @@ export default function Questions() {
                 <img 
                     src={RightArrow} 
                     onClick={() => {
-                        if (tripBuilder.autoBuild === false) {
+                        if (autoBuild === false || state + 1 == views.length) {
                             setFormComplete(true)
                         } else {
                             setState(state + 1)

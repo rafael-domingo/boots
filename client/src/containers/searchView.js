@@ -9,7 +9,8 @@ export default function SearchView() {
         justifyContent: 'flex-end',
         alignItems: 'flex-end',
         flexWrap: 'wrap',
-        height: '100vh'
+        height: '100vh',
+        width: '100%'
     }
 
     const searchDivStyle = {

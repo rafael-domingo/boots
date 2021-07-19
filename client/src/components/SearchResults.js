@@ -20,7 +20,12 @@ export default function SearchResults() {
                 {
                     searchResults.map(item => {
                         return (
-                            <LocationCard name={item.name} picture={item.image_url} location={item.location.address1}/>
+                            <LocationCard 
+                                name={item.name} 
+                                picture={item.image_url} 
+                                location={item.location.address1} 
+                                locationInfo={item}
+                            />
                         )
                     })
                 }

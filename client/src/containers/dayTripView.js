@@ -1,8 +1,13 @@
 import React from 'react';
 import LocationCard from '../components/LocationCard';
 import SmallMap from '../components/SmallMap';
+import SearchView from './searchView';
+import { useSelector } from 'react-redux';
 
 export default function DayTripView() {
+    const [search, setSearch] = React.useState(false);
+    const locations = useSelector(state => state.user.currentTrip);
+
     const divStyle = {
         height: '100vh',
         width: '100%',
@@ -36,20 +41,54 @@ export default function DayTripView() {
         fontWeight: 'normal'
 
     }
-    return (
-        <div style={divStyle}>
-            <div style={mapDivStyle}>
-                <SmallMap />
+    if (search) {
+        return (
+            <div style={divStyle}>
+                <SearchView />
+                <button onClick={() => setSearch(false)}>Trip View</button>
             </div>
-            <div style={locationsDivStyle}>
-                <h1 style={cityNameStyle}>Baton Rouge</h1>
-                <LocationCard />
-                <LocationCard />
-                <LocationCard />
-                <LocationCard />
-                <LocationCard />
-             
-            </div>
-        </div>
-    )
-}
+        )
+    }
+    else {
+        if (locations.length > 0) {
+            return (
+                <div style={divStyle}>
+                    <div style={mapDivStyle}>
+                        <SmallMap />
+                    </div>
+                    <div style={locationsDivStyle}>
+                        <h1 style={cityNameStyle}>Baton Rouge</h1>
+                        {
+                            locations.map(item => {
+                                return (
+                                    <LocationCard 
+                                        name={item.locationInfo.name} 
+                                        picture={item.locationInfo.image_url} 
+                                        location={item.locationInfo.location.address1} 
+                                        locationInfo={item.locationInfo}
+                                    />
+                                )
+                            })
+                        }                     
+                    </div>
+                    <button onClick={() => setSearch(true)}>Search</button>
+                </div>
+            )
+        } else {
+            return (
+                <div style={divStyle}>
+                    <div style={mapDivStyle}>
+                        <SmallMap />
+                    </div>
+                    <div style={locationsDivStyle}>
+                        <h1 style={cityNameStyle}>Baton Rouge</h1>
+                        
+                    </div>
+                    <button onClick={() => setSearch(true)}>Search</button>
+                </div>
+            )
+        }
+      
+    }
+    }
+    

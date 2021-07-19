@@ -6,10 +6,10 @@ export const userSlice = createSlice({
         username: {},
         profilePicture: {},
         tripList: {},
-        currentTrip: {},
+        currentTrip: [],
         tripBuilder: {
             city: '',
-            transportationn: '',
+            transportation: '',
             autoBuild: false,
             timeDay: {
                 morning: false,
@@ -39,7 +39,7 @@ export const userSlice = createSlice({
             state.tripList = action.payload
         },
         setCurrentTrip: (state, action) => {
-            state.currentTrip = action.payload
+            state.currentTrip.push(action.payload)
         },
         setTripBuilder: (state, action) => {
             state.tripBuilder = action.payload

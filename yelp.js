@@ -20,7 +20,7 @@ router.post('/search', async (req, res) => {
 })
 
 router.get('/detail', async (req, res) => {
-
+    
 })
 
 router.post('/autocomplete', async (req, res) => {

@@ -14,9 +14,10 @@ import Sightsee from '../assets/sightsee.png';
 import Drink from '../assets/drink.png';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { setCity, setTransportation, setAutoBuild, setTimeDay, setActivities } from '../redux/tripBuilder';
+import { setCity, setTransportation, setAutoBuild, setTimeDay, setActivities, tripBuilderSlice } from '../redux/tripBuilder';
 
 export default function Questions() {
+    const tripBuilderState = useSelector(state => state.tripBuilder);
     // Handle which question to show based on flow
     var [state, setState] = React.useState(0);
     const views = ['city', 'travel', 'proceed', 'time', 'activity'];
@@ -60,19 +61,19 @@ export default function Questions() {
                 <img src={LeftArrow} onClick={() => setState(state - 1)}/>
                 <div style={questionsDivStyle}>
                     {
-                        view==='city' && <City onChange={cityInput}/>
+                        view==='city' && <City onChange={cityInput} tripBuilderState={tripBuilderState}/>
                     }
                     {
-                        view==='travel' && <Travel transportation={transportationInput}/>
+                        view==='travel' && <Travel transportation={transportationInput} tripBuilderState={tripBuilderState}/>
                     }
                     {
-                        view==='proceed' && <Proceed proceedInput={proceedInput} />
+                        view==='proceed' && <Proceed proceedInput={proceedInput} tripBuilderState={tripBuilderState}/>
                     }
                     {
-                        view==='time' && <Time timeInput={timeInput} />
+                        view==='time' && <Time timeInput={timeInput} tripBuilderState={tripBuilderState}/>
                     }
                     {
-                        view==='activity' && <Activity activityInput={activityInput} />
+                        view==='activity' && <Activity activityInput={activityInput} tripBuilderState={tripBuilderState}/>
                     }               
                 </div>     
                 <img 
@@ -99,7 +100,7 @@ export default function Questions() {
    
 }
 
-function City({ onChange }) {
+function City({ onChange, tripBuilderState }) {
     const divStyle = {
         display: 'flex',
         justifyContent: 'center',
@@ -128,15 +129,14 @@ function City({ onChange }) {
         <div style={divStyle}>
             <div style={questionDivStyle}>
                 <p style={questionStyle}>What city would you like to visit?</p>
-                <input style={textBoxStyle} onChange={onChange} type="text" name="city"></input>
+                <input style={textBoxStyle} onChange={onChange} type="text" name="city" value={tripBuilderState.city}></input>
             </div>
         </div>
     )
 }
 
 
-function Travel({ transportation }) {
-    const [selected, setSelected] = React.useState();
+function Travel({ transportation, tripBuilderState }) {
     const divStyle = {
         display: 'flex',
         justifyContent: 'center',
@@ -170,26 +170,23 @@ function Travel({ transportation }) {
                 <p style={questionStyle}>How will you be traveling?</p>
                 <div style={choicesDivStyle}>
                     <img 
-                        style={ selected == 'Car' ? selectedStyle : null } 
+                        style={ tripBuilderState.transportation == 'Car' ? selectedStyle : null } 
                         src={Car} 
                         onClick={() => {
-                            setSelected('Car')
                             transportation('Car')}
                             }
                     />
                     <img 
-                        style={ selected == 'Bicycle' ? selectedStyle : null } 
+                        style={ tripBuilderState.transportation == 'Bicycle' ? selectedStyle : null } 
                         src={Bicycle} 
                         onClick={() => {
-                            setSelected('Bicycle')
                             transportation('Bicycle')}
                             }
                     />
                      <img 
-                        style={ selected == 'Walk' ? selectedStyle : null } 
+                        style={ tripBuilderState.transportation == 'Walk' ? selectedStyle : null } 
                         src={Walk} 
                         onClick={() => {
-                            setSelected('Walk')
                             transportation('Walk')}
                             }
                     />
@@ -200,7 +197,7 @@ function Travel({ transportation }) {
     )
 }
 
-function Proceed({ proceedInput }) {
+function Proceed({ proceedInput, tripBuilderState }) {
     const divStyle = {
         display: 'flex',
         justifyContent: 'center',
@@ -239,23 +236,46 @@ function Proceed({ proceedInput }) {
         padding: '1em',
         margin: '1em'
     }
+    const selectedStyle = {
+        width: '50%',
+        backgroundColor: 'rgb(64, 112, 191)',
+        borderRadius: '30px',
+        border: '1px solid rgb(64, 112, 191)',
+        color: 'rgb(64, 112, 191)',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: '1em',
+        margin: '1em',
+        backgroundColor: 'white'
+    }
     return(
         <div style={divStyle}>
             <div style={questionDivStyle}>
                 <p style={questionStyle}>How do you want to proceed?</p>
                 <div style={answerDivStyle}>
-                    <div style={answerStyle} onClick={() => proceedInput(true)}>Build me an intinerary</div>
-                    <div style={answerStyle} onClick={() => proceedInput(false)}>I'll choose my own adventure</div>
+                    <div 
+                        style={tripBuilderState.autoBuild === true ? selectedStyle : answerStyle}
+                        onClick={() => proceedInput(true)}
+                    >
+                        Build me an intinerary
+                    </div>
+                    <div 
+                        style={tripBuilderState.autoBuild === false ? selectedStyle : answerStyle}
+                        onClick={() => proceedInput(false)}
+                    >
+                        I'll choose my own adventure
+                    </div>
                 </div>
             </div>
         </div>
     )
 }
 
-function Time({ timeInput }) {
-    const [morning, setMorning] = React.useState(false);
-    const [midDay, setmidDay] = React.useState(false);
-    const [evening, setEvening] = React.useState(false);
+function Time({ timeInput, tripBuilderState }) {
+    const [morning, setMorning] = React.useState(tripBuilderState.timeDay.morning);
+    const [midDay, setmidDay] = React.useState(tripBuilderState.timeDay.midDay);
+    const [evening, setEvening] = React.useState(tripBuilderState.timeDay.evening);
 
     const divStyle = {
         display: 'flex',
@@ -320,7 +340,7 @@ function Time({ timeInput }) {
                 <div style={answersDivStyle}>
                     <div 
                         style={answerDivStyle} 
-                        style={ morning ? selectedStyle : null} 
+                        style={ morning === true ? selectedStyle : null} 
                         onClick={() => setMorning(!morning)}
                     >
                         <img src={Sunrise}/>
@@ -328,7 +348,7 @@ function Time({ timeInput }) {
                     </div>
                     <div 
                         style={answerDivStyle}
-                        style={ midDay ? selectedStyle : null}
+                        style={ midDay === true ? selectedStyle : null}
                         onClick={() => setmidDay(!midDay)}
                     >
                         <img src={Midday}/>
@@ -336,7 +356,7 @@ function Time({ timeInput }) {
                     </div>
                     <div 
                         style={answerDivStyle}
-                        style={ evening ? selectedStyle : null}
+                        style={ evening === true ? selectedStyle : null}
                         onClick={() => setEvening(!evening)}
                     >
                         <img src={Sunset}/>
@@ -348,12 +368,12 @@ function Time({ timeInput }) {
     )
 }
 
-function Activity({ activityInput }) {
-    const [eat, setEat] = React.useState(false);
-    const [shop, setShop] = React.useState(false);
-    const [caffeinate, setCaffeinate] = React.useState(false);
-    const [sightsee, setSightsee] = React.useState(false);
-    const [drink, setDrink] = React.useState(false);
+function Activity({ activityInput, tripBuilderState }) {
+    const [eat, setEat] = React.useState(tripBuilderState.activities.eat);
+    const [shop, setShop] = React.useState(tripBuilderState.activities.shop);
+    const [caffeinate, setCaffeinate] = React.useState(tripBuilderState.activities.caffeinate);
+    const [sightsee, setSightsee] = React.useState(tripBuilderState.activities.sightsee);
+    const [drink, setDrink] = React.useState(tripBuilderState.activities.drink);
 
     const divStyle = {
         display: 'flex',

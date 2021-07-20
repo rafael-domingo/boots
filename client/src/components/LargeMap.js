@@ -3,14 +3,16 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { AmbientLight, BoxBufferGeometry, DirectionalLight, Mesh, MeshNormalMaterial, Scene } from "three";
 import { latLngToVector3, ThreeJSOverlayView } from "@googlemaps/three";
 import { Loader } from "@googlemaps/js-api-loader"
+require('dotenv').config();
 export default class LargeMap extends Component {
 
   googleMapRef = React.createRef()
   
   componentDidMount() {
+    const apiKey = `${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`;
     // Load Google Maps API before drawing the map
     const loader = new Loader({
-      apiKey: "AIzaSyCSlcbviYPukMnDgd9uEy3D87gqFlP2nEo",
+      apiKey: apiKey,
       version: "beta",
       
     });
@@ -27,7 +29,7 @@ export default class LargeMap extends Component {
   const mapOptions = {
     tilt: 0,
     heading: 0,
-    zoom: 10,
+    zoom: 18,
     center: { lat: 35.6594945, lng: 139.6999859 },
     mapId: "15431d2b469f209e",
     // disable interactions due to animation loop and moveCamera

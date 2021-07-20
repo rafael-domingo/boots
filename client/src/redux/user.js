@@ -6,24 +6,7 @@ export const userSlice = createSlice({
         username: {},
         profilePicture: {},
         tripList: {},
-        currentTrip: [],
-        tripBuilder: {
-            city: '',
-            transportation: '',
-            autoBuild: false,
-            timeDay: {
-                morning: false,
-                midDay: false,
-                evening: false
-            },
-            activities: {
-                eat: false,
-                shop: false,
-                caffeinate: false,
-                sightsee: false,
-                drink: false
-            },
-        },
+        currentTrip: [],       
         locationDetail: {},
         searchTerm: {},
         searchResults: {},
@@ -40,10 +23,7 @@ export const userSlice = createSlice({
         },
         setCurrentTrip: (state, action) => {
             state.currentTrip.push(action.payload)
-        },
-        setTripBuilder: (state, action) => {
-            state.tripBuilder = action.payload
-        },
+        },    
         setLocationDetail: (state, action) => {
             state.locationDetail = action.payload
         },
@@ -62,7 +42,6 @@ export const {
     setProfilePicture, 
     setTripList, 
     setCurrentTrip, 
-    setTripBuilder, 
     setLocationDetail, 
     setSearchTerm,
     setSearchResults

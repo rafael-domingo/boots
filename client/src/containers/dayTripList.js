@@ -1,9 +1,12 @@
 import React from 'react';
 import LargeMap from '../components/LargeMap';
 import TripCard from '../components/TripCard';
-
+import { useSelector } from 'react-redux';
 
 export default function DayTripList() {
+    const tripListState = useSelector(state => state.user.tripList);
+    const [mapLocation, setMapLocation] = React.useState(tripListState[0].location);
+
     const divStyle = {
         height: '100vh',
         width: '100vw',
@@ -32,13 +35,20 @@ export default function DayTripList() {
         position: 'absolute',
         marginRight: '5vw'
     }
+    const handleClick = (location) => {
+        console.log(location)
+        setMapLocation(location)
+    }
     return (
         <div style={divStyle}>
-            <LargeMap />
+            <LargeMap location={mapLocation}/>
             <div style={tripCardStyle}>
-                <TripCard />
-                <TripCard />
-                <TripCard />
+                {
+                    tripListState.map(trip => {
+                        return (<TripCard handleClick={handleClick} tripDetails={trip}/>)
+                    })
+                }
+               
                 
             </div>
         </div>

@@ -5,7 +5,24 @@ export const userSlice = createSlice({
     initialState: {
         username: {},
         profilePicture: {},
-        tripList: {},
+        tripList: [
+            {
+                name: 'Baton Rouge',
+                location: {
+                    lat: 30.441455,
+                    lng: -91.181458
+                },
+                trip: []
+            },
+            {
+                name: 'New Orleans',
+                location: {
+                    lat: 30.0329779,
+                    lng: -89.9526028
+                },
+                trip: []
+            }
+        ],
         currentTrip: [],       
         locationDetail: {},
         searchTerm: {},

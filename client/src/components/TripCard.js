@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-export default function TripCard() {
+export default function TripCard({ handleClick, tripDetails }) {
 
     const divStyle = {
         display: 'flex',
@@ -21,8 +21,8 @@ export default function TripCard() {
         fontSize: '3em'
     }
     return (
-        <div style={divStyle}>
-            <p style={textStyle}>Baton Rouge</p>
+        <div style={divStyle} onClick={() => handleClick(tripDetails.location)}>
+            <p style={textStyle}>{tripDetails.name}</p>
         </div>
     )
 }

@@ -7,7 +7,7 @@ import FlatMaps from '../components/FlatMaps';
 
 export default function DayTripList() {
     const tripListState = useSelector(state => state.user.tripList);
-    const [mapLocation, setMapLocation] = React.useState([tripListState[0].location, tripListState[2].location]);
+    const [mapLocation, setMapLocation] = React.useState([tripListState[0].location, tripListState[1].location, tripListState[2].location]);
     const dispatch = useDispatch();
 
     const divStyle = {

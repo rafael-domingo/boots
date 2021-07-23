@@ -9,7 +9,7 @@ export default function DayTripView() {
     const [search, setSearch] = React.useState(false);
     const locations = useSelector(state => state.user.currentTrip);
     const tripListState = useSelector(state => state.user.tripList);
-    const [mapLocation, setMapLocation] = React.useState(tripListState[0].location);
+    const [mapLocation, setMapLocation] = React.useState([tripListState[0].location]);
     const divStyle = {
         height: '100vh',
         width: '100%',
@@ -53,10 +53,14 @@ export default function DayTripView() {
     }
     else {
         if (locations.length > 0) {
+            var locationsArray = []
+            locations.map((location) => {
+                locationsArray.push({ lat: location.locationInfo.coordinates.latitude, lng: location.locationInfo.coordinates.longitude})
+            })
             return (
                 <div style={divStyle}>
                     <div style={mapDivStyle}>
-                        <FlatMaps location={mapLocation}/>
+                        <FlatMaps location={locationsArray}/>
 
                     </div>
                     <div style={locationsDivStyle}>

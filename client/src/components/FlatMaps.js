@@ -9,26 +9,31 @@ export default class FlatMaps extends Component {
   componentDidMount() {
     const apiKey = `${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`;
 
-
     const loader = new Loader({
       apiKey: apiKey,
     })
     const locationArray = this.props.location
     loader.load().then(() => {
+      // instantiate instance of google map
       this.googleMap = this.createGoogleMap(this.props.location)
+      // create bounds for map to use for markers 
       this.bounds = this.createBounds();  
+      // Determine how many markers to put on map
       if (this.props.location.length == 1) {
+        // if only 1 marker, then set zoom level so it's not too close
         this.createMarker(this.props.location)
         this.googleMap.setCenter(this.props.location[0])
         this.googleMap.setZoom(15);
       } else {
         this.createMarker(this.props.location)
+        // Auto fit and Auto zoom based on markers
         this.googleMap.fitBounds(this.bounds)
         this.googleMap.panToBounds(this.bounds)
       }
     })
   }
 
+  // exact copy of component did mount 
   componentDidUpdate() {
     const apiKey = `${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`;
 
@@ -53,6 +58,7 @@ export default class FlatMaps extends Component {
   }
 
   createGoogleMap = (location) => {
+    // map styles generated from Google tool 
     const styles = [
       {
         "elementType": "geometry",
@@ -220,20 +226,20 @@ export default class FlatMaps extends Component {
       // tilt: 45,
       styles: styles
     }
-
    return new window.google.maps.Map(this.googleMapRef.current, mapOptions);
 
   }
 
+  // used to establish bounds for map
   createBounds = () => {
     return new window.google.maps.LatLngBounds();
   }
 
   createMarker = (location) => {
-    console.log(location)
     location.map((loc) => {
-      console.log(loc)
+      // add location to bounds for map to consider
       this.bounds.extend(loc)
+      // draw marker on map
       new window.google.maps.Marker({
         position: loc,
         map: this.googleMap

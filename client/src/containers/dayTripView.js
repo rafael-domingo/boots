@@ -3,11 +3,13 @@ import LocationCard from '../components/LocationCard';
 import SmallMap from '../components/SmallMap';
 import SearchView from './searchView';
 import { useSelector } from 'react-redux';
+import FlatMaps from '../components/FlatMaps';
 
 export default function DayTripView() {
     const [search, setSearch] = React.useState(false);
     const locations = useSelector(state => state.user.currentTrip);
-
+    const tripListState = useSelector(state => state.user.tripList);
+    const [mapLocation, setMapLocation] = React.useState(tripListState[0].location);
     const divStyle = {
         height: '100vh',
         width: '100%',
@@ -54,7 +56,8 @@ export default function DayTripView() {
             return (
                 <div style={divStyle}>
                     <div style={mapDivStyle}>
-                        <SmallMap />
+                        <FlatMaps location={mapLocation}/>
+
                     </div>
                     <div style={locationsDivStyle}>
                         <h1 style={cityNameStyle}>Baton Rouge</h1>
@@ -78,7 +81,7 @@ export default function DayTripView() {
             return (
                 <div style={divStyle}>
                     <div style={mapDivStyle}>
-                        <SmallMap />
+                        <FlatMaps location={mapLocation}/>
                     </div>
                     <div style={locationsDivStyle}>
                         <h1 style={cityNameStyle}>Baton Rouge</h1>

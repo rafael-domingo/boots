@@ -1,6 +1,6 @@
 import React, { Component, createRef } from 'react'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
-import { AmbientLight, BoxBufferGeometry, DirectionalLight, Mesh, MeshNormalMaterial, Scene } from "three";
+import { AmbientLight, BoxBufferGeometry, DirectionalLight, Mesh, MeshNormalMaterial, Scene, Sprite, Object3D } from "three";
 import { latLngToVector3, ThreeJSOverlayView } from "@googlemaps/three";
 import { Loader } from "@googlemaps/js-api-loader"
 require('dotenv').config();
@@ -44,7 +44,7 @@ export default class LargeMap extends Component {
   const mapOptions = {
     tilt: 0,
     heading: 0,
-    zoom: 15,
+    zoom: 17,
     center: location,
     mapId: "15431d2b469f209e",
     // disable interactions due to animation loop and moveCamera
@@ -75,7 +75,7 @@ export default class LargeMap extends Component {
   box1.position.copy(latLngToVector3(mapOptions.center));
   box1.position.setY(100);
   scene.add(box1);
-
+  
   new ThreeJSOverlayView({
     scene, map
   });
@@ -151,7 +151,7 @@ export default class LargeMap extends Component {
 
   render() {
     const largeMapStyle = {
-      width: '100%',
+      width: '150vw',
       height: '100%',
       zIndex: '-1',
       position: 'absolute'

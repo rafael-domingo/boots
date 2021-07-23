@@ -2,8 +2,13 @@ import React from 'react';
 import LargeMap from '../components/LargeMap';
 import SearchBox from '../components/SearchBox';
 import SearchResults from '../components/SearchResults';
+import { useSelector } from 'react-redux';
+import FlatMaps from '../components/FlatMaps';
 
 export default function SearchView() {
+    const tripListState = useSelector(state => state.user.tripList);
+    const [mapLocation, setMapLocation] = React.useState([tripListState[0].location, tripListState[1].location]);
+
     const divStyle = {
         display: 'flex',
         justifyContent: 'flex-end',
@@ -25,7 +30,7 @@ export default function SearchView() {
     }
     return (
         <div style={divStyle}>
-            <LargeMap />
+            <FlatMaps location={mapLocation}/>
             <div style={searchDivStyle}>
                 <SearchResults />
                 <SearchBox />

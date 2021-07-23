@@ -1,11 +1,14 @@
 import React from 'react';
 import LargeMap from '../components/LargeMap';
 import TripCard from '../components/TripCard';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setCurrentTrip } from '../redux/user';
+import FlatMaps from '../components/FlatMaps';
 
 export default function DayTripList() {
     const tripListState = useSelector(state => state.user.tripList);
-    const [mapLocation, setMapLocation] = React.useState(tripListState[0].location);
+    const [mapLocation, setMapLocation] = React.useState([tripListState[0].location, tripListState[2].location]);
+    const dispatch = useDispatch();
 
     const divStyle = {
         height: '100vh',
@@ -35,17 +38,21 @@ export default function DayTripList() {
         position: 'absolute',
         marginRight: '5vw'
     }
-    const handleClick = (location) => {
+    const handleHover = (location) => {
         console.log(location)
-        setMapLocation(location)
+        setMapLocation([location])
+    }
+
+    const handleClick = (trip) => {
+        dispatch(setCurrentTrip(trip))
     }
     return (
         <div style={divStyle}>
-            <LargeMap location={mapLocation}/>
+            <FlatMaps location={mapLocation}/>
             <div style={tripCardStyle}>
                 {
                     tripListState.map(trip => {
-                        return (<TripCard handleClick={handleClick} tripDetails={trip}/>)
+                        return (<TripCard handleHover={handleHover} handleClick={handleClick} tripDetails={trip}/>)
                     })
                 }
                

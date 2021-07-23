@@ -21,6 +21,14 @@ export const userSlice = createSlice({
                     lng: -89.9526028
                 },
                 trip: []
+            },
+            {
+                name: 'New York City',
+                location: {
+                    lat: 40.6974034,
+                    lng: -74.1197618
+                },
+                trip: []
             }
         ],
         currentTrip: [],       

@@ -3,22 +3,41 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { AmbientLight, DirectionalLight, Scene } from "three";
 import { ThreeJSOverlayView } from "@googlemaps/three";
 import { Loader } from "@googlemaps/js-api-loader"
+require('dotenv').config();
+
 export default class SmallMap extends Component {
 
   googleMapRef = React.createRef()
   
   componentDidMount() {
+
+    const apiKey = `${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`;
     // Load Google Maps API before drawing the map
     const loader = new Loader({
-      apiKey: "AIzaSyCSlcbviYPukMnDgd9uEy3D87gqFlP2nEo",
+      apiKey: apiKey,
       version: "beta",
       
     });
     // Draw the map once the promise is fulfilled
     loader.load().then(() => {
-      this.googleMap = this.createGoogleMap()
+      this.googleMap = this.createGoogleMap(this.props.location)
     });
 
+  }
+
+  componentDidUpdate() {
+    
+    const apiKey = `${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`;
+    // Load Google Maps API before drawing the map
+    const loader = new Loader({
+      apiKey: apiKey,
+      version: "beta",
+      
+    });
+    // Draw the map once the promise is fulfilled
+    loader.load().then(() => {
+      this.googleMap = this.createGoogleMap(this.props.location)
+    });
   }
 
   createGoogleMap = () => {

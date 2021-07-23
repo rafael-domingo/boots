@@ -1,64 +1,262 @@
-import React, { Component, createRef } from 'react'
+import React, { Component, createRef } from 'react';
+import { Loader } from "@googlemaps/js-api-loader";
+require('dotenv').config();
 
 export default class FlatMaps extends Component {
+
   googleMapRef = React.createRef()
-  googleMapRef1 = React.createRef()
- 
+
   componentDidMount() {
-    const googleScript = document.createElement('script')
-    googleScript.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyCSlcbviYPukMnDgd9uEy3D87gqFlP2nEo&v=beta`
-    window.document.body.appendChild(googleScript)
+    const apiKey = `${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`;
 
-    googleScript.addEventListener('load', () => {
-      this.googleMap = this.createGoogleMap()
-      this.marker = this.createMarker()
+
+    const loader = new Loader({
+      apiKey: apiKey,
+    })
+    const locationArray = this.props.location
+    loader.load().then(() => {
+      this.googleMap = this.createGoogleMap(this.props.location)
+      this.bounds = this.createBounds();  
+      if (this.props.location.length == 1) {
+        this.createMarker(this.props.location)
+        this.googleMap.setCenter(this.props.location[0])
+        this.googleMap.setZoom(15);
+      } else {
+        this.createMarker(this.props.location)
+        this.googleMap.fitBounds(this.bounds)
+        this.googleMap.panToBounds(this.bounds)
+      }
     })
   }
 
-  createGoogleMap = () => {
+  componentDidUpdate() {
+    const apiKey = `${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`;
 
-    new window.google.maps.Map(this.googleMapRef.current, {
-      zoom: 20,
-      mapId: '29a0d968ac095d5f',
-      center: {
-        lat: 35.6594945,
-        lng: 139.6999859,
+    const loader = new Loader({
+      apiKey: apiKey
+    })
+
+    loader.load().then(() => {
+      this.googleMap = this.createGoogleMap(this.props.location)
+      this.bounds = this.createBounds();  
+      if (this.props.location.length == 1) {
+        this.createMarker(this.props.location)
+        this.googleMap.setCenter(this.props.location[0])
+        this.googleMap.setZoom(15);
+      } else {
+        this.createMarker(this.props.location)
+        this.googleMap.fitBounds(this.bounds)
+        this.googleMap.panToBounds(this.bounds)
+      }
+   
+    })
+  }
+
+  createGoogleMap = (location) => {
+    const styles = [
+      {
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#f5f5f5"
+          }
+        ]
       },
-      disableDefaultUI: true,
-    })
-    new window.google.maps.Map(this.googleMapRef1.current, {
-        zoom: 20,
-        mapId: '29a0d968ac095d5f',
-        center: {
-          lat: 35.6594945,
-          lng: 139.6999859,
-        },
-        disableDefaultUI: true,
-      })
+      {
+        "elementType": "labels.icon",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      },
+      {
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#616161"
+          }
+        ]
+      },
+      {
+        "elementType": "labels.text.stroke",
+        "stylers": [
+          {
+            "color": "#f5f5f5"
+          }
+        ]
+      },
+      {
+        "featureType": "administrative.land_parcel",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#bdbdbd"
+          }
+        ]
+      },
+      {
+        "featureType": "poi",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#eeeeee"
+          }
+        ]
+      },
+      {
+        "featureType": "poi",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#757575"
+          }
+        ]
+      },
+      {
+        "featureType": "poi.park",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#e5e5e5"
+          }
+        ]
+      },
+      {
+        "featureType": "poi.park",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#9e9e9e"
+          }
+        ]
+      },
+      {
+        "featureType": "road",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#ffffff"
+          }
+        ]
+      },
+      {
+        "featureType": "road.arterial",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#757575"
+          }
+        ]
+      },
+      {
+        "featureType": "road.highway",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#dadada"
+          }
+        ]
+      },
+      {
+        "featureType": "road.highway",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#616161"
+          }
+        ]
+      },
+      {
+        "featureType": "road.local",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#9e9e9e"
+          }
+        ]
+      },
+      {
+        "featureType": "transit.line",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#e5e5e5"
+          }
+        ]
+      },
+      {
+        "featureType": "transit.station",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#eeeeee"
+          }
+        ]
+      },
+      {
+        "featureType": "water",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#c9c9c9"
+          }
+        ]
+      },
+      {
+        "featureType": "water",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#9e9e9e"
+          }
+        ]
+      }
+    ]
+    const mapOptions = {
+      center: location,
+      zoom: 8,
+      // mapTypeId: "satellite",
+      // tilt: 45,
+      styles: styles
+    }
+
+   return new window.google.maps.Map(this.googleMapRef.current, mapOptions);
+
   }
 
-  createMarker = () =>
-    new window.google.maps.Marker({
-      position: { lat: 35.6594945, lng: 139.6999859 },
-      map: this.googleMap,
+  createBounds = () => {
+    return new window.google.maps.LatLngBounds();
+  }
+
+  createMarker = (location) => {
+    console.log(location)
+    location.map((loc) => {
+      console.log(loc)
+      this.bounds.extend(loc)
+      new window.google.maps.Marker({
+        position: loc,
+        map: this.googleMap
+      })
     })
+   
+  }
+
 
   render() {
+    const mapStyle = {
+      width: '100vw',
+      height: '100%',
+      zIndex: '-1',
+      position: 'absolute'
+    }
+
     return (
-        <div style={{width: '100vw', height: '100vh'}}>
-        <div
+      <div 
         id="google-map"
         ref={this.googleMapRef}
-        style={{ width: '50%', height: '50%', position: 'absolute' }}
+        style={mapStyle}
       />
-      <div
-        id="google-map1"
-        ref={this.googleMapRef1}
-        style={{ width: '50%', height: '50%', right: '0', position: 'absolute' }}
-      />
-        </div>
-     
-     
     )
   }
 }

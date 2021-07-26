@@ -20,7 +20,10 @@ function App() {
   if (viewState === 'Home') {
     return (
       <div>
-        <Logo />
+        {
+          drawer && <Drawer />
+        }
+        <Logo onMouseEnter={() => setDrawer(true)}/>
         <DayTripList />
       </div>
     
@@ -29,7 +32,10 @@ function App() {
   else if (viewState === 'Trip') {
     return (
       <div>
-        <Logo />
+        {
+          drawer && <Drawer />
+        }
+        <Logo onMouseEnter={() => setDrawer(true)}/>
         <DayTripView />
       </div>
     )

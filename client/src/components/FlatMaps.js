@@ -26,9 +26,10 @@ export default class FlatMaps extends Component {
         this.googleMap.setZoom(15);
       } else {
         this.createMarker(this.props.location)
-        // Auto fit and Auto zoom based on markers
-        this.googleMap.fitBounds(this.bounds)
+        // Auto fit and Auto zoom based on markers (with 500px padding)
+        this.googleMap.fitBounds(this.bounds, {right: this.props.width / 2})
         this.googleMap.panToBounds(this.bounds)
+ 
       }
     })
   }
@@ -50,7 +51,7 @@ export default class FlatMaps extends Component {
         this.googleMap.setZoom(15);
       } else {
         this.createMarker(this.props.location)
-        this.googleMap.fitBounds(this.bounds)
+        this.googleMap.fitBounds(this.bounds, {right: this.props.width / 2})
         this.googleMap.panToBounds(this.bounds)
       }
    
@@ -251,7 +252,7 @@ export default class FlatMaps extends Component {
 
   render() {
     const mapStyle = {
-      width: '50vw',
+      width: '100%',
       height: '100%',
       zIndex: '-1',
       position: 'absolute'

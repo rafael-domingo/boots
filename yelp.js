@@ -8,9 +8,10 @@ const router = express.Router();
 
 router.post('/search', async (req, res) => {
     const searchTerm = req.body.searchTerm;
+    const location = req.body.city;
     client.search({
         term: searchTerm,
-        location: 'baton rouge, la',
+        location: location,
       }).then(response => {
         console.log('search');
         res.json(response.jsonBody);

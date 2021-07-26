@@ -1,14 +1,15 @@
 import fetch from 'node-fetch';
 
 export const Yelp = {
-    search(searchTerm) {
+    search(searchTerm, city) {
         return fetch('http://localhost:5000/yelp/search', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                searchTerm: searchTerm
+                searchTerm: searchTerm,
+                city: city
             })
         })
         .then(response => response.json())

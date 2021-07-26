@@ -15,12 +15,13 @@ export default function DayTripView() {
     const [mapLocation, setMapLocation] = React.useState([currentTripListState.coordinates]);
     const dispatch = useDispatch();
     const divStyle = {
-        height: '100vh',
+        height: '100%',
         width: '100%',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'flex-start',
         position: 'absolute',
+        flexWrap: 'wrap',
         top: '0',
         right: '0'
         // flexWrap: 'wrap'
@@ -28,7 +29,8 @@ export default function DayTripView() {
 
     const mapDivStyle = {
         height: 'auto',
-        width: '50%'
+        width: '50%',        
+        overflow: 'scroll'
     }
 
     const locationsDivStyle = {
@@ -64,7 +66,7 @@ export default function DayTripView() {
             return (
                 <div style={divStyle}>
                     <div style={mapDivStyle}>
-                        <FlatMaps location={locationsArray}/>
+                        <FlatMaps location={locationsArray} width={window.innerWidth}/>
 
                     </div>
                     <div style={locationsDivStyle}>
@@ -92,7 +94,7 @@ export default function DayTripView() {
             return (
                 <div style={divStyle}>
                     <div style={mapDivStyle}>
-                        <FlatMaps location={mapLocation}/>
+                        <FlatMaps location={mapLocation} width={window.innerWidth}/>
                     </div>
                     <div style={locationsDivStyle}>
                     <h1 style={cityNameStyle}>{currentTripListState.name}</h1>

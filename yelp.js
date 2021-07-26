@@ -10,7 +10,7 @@ router.post('/search', async (req, res) => {
     const searchTerm = req.body.searchTerm;
     client.search({
         term: searchTerm,
-        location: 'san francisco, ca',
+        location: 'baton rouge, la',
       }).then(response => {
         console.log('search');
         res.json(response.jsonBody);

@@ -2,7 +2,8 @@ import React from 'react';
 import LargeMap from '../components/LargeMap';
 import TripCard from '../components/TripCard';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentTrip } from '../redux/user';
+import { setView } from '../redux/user';
+import { setName, setCity, setCoordinates, setDestinations } from '../redux/currentTrip';
 import FlatMaps from '../components/FlatMaps';
 
 export default function DayTripList() {
@@ -44,7 +45,11 @@ export default function DayTripList() {
     }
 
     const handleClick = (trip) => {
-        dispatch(setCurrentTrip(trip))
+        dispatch(setName(trip.name))
+        dispatch(setCity(trip.name))
+        dispatch(setCoordinates(trip.location))
+        dispatch(setDestinations(trip.trip))
+        dispatch(setView('Trip'))
     }
     return (
         <div style={divStyle}>

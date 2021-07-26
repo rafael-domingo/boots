@@ -1,11 +1,12 @@
 import React from 'react';
 import FrenchTruck from '../assets/frenchtruck.jpg';
-import { useDispatch } from 'react-redux';
-import { setCurrentTrip } from '../redux/user';
+import { useDispatch, useSelector } from 'react-redux';
+import { addDestinations } from '../redux/currentTrip';
+// import { setCurrentTrip } from '../redux/user';
 
 export default function LocationCard({ name = "French Truck", picture = FrenchTruck, location = '4950 Government St', locationInfo }) {
     const dispatch = useDispatch();
-  
+    const destinationsState = useSelector(state => state.currentTrip.destinations);
     const divStyle = {
         height: '100%',
         width: '90%',
@@ -71,8 +72,8 @@ export default function LocationCard({ name = "French Truck", picture = FrenchTr
                 <p style={addressStyle}>{location}</p>
             </div>
             <div style={buttonDivStyle}>
-                <button onClick={() => {
-                    dispatch(setCurrentTrip({locationInfo}))
+                <button onClick={() => {                  
+                    dispatch(addDestinations(locationInfo))
                 }}>+</button>
             </div>
            

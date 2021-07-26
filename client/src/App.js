@@ -11,41 +11,60 @@ import Location from './containers/location';
 import Questions from './components/Questions';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import SearchView from './containers/searchView';
-
+import { setView } from './redux/user';
+import { useDispatch, useSelector } from 'react-redux';
 function App() {
   const [drawer, setDrawer] = React.useState(false)
-
-  return (
-    <Router>
-      <Logo />
-      {
-        drawer && <Drawer />        
-      }
-      <Switch>
-        <Route path="/list">
-          <DayTripList />
-        </Route>
-        <Route path="/trip">
-          <DayTripView />
-        </Route>
-        <Route path="/location">
-          <Location />
-        </Route>
-        <Route path="/questions">
-          <Questions />
-        </Route>
-        <Route path="/search">
-          <SearchView />
-        </Route>
-        <Route path="/">
-          <Home />
-        </Route>
-      </Switch>    
-    </Router>
+  const dispatch = useDispatch();
+  const viewState = useSelector(state => state.user.view)
+  if (viewState === 'Home') {
+    return (
+      <div>
+        <Logo />
+        <DayTripList />
+      </div>
+    
+    )
+  } 
+  else if (viewState === 'Trip') {
+    return (
+      <div>
+        <Logo />
+        <DayTripView />
+      </div>
+    )
+  }
+  // return (
+  //   <Router>
+  //     <Logo />
+  //     {
+  //       drawer && <Drawer />        
+  //     }
+  //     <Switch>
+  //       <Route path="/list">
+  //         <DayTripList />
+  //       </Route>
+  //       <Route path="/trip">
+  //         <DayTripView />
+  //       </Route>
+  //       <Route path="/location">
+  //         <Location />
+  //       </Route>
+  //       <Route path="/questions">
+  //         <Questions />
+  //       </Route>
+  //       <Route path="/search">
+  //         <SearchView />
+  //       </Route>
+  //       <Route path="/">
+  //         <Home />
+  //       </Route>
+  //     </Switch>    
+  //   </Router>
 
    
   
-  );
+  // );
 }
 
 export default App;

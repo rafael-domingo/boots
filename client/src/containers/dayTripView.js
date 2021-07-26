@@ -2,14 +2,18 @@ import React from 'react';
 import LocationCard from '../components/LocationCard';
 import SmallMap from '../components/SmallMap';
 import SearchView from './searchView';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import FlatMaps from '../components/FlatMaps';
+import { updateTripList } from '../redux/user';
+import { setView } from '../redux/user';
 
 export default function DayTripView() {
     const [search, setSearch] = React.useState(false);
-    const locations = useSelector(state => state.user.currentTrip);
+    const locations = useSelector(state => state.currentTrip.destinations);
+    const currentTripListState = useSelector(state => state.currentTrip);
     const tripListState = useSelector(state => state.user.tripList);
-    const [mapLocation, setMapLocation] = React.useState([tripListState[0].location]);
+    const [mapLocation, setMapLocation] = React.useState([currentTripListState.coordinates]);
+    const dispatch = useDispatch();
     const divStyle = {
         height: '100vh',
         width: '100%',
@@ -55,7 +59,7 @@ export default function DayTripView() {
         if (locations.length > 0) {
             var locationsArray = []
             locations.map((location) => {
-                locationsArray.push({ lat: location.locationInfo.coordinates.latitude, lng: location.locationInfo.coordinates.longitude})
+                locationsArray.push({ lat: location.coordinates.latitude, lng: location.coordinates.longitude})
             })
             return (
                 <div style={divStyle}>
@@ -64,21 +68,24 @@ export default function DayTripView() {
 
                     </div>
                     <div style={locationsDivStyle}>
-                        <h1 style={cityNameStyle}>Baton Rouge</h1>
+                        <h1 style={cityNameStyle}>{currentTripListState.name}</h1>
                         {
                             locations.map(item => {
                                 return (
                                     <LocationCard 
-                                        name={item.locationInfo.name} 
-                                        picture={item.locationInfo.image_url} 
-                                        location={item.locationInfo.location.address1} 
-                                        locationInfo={item.locationInfo}
+                                        name={item.name} 
+                                        picture={item.image_url} 
+                                        location={item.location.address1} 
+                                        locationInfo={item}
                                     />
                                 )
                             })
                         }                     
                     </div>
                     <button onClick={() => setSearch(true)}>Search</button>
+                    <button onClick={() => dispatch(updateTripList(currentTripListState))}>Update</button>
+                    <button onClick={() => dispatch(setView('Home'))}>Back</button>
+
                 </div>
             )
         } else {
@@ -88,10 +95,13 @@ export default function DayTripView() {
                         <FlatMaps location={mapLocation}/>
                     </div>
                     <div style={locationsDivStyle}>
-                        <h1 style={cityNameStyle}>Baton Rouge</h1>
+                    <h1 style={cityNameStyle}>{currentTripListState.name}</h1>
                         
                     </div>
                     <button onClick={() => setSearch(true)}>Search</button>
+                    <button onClick={() => dispatch(updateTripList(currentTripListState))}>Update</button>
+                    <button onClick={() => dispatch(setView('Home'))}>Back</button>
+
                 </div>
             )
         }

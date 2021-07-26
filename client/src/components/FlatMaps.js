@@ -251,7 +251,7 @@ export default class FlatMaps extends Component {
 
   render() {
     const mapStyle = {
-      width: '100vw',
+      width: '50vw',
       height: '100%',
       zIndex: '-1',
       position: 'absolute'

@@ -53,7 +53,7 @@ export default function DayTripList() {
     }
     return (
         <div style={divStyle}>
-            <FlatMaps location={mapLocation}/>
+            <FlatMaps location={mapLocation} width={window.innerWidth}/>
             <div style={tripCardStyle}>
                 {
                     tripListState.map(trip => {

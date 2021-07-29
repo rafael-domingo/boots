@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setView } from '../redux/user';
 import { setName, setCity, setCoordinates, setDestinations } from '../redux/currentTrip';
 import FlatMaps from '../components/FlatMaps';
+import Maps from '../components/Maps';
 
 export default function DayTripList() {
     const tripListState = useSelector(state => state.user.tripList);
@@ -53,7 +54,7 @@ export default function DayTripList() {
     }
     return (
         <div style={divStyle}>
-            <FlatMaps location={mapLocation} width={window.innerWidth}/>
+            <Maps location={mapLocation} width={window.innerWidth}/>
             <div style={tripCardStyle}>
                 {
                     tripListState.map(trip => {

@@ -253,7 +253,7 @@ export default class FlatMaps extends Component {
       // draw marker on map
       new window.google.maps.Marker({
         position: loc,
-        label: 'Label',
+        label: 'label',
         icon: svgMarker,
         animation: window.google.maps.Animation.DROP,
         map: this.googleMap

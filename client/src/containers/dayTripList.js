@@ -40,6 +40,17 @@ export default function DayTripList() {
         position: 'absolute',
         marginRight: '5vw'
     }
+
+    const newTripButtonStyle = {
+        width: '3em',
+        height: '3em',
+        borderRadius: '50%',
+        backgroundColor: 'rgba(64,112,191,1)',
+        color: 'white',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+    }
     const handleHover = (location) => {
         console.log(location)
         setMapLocation([location])
@@ -61,7 +72,12 @@ export default function DayTripList() {
                         return (<TripCard handleHover={handleHover} handleClick={handleClick} tripDetails={trip}/>)
                     })
                 }
-               
+                <div style={{width: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center'}} onClick={() => dispatch(setView('Questions'))}>
+                    <div style={newTripButtonStyle}>
+                    +
+                    </div>
+                </div>
+            
                 
             </div>
         </div>

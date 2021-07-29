@@ -39,6 +39,17 @@ function App() {
         <DayTripView />
       </div>
     )
+  } 
+  else if (viewState === 'Questions') {
+    return (
+      <div>
+      {
+        drawer && <Drawer />
+      }
+      <Logo onMouseEnter={() => setDrawer(true)}/>
+      <Questions />
+    </div>
+    )
   }
   // return (
   //   <Router>

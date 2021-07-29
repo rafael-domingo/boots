@@ -43,7 +43,9 @@ export default function Maps({ location, width, directions = false }) {
             directionRender.current = new window.google.maps.DirectionsRenderer();
             createDirections(location)
             directionRender.current.setMap(googleMap.current);
-
+            directionRender.current.setOptions({
+              preserveViewport: true
+            })
           }
           createMarker(location)
           // Auto fit and Auto zoom based on markers (with 500px padding)
@@ -63,17 +65,20 @@ export default function Maps({ location, width, directions = false }) {
         // bounds.current = new window.google.maps.LatLngBounds();  
         // Determine how many markers to put on map
         if (location.length == 1) {
+          console.log(location)
+
           // if only 1 marker, then set zoom level so it's not too close
           // createMarker(location)
           googleMap.current.setCenter(location[0])
           googleMap.current.setZoom(15);
         } else {
           
-          // createMarker(location)
+          createMarker(location)
           // Auto fit and Auto zoom based on markers (with 500px padding)
           googleMap.current.fitBounds(bounds.current, {right: width / 2})
           googleMap.current.panToBounds(bounds.current)
    
+          
         }
         
       // })
@@ -270,8 +275,8 @@ export default function Maps({ location, width, directions = false }) {
         // draw marker on map
         new window.google.maps.Marker({
           position: loc,
-          label: 'label',
-          icon: svgMarker,
+          label: 'A',
+          // icon: svgMarker,
           animation: window.google.maps.Animation.DROP,
           map: googleMap.current
         })
@@ -281,7 +286,7 @@ export default function Maps({ location, width, directions = false }) {
 
     const createDirections = (location) => {
       var start = location[0];
-      var end = location[1];
+      var end = location[location.length - 1];
       var waypoints = [];
       if (location.length > 2) {
         for (let index = 1; index < location.length; index++){

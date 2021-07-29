@@ -53,7 +53,7 @@ export default function DayTripView() {
     if (search) {
         return (
             <div style={divStyle}>
-                <SearchView />
+                <SearchView />                
                 <button onClick={() => setSearch(false)}>Trip View</button>
             </div>
         )
@@ -105,6 +105,7 @@ export default function DayTripView() {
                     <button onClick={() => dispatch(updateTripList(currentTripListState))}>Update</button>
                     <button onClick={() => dispatch(setView('Home'))}>Back</button>
 
+                  
                 </div>
             )
         }

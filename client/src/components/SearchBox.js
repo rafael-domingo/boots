@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { setSearchTerm, setSearchResults } from '../redux/user';
 import { Yelp } from '../util/Yelp';
-export default function SearchBox() {
+export default function SearchBox({ handleResults }) {
     const dispatch = useDispatch();
     const searchTerm = useSelector(state => state.user.searchTerm);
     const city = useSelector(state => state.currentTrip.city);
@@ -26,7 +26,13 @@ export default function SearchBox() {
         e.preventDefault()
         console.log('submitted')
         console.log(e.target.value)
-        Yelp.search(searchTerm, city).then(results => dispatch(setSearchResults(results)))
+        Yelp.search(searchTerm, city).then(results => 
+            {
+                dispatch(setSearchResults(results))
+                handleResults(results)
+            }
+        )
+        
     }
 
     const handleChange = (e) => {

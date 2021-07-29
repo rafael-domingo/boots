@@ -3,37 +3,64 @@ import LargeMap from '../components/LargeMap';
 import SearchBox from '../components/SearchBox';
 import SearchResults from '../components/SearchResults';
 import { useSelector } from 'react-redux';
-import FlatMaps from '../components/FlatMaps';
+import Maps from '../components/Maps';
 
 export default function SearchView() {
-    const tripListState = useSelector(state => state.user.tripList);
-    const [mapLocation, setMapLocation] = React.useState([tripListState[0].location, tripListState[1].location]);
+    const currenttripListState = useSelector(state => state.currentTrip);
+    const [mapLocation, setMapLocation] = React.useState([currenttripListState.coordinates])
 
     const divStyle = {
         display: 'flex',
-        justifyContent: 'flex-end',
-        alignItems: 'flex-end',
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
         flexWrap: 'wrap',
-        height: '100vh',
-        width: '100%'
+        // position: 'absolute',
+        height: '100%',
+        width: '100%',
+        top: '0',
+        right: '0'
     }
+
+    const mapDivStyle = {
+        height: 'auto',
+        width: '50%',        
+        overflow: 'scroll'
+    }
+
 
     const searchDivStyle = {
         width: '50%',
+        height: '100vh',
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'flex-start',
+        alignItems: 'center',
         flexWrap: 'wrap',
-        margin: '2em',
-        height: '90vh',
         overflow: 'scroll'
+
+    }
+
+    const handleResults = (results) => {
+        var locArray = []
+        results.businesses.map(business => {
+            const latitude = business.coordinates.latitude;
+            const longitude = business.coordinates.longitude;
+            const location = {
+                lat: latitude,
+                lng: longitude
+            }
+            locArray.push(location)
+        })
+        setMapLocation(locArray);
+        console.log(locArray)
     }
     return (
         <div style={divStyle}>
-            <FlatMaps location={mapLocation}/>
+            <div style={mapDivStyle}>
+                <Maps location={mapLocation} width={window.innerWidth}/>
+            </div>
             <div style={searchDivStyle}>
                 <SearchResults />
-                <SearchBox />
+                <SearchBox handleResults={handleResults}/>
             </div>
         
         </div>

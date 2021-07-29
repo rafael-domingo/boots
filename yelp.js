@@ -12,6 +12,7 @@ router.post('/search', async (req, res) => {
     client.search({
         term: searchTerm,
         location: location,
+       
       }).then(response => {
         console.log('search');
         res.json(response.jsonBody);

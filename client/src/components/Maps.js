@@ -2,12 +2,15 @@ import React, { useRef } from 'react';
 import { Loader } from '@googlemaps/js-api-loader';
 require('dotenv').config();
 
-export default function Maps({ location, width }) {
+export default function Maps({ location, width, directions = false }) {
   const apiKey = `${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`;
   const googleMapRef = React.createRef()
   const googleMap = useRef(null);
   const marker = useRef(null);
   const bounds = useRef(null);
+  const directionService = useRef(null);
+  const directionRender = useRef(null);
+
   const mapStyle = {
     width: '100%',
     height: '100%',
@@ -24,6 +27,7 @@ export default function Maps({ location, width }) {
       loader.load().then(() => {
         // instantiate instance of google map
         googleMap.current = createGoogleMap(location)
+       
         // create bounds for map to use for markers 
         bounds.current = new window.google.maps.LatLngBounds();  
         // Determine how many markers to put on map
@@ -33,19 +37,30 @@ export default function Maps({ location, width }) {
           googleMap.current.setCenter(location[0])
           googleMap.current.setZoom(15);
         } else {
+          if (directions === true) {
+            // instantiate directions service and renderer
+            directionService.current = new window.google.maps.DirectionsService();
+            directionRender.current = new window.google.maps.DirectionsRenderer();
+            createDirections(location)
+            directionRender.current.setMap(googleMap.current);
+
+          }
           createMarker(location)
           // Auto fit and Auto zoom based on markers (with 500px padding)
           googleMap.current.fitBounds(bounds.current, {right: width / 2})
           googleMap.current.panToBounds(bounds.current)
+
    
         }
+        setTimeout(() => {
+          googleMap.current.fitBounds(bounds.current, {right: width / 2})
+
+        }, 1000);
       })
-    } else {
-      // loader.load().then(() => {
-        // instantiate instance of google map
-        // googleMap.current = createGoogleMap(location)
-        // create bounds for map to use for markers 
-        bounds.current = new window.google.maps.LatLngBounds();  
+    } 
+    // If googleMap is not null, modify the map with updated views or markers
+    else {      
+        // bounds.current = new window.google.maps.LatLngBounds();  
         // Determine how many markers to put on map
         if (location.length == 1) {
           // if only 1 marker, then set zoom level so it's not too close
@@ -53,12 +68,14 @@ export default function Maps({ location, width }) {
           googleMap.current.setCenter(location[0])
           googleMap.current.setZoom(15);
         } else {
+          
           // createMarker(location)
           // Auto fit and Auto zoom based on markers (with 500px padding)
           googleMap.current.fitBounds(bounds.current, {right: width / 2})
           googleMap.current.panToBounds(bounds.current)
    
         }
+        
       // })
     }
    
@@ -260,6 +277,33 @@ export default function Maps({ location, width }) {
         })
       })
      
+    }
+
+    const createDirections = (location) => {
+      var start = location[0];
+      var end = location[1];
+      var waypoints = [];
+      if (location.length > 2) {
+        for (let index = 1; index < location.length; index++){
+          waypoints.push({
+            location: location[index],
+            stopover: true
+          })
+         
+        }
+      }
+      var request = {
+        origin: start,
+        destination: end,
+        waypoints: waypoints,
+        travelMode: 'DRIVING'
+      }
+      directionService.current.route(request, function(result, status) {
+        if (status == 'OK') {
+          console.log(result)
+          directionRender.current.setDirections(result)
+        }
+      })
     }
   return (
     <div

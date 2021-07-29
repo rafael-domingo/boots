@@ -4,6 +4,7 @@ import SmallMap from '../components/SmallMap';
 import SearchView from './searchView';
 import { useSelector, useDispatch } from 'react-redux';
 import FlatMaps from '../components/FlatMaps';
+import Maps from '../components/Maps';
 import { updateTripList } from '../redux/user';
 import { setView } from '../redux/user';
 
@@ -66,7 +67,7 @@ export default function DayTripView() {
             return (
                 <div style={divStyle}>
                     <div style={mapDivStyle}>
-                        <FlatMaps location={locationsArray} width={window.innerWidth}/>
+                        <Maps location={locationsArray} width={window.innerWidth} directions={true}/>
 
                     </div>
                     <div style={locationsDivStyle}>
@@ -94,7 +95,7 @@ export default function DayTripView() {
             return (
                 <div style={divStyle}>
                     <div style={mapDivStyle}>
-                        <FlatMaps location={mapLocation} width={window.innerWidth}/>
+                        <Maps location={mapLocation} width={window.innerWidth}/>
                     </div>
                     <div style={locationsDivStyle}>
                     <h1 style={cityNameStyle}>{currentTripListState.name}</h1>

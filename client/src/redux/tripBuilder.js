@@ -4,6 +4,9 @@ export const tripBuilderSlice = createSlice({
     name: 'TripBuilder',
     initialState: {
         city: '',
+        autoComplete: [],
+        selectedCityName: {},
+        selectedCityLocation: '',
         transportation: '',
         autoBuild: '',
         timeDay: {
@@ -23,6 +26,15 @@ export const tripBuilderSlice = createSlice({
         setCity: (state, action) => {
             state.city = action.payload
         },
+        setAutoComplete: (state, action) => {
+            state.autoComplete = action.payload
+        },
+        setSelectedCityName: (state, action) => {
+            state.selectedCityName = action.payload
+        },
+        setSelectedCityLocation: (state, action) => {
+            state.selectedCityLocation = action.payload
+        },
         setTransportation: (state, action) => {
             state.transportation = action.payload
         },
@@ -40,6 +52,9 @@ export const tripBuilderSlice = createSlice({
 
 export const {
     setCity,
+    setAutoComplete,
+    setSelectedCityName,
+    setSelectedCityLocation,
     setTransportation,
     setAutoBuild,
     setTimeDay,

@@ -3,7 +3,15 @@ import RightArrow from '../assets/right-arrow.png';
 import LeftArrow from '../assets/left-arrow.png';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { setCity, setTransportation, setAutoBuild, setTimeDay, setActivities, tripBuilderSlice } from '../redux/tripBuilder';
+import { 
+    setCity, 
+    setTransportation, 
+    setAutoBuild, 
+    setTimeDay, 
+    setActivities, 
+    setAutoComplete, 
+    setSelectedCityLocation, 
+    setSelectedCityName } from '../redux/tripBuilder';
 
 import {Maps} from '../util/Maps';
 import { v4 as uuidv4 } from 'uuid'
@@ -34,7 +42,9 @@ export default function Questions() {
     // Event handlers for children functions
     const cityInput = (e) => {
         dispatch(setCity(e.target.value))
-        Maps.autoComplete(e.target.value, sessionToken).then(data => console.log(data))
+        Maps.autoComplete(e.target.value, sessionToken).then(data => {
+            dispatch(setAutoComplete(data.predictions))
+        })
         Maps.placeDetails("ChIJAYWNSLS4QIYROwVl894CDco", sessionToken)
     }
     const transportationInput = (transport) => {

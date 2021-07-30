@@ -5,7 +5,8 @@ export default function City({ onChange, tripBuilderState }) {
     const divStyle = {
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        flexWrap: 'wrap'
     }
 
     const questionDivStyle = {
@@ -25,12 +26,31 @@ export default function City({ onChange, tripBuilderState }) {
     const textBoxStyle = {
         width: '100%'
     }
+    
+    const resultsDivStyle = {
+        color: 'black',
+        width: '100%'
+    }
 
+    const resultStyle = {
+
+    }
     return(
         <div style={divStyle}>
             <div style={questionDivStyle}>
                 <p style={questionStyle}>What city would you like to visit?</p>
                 <input style={textBoxStyle} onChange={onChange} type="text" name="city" value={tripBuilderState.city}></input>
+            </div>
+            <div style={resultsDivStyle}>
+                {
+                    tripBuilderState.autoComplete.map(item =>{
+                        return  (
+                        <div style={resultStyle}>
+                            {item.description}
+                        </div>
+                        )
+                    })
+                }
             </div>
         </div>
     )

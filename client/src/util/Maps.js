@@ -30,6 +30,6 @@ export const Maps = {
             })
         })
         .then(response => response.json())
-        .then(data => console.log(data))
+        .then(data => data)
     }
 }

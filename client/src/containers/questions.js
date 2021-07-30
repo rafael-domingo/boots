@@ -39,13 +39,7 @@ export default function Questions() {
     
     ////////////////////////////
     // Event handlers for children functions
-    const cityInput = (e) => {
-        dispatch(setCity(e.target.value))
-        Maps.autoComplete(e.target.value, sessionToken).then(data => {
-            dispatch(setAutoComplete(data.predictions))
-        })
-        Maps.placeDetails("ChIJAYWNSLS4QIYROwVl894CDco", sessionToken)
-    }
+
     const transportationInput = (transport) => {
         dispatch(setTransportation(transport))
     }

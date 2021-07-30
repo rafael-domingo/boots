@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCity, setAutoComplete, setSelectedCity } from '../../redux/tripBuilder';
+import { setCity, setAutoComplete, setSelectedCity, setSelectedCityLocation } from '../../redux/tripBuilder';
 import { Maps } from '../../util/Maps';
 
 export default function City({ sessionToken }) {
@@ -61,6 +61,9 @@ export default function City({ sessionToken }) {
 
     const handleSelected = (item) => {
         dispatch(setSelectedCity(item))
+        Maps.placeDetails(item.place_id, sessionToken).then(data => {
+            dispatch(setSelectedCityLocation(data.result.geometry.location))
+        })
     }
 
     const handleInput = (e) => {

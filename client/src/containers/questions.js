@@ -10,8 +10,7 @@ import {
     setTimeDay, 
     setActivities, 
     setAutoComplete, 
-    setSelectedCityLocation, 
-    setSelectedCityName } from '../redux/tripBuilder';
+    setSelectedCityLocation, } from '../redux/tripBuilder';
 
 import {Maps} from '../util/Maps';
 import { v4 as uuidv4 } from 'uuid'
@@ -81,7 +80,7 @@ export default function Questions() {
                 <img src={LeftArrow} onClick={() => setState(state - 1)}/>
                 <div style={questionsDivStyle}>
                     {
-                        view==='city' && <City onChange={cityInput} tripBuilderState={tripBuilderState}/>
+                        view==='city' && <City sessionToken={sessionToken}/>
                     }
                     {
                         view==='travel' && <Travel transportation={transportationInput} tripBuilderState={tripBuilderState}/>

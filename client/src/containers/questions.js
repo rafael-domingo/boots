@@ -2,17 +2,8 @@ import React from 'react';
 import RightArrow from '../assets/right-arrow.png';
 import LeftArrow from '../assets/left-arrow.png';
 
-import { useDispatch, useSelector } from 'react-redux';
-import { 
-    setCity, 
-    setTransportation, 
-    setAutoBuild, 
-    setTimeDay, 
-    setActivities, 
-    setAutoComplete, 
-    setSelectedCityLocation, } from '../redux/tripBuilder';
+import { useSelector } from 'react-redux';
 
-import {Maps} from '../util/Maps';
 import { v4 as uuidv4 } from 'uuid'
 
 import City from '../components/questions/City';
@@ -22,39 +13,17 @@ import Time from '../components/questions/Time';
 import Activity from '../components/questions/Activity';
 
 export default function Questions() {
-  ////////////////////////////
     // STATE MANAGEMENT
-    const tripBuilderState = useSelector(state => state.tripBuilder);
     // Handle which question to show based on flow
     var [state, setState] = React.useState(0);
     const views = ['city', 'travel', 'proceed', 'time', 'activity'];
     var view = views[state];
     const [formComplete, setFormComplete] = React.useState(false);
     const autoBuild = useSelector(state => state.tripBuilder.autoBuild)
-    const dispatch = useDispatch();
-    ////////////////////////////
-
+    
     // Generate session token for Maps API call
     var sessionToken = uuidv4();
-    
-    ////////////////////////////
-    // Event handlers for children functions
 
-    const transportationInput = (transport) => {
-        dispatch(setTransportation(transport))
-    }
-    const proceedInput = (autoBuild) => {
-        dispatch(setAutoBuild(autoBuild))
-    }
-    const timeInput = (timeInput) => {
-        dispatch(setTimeDay(timeInput))
-    }
-    const activityInput = (activityInput) => {
-        dispatch(setActivities(activityInput))
-    }
-    ////////////////////////////
-
-    ////////////////////////////
     // DIV STYLES
     const divStyle = {
         display: 'flex',
@@ -66,7 +35,6 @@ export default function Questions() {
     const questionsDivStyle = {
         padding: '2em'
     }
-    ////////////////////////////
     
     if (!formComplete) {
         return (
@@ -77,16 +45,16 @@ export default function Questions() {
                         view==='city' && <City sessionToken={sessionToken}/>
                     }
                     {
-                        view==='travel' && <Travel transportation={transportationInput} tripBuilderState={tripBuilderState}/>
+                        view==='travel' && <Travel />
                     }
                     {
-                        view==='proceed' && <Proceed proceedInput={proceedInput} tripBuilderState={tripBuilderState}/>
+                        view==='proceed' && <Proceed />
                     }
                     {
-                        view==='time' && <Time timeInput={timeInput} tripBuilderState={tripBuilderState}/>
+                        view==='time' && <Time />
                     }
                     {
-                        view==='activity' && <Activity activityInput={activityInput} tripBuilderState={tripBuilderState}/>
+                        view==='activity' && <Activity />
                     }               
                 </div>     
                 <img 

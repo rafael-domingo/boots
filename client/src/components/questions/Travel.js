@@ -2,9 +2,12 @@ import React from 'react';
 import Bicycle from '../../assets/bicycle.png';
 import Car from '../../assets/car.png';
 import Walk from '../../assets/walk.png';
+import { useDispatch, useSelector } from 'react-redux';
+import { setTransportation } from '../../redux/tripBuilder';
 
-
-export default function Travel({ transportation, tripBuilderState }) {
+export default function Travel() {
+    const tripBuilderState = useSelector(state => state.tripBuilder);
+    const dispatch = useDispatch();
     const divStyle = {
         display: 'flex',
         justifyContent: 'center',
@@ -32,6 +35,10 @@ export default function Travel({ transportation, tripBuilderState }) {
     const selectedStyle = {
         backgroundColor: 'black'
     }
+
+    const handleInput = (transport) => {
+        dispatch(setTransportation(transport))
+    }
     return(
         <div style={divStyle}>
             <div style={questionDivStyle}>
@@ -41,21 +48,21 @@ export default function Travel({ transportation, tripBuilderState }) {
                         style={ tripBuilderState.transportation == 'Car' ? selectedStyle : null } 
                         src={Car} 
                         onClick={() => {
-                            transportation('Car')}
+                            handleInput('Car')}
                             }
                     />
                     <img 
                         style={ tripBuilderState.transportation == 'Bicycle' ? selectedStyle : null } 
                         src={Bicycle} 
                         onClick={() => {
-                            transportation('Bicycle')}
+                            handleInput('Bicycle')}
                             }
                     />
                      <img 
                         style={ tripBuilderState.transportation == 'Walk' ? selectedStyle : null } 
                         src={Walk} 
                         onClick={() => {
-                            transportation('Walk')}
+                            handleInput('Walk')}
                             }
                     />
                 </div>

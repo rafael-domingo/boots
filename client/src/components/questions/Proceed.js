@@ -1,6 +1,10 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setAutoBuild } from '../../redux/tripBuilder';
+export default function Proceed() {
+    const tripBuilderState = useSelector(state => state.tripBuilder);
+    const dispatch = useDispatch();
 
-export default function Proceed({ proceedInput, tripBuilderState }) {
     const divStyle = {
         display: 'flex',
         justifyContent: 'center',
@@ -52,6 +56,10 @@ export default function Proceed({ proceedInput, tripBuilderState }) {
         margin: '1em',
         backgroundColor: 'white'
     }
+
+    const handleInput = (autoBuild) => {
+        dispatch(setAutoBuild(autoBuild))
+    }
     return(
         <div style={divStyle}>
             <div style={questionDivStyle}>
@@ -59,13 +67,13 @@ export default function Proceed({ proceedInput, tripBuilderState }) {
                 <div style={answerDivStyle}>
                     <div 
                         style={tripBuilderState.autoBuild === true ? selectedStyle : answerStyle}
-                        onClick={() => proceedInput(true)}
+                        onClick={() => handleInput(true)}
                     >
                         Build me an intinerary
                     </div>
                     <div 
                         style={tripBuilderState.autoBuild === false ? selectedStyle : answerStyle}
-                        onClick={() => proceedInput(false)}
+                        onClick={() => handleInput(false)}
                     >
                         I'll choose my own adventure
                     </div>

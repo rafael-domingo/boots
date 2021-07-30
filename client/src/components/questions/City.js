@@ -4,7 +4,6 @@ import { setCity, setAutoComplete, setSelectedCity, setSelectedCityLocation } fr
 import { Maps } from '../../util/Maps';
 
 export default function City({ sessionToken }) {
-    const [selected, setSelected] = React.useState()
     const tripBuilderState = useSelector(state => state.tripBuilder)
     const dispatch = useDispatch()
 
@@ -85,7 +84,6 @@ export default function City({ sessionToken }) {
                         return  (
                         <div 
                             onClick={() => {
-                                setSelected(item.description)
                                 handleSelected(item)
                             }}
                             style={tripBuilderState.selectedCity.description === item.description ? selectedResultStyle : resultStyle}

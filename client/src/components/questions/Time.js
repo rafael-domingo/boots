@@ -2,12 +2,15 @@ import React from 'react';
 import Sunrise from '../../assets/sunrise.png';
 import Sunset from '../../assets/sunset.png';
 import Midday from '../../assets/midday.png';
+import { useDispatch, useSelector } from 'react-redux';
+import { setTimeDay } from '../../redux/tripBuilder';
 
-
-export default function Time({ timeInput, tripBuilderState }) {
+export default function Time() {
+    const tripBuilderState = useSelector(state => state.tripBuilder);
     const [morning, setMorning] = React.useState(tripBuilderState.timeDay.morning);
     const [midDay, setmidDay] = React.useState(tripBuilderState.timeDay.midDay);
     const [evening, setEvening] = React.useState(tripBuilderState.timeDay.evening);
+    const dispatch = useDispatch();
 
     const divStyle = {
         display: 'flex',
@@ -62,7 +65,7 @@ export default function Time({ timeInput, tripBuilderState }) {
             midDay: midDay,
             evening: evening
         }
-        timeInput(timeObject)
+        dispatch(setTimeDay(timeObject))
     }, [morning, midDay, evening])
 
     return(

@@ -4,8 +4,12 @@ import Shop from '../../assets/shop.png';
 import Caffeinate from '../../assets/caffeinate.png';
 import Sightsee from '../../assets/sightsee.png';
 import Drink from '../../assets/drink.png';
+import { useDispatch, useSelector } from 'react-redux';
+import { setActivities } from '../../redux/tripBuilder';
 
-export default function Activity({ activityInput, tripBuilderState }) {
+export default function Activity() {
+    const tripBuilderState = useSelector(state => state.tripBuilder);
+    const dispatch = useDispatch();
     const [eat, setEat] = React.useState(tripBuilderState.activities.eat);
     const [shop, setShop] = React.useState(tripBuilderState.activities.shop);
     const [caffeinate, setCaffeinate] = React.useState(tripBuilderState.activities.caffeinate);
@@ -65,7 +69,7 @@ export default function Activity({ activityInput, tripBuilderState }) {
             sightsee: sightsee,
             drink: drink
         }
-        activityInput(activitiesObject)
+        dispatch(setActivities(activitiesObject))
     }, [eat, shop, caffeinate, sightsee, drink])
     return(
         <div style={divStyle}>

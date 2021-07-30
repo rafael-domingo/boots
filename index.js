@@ -4,6 +4,7 @@ const cors = require('cors');
 const axios = require('axios');
 // const {Client} = require("@googlemaps/google-maps-services-js");
 const yelp = require('./yelp');
+const maps = require('./maps');
 const port = process.env.PORT || 5000;
 
 const app = express();
@@ -11,7 +12,7 @@ app.use(cors());
 
 app.use(express.json());
 app.use('/yelp', yelp);
-
+app.use('/maps', maps);
 // var google_api_key = process.env.GOOGLE_MAPS_API_KEY;
 
 

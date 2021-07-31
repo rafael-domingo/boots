@@ -8,10 +8,12 @@ const router = express.Router();
 
 router.post('/search', async (req, res) => {
     const searchTerm = req.body.searchTerm;
-    const location = req.body.city;
+    const latitude = req.body.latitude;
+    const longitude = req.body.longitude;
     client.search({
         term: searchTerm,
-        location: location,
+        latitude: latitude,
+        longitude: longitude
        
       }).then(response => {
         console.log('search');

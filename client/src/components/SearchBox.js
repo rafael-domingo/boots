@@ -5,7 +5,7 @@ import { Yelp } from '../util/Yelp';
 export default function SearchBox({ handleResults }) {
     const dispatch = useDispatch();
     const searchTerm = useSelector(state => state.user.searchTerm);
-    const city = useSelector(state => state.currentTrip.city);
+    const coordinates = useSelector(state => state.currentTrip.coordinates);
     const divStyle = {
         width: '100%',
         display: 'flex',
@@ -26,7 +26,7 @@ export default function SearchBox({ handleResults }) {
         e.preventDefault()
         console.log('submitted')
         console.log(e.target.value)
-        Yelp.search(searchTerm, city).then(results => 
+        Yelp.search(searchTerm, coordinates).then(results => 
             {
                 dispatch(setSearchResults(results))
                 handleResults(results)

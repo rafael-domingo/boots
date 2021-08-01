@@ -11,6 +11,7 @@ import Travel from '../components/questions/Travel';
 import Proceed from '../components/questions/Proceed';
 import Time from '../components/questions/Time';
 import Activity from '../components/questions/Activity';
+import TripBuilderLoader from './tripBuilderLoader';
 
 export default function Questions() {
     // STATE MANAGEMENT
@@ -74,7 +75,7 @@ export default function Questions() {
     } else {
         return (
             <div>
-                Submit
+                <TripBuilderLoader />
             </div>
         )
     }

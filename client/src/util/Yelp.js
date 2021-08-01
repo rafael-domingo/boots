@@ -79,12 +79,9 @@ export const Yelp = {
         const searchYelp = async (searchTermArray) => {
             for (let index = 0; index < searchTermArray.length; index++) {
                 const term = searchTermArray[index];
-                this.search(term, { lat: 30.441455, lng: -91.181458})
+                this.search(term, location)
                 .then(response => {
-                   tripArray.push({
-                       term: term,
-                       response: response.businesses[0]
-                   })
+                   tripArray.push(response.businesses[0])
                     
                 })
                 await timer(1000);

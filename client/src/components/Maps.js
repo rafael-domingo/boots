@@ -19,70 +19,70 @@ export default function Maps({ location, width, directions = false }) {
   }
 
   React.useEffect(() => {
-    const loader = new Loader({
-      apiKey: apiKey,
-    })
-    // Prevent redundant API calls by checking if googleMap is null
-    if (googleMap.current === null) {
-      loader.load().then(() => {
-        // instantiate instance of google map
-        googleMap.current = createGoogleMap(location)
+    // const loader = new Loader({
+    //   apiKey: apiKey,
+    // })
+    // // Prevent redundant API calls by checking if googleMap is null
+    // if (googleMap.current === null) {
+    //   loader.load().then(() => {
+    //     // instantiate instance of google map
+    //     googleMap.current = createGoogleMap(location)
        
-        // create bounds for map to use for markers 
-        bounds.current = new window.google.maps.LatLngBounds();  
-        // Determine how many markers to put on map
-        if (location.length == 1) {
-          // if only 1 marker, then set zoom level so it's not too close
-          createMarker(location)
-          googleMap.current.setCenter(location[0])
-          googleMap.current.setZoom(15);
-        } else {
-          if (directions === true) {
-            // instantiate directions service and renderer
-            directionService.current = new window.google.maps.DirectionsService();
-            directionRender.current = new window.google.maps.DirectionsRenderer();
-            createDirections(location)
-            directionRender.current.setMap(googleMap.current);
-            directionRender.current.setOptions({
-              preserveViewport: true
-            })
-          }
-          createMarker(location)
-          // Auto fit and Auto zoom based on markers (with 500px padding)
-          googleMap.current.fitBounds(bounds.current, {right: width / 2})
-          googleMap.current.panToBounds(bounds.current)
+    //     // create bounds for map to use for markers 
+    //     bounds.current = new window.google.maps.LatLngBounds();  
+    //     // Determine how many markers to put on map
+    //     if (location.length == 1) {
+    //       // if only 1 marker, then set zoom level so it's not too close
+    //       createMarker(location)
+    //       googleMap.current.setCenter(location[0])
+    //       googleMap.current.setZoom(15);
+    //     } else {
+    //       if (directions === true) {
+    //         // instantiate directions service and renderer
+    //         directionService.current = new window.google.maps.DirectionsService();
+    //         directionRender.current = new window.google.maps.DirectionsRenderer();
+    //         createDirections(location)
+    //         directionRender.current.setMap(googleMap.current);
+    //         directionRender.current.setOptions({
+    //           preserveViewport: true
+    //         })
+    //       }
+    //       createMarker(location)
+    //       // Auto fit and Auto zoom based on markers (with 500px padding)
+    //       googleMap.current.fitBounds(bounds.current, {right: width / 2})
+    //       googleMap.current.panToBounds(bounds.current)
 
    
-        }
-        setTimeout(() => {
-          googleMap.current.fitBounds(bounds.current, {right: width / 2})
+    //     }
+    //     setTimeout(() => {
+    //       googleMap.current.fitBounds(bounds.current, {right: width / 2})
 
-        }, 1000);
-      })
-    } 
-    // If googleMap is not null, modify the map with updated views or markers
-    else {      
-        // bounds.current = new window.google.maps.LatLngBounds();  
-        // Determine how many markers to put on map
-        if (location.length == 1) {
-          console.log(location)
+    //     }, 1000);
+    //   })
+    // } 
+    // // If googleMap is not null, modify the map with updated views or markers
+    // else {      
+    //     // bounds.current = new window.google.maps.LatLngBounds();  
+    //     // Determine how many markers to put on map
+    //     if (location.length == 1) {
+    //       console.log(location)
 
-          // if only 1 marker, then set zoom level so it's not too close
-          // createMarker(location)
-          googleMap.current.setCenter(location[0])
-          googleMap.current.setZoom(15);
-        } else {
+    //       // if only 1 marker, then set zoom level so it's not too close
+    //       // createMarker(location)
+    //       googleMap.current.setCenter(location[0])
+    //       googleMap.current.setZoom(15);
+    //     } else {
           
-          createMarker(location)
-          // Auto fit and Auto zoom based on markers (with 500px padding)
-          googleMap.current.fitBounds(bounds.current, {right: width / 2})
-          googleMap.current.panToBounds(bounds.current)
+    //       createMarker(location)
+    //       // Auto fit and Auto zoom based on markers (with 500px padding)
+    //       googleMap.current.fitBounds(bounds.current, {right: width / 2})
+    //       googleMap.current.panToBounds(bounds.current)
    
           
-        }
+    //     }
         
-      // })
-    }
+    //   // })
+    // }
    
   }, [location])
 

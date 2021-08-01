@@ -13,7 +13,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import SearchView from './containers/searchView';
 import { setView } from './redux/user';
 import { useDispatch, useSelector } from 'react-redux';
-import { Yelp } from './util/Yelp';
+
 function App() {
   const [drawer, setDrawer] = React.useState(false)
   const dispatch = useDispatch();

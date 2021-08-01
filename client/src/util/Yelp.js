@@ -38,7 +38,7 @@ export const Yelp = {
         
     },
 
-    buildTrip(location, timeDay, activities) {      
+    async buildTrip(location, timeDay, activities) {      
         
         // define search terms based on trip builder inputs        
         var intineraryArray = [
@@ -71,7 +71,32 @@ export const Yelp = {
             }
         })
 
+        // call Yelp API to populate trip array
+        var tripArray = [];
+        // create timer to rate-limit call to Yelp API
+        const timer = ms => new Promise(res => setTimeout(res, ms))
+        // async function to call Yelp API
+        const searchYelp = async (searchTermArray) => {
+            for (let index = 0; index < searchTermArray.length; index++) {
+                const term = searchTermArray[index];
+                this.search(term, { lat: 30.441455, lng: -91.181458})
+                .then(response => {
+                   tripArray.push({
+                       term: term,
+                       response: response.businesses[0]
+                   })
+                    
+                })
+                await timer(1000);
+                
+            }
+            return tripArray
+        }
+        // call async function 
+        const array = await searchYelp(searchTermArray)
+            
+        return array;
+    },
 
-        console.log(searchTermArray);
-    }
+
 }

@@ -5,7 +5,7 @@ import SearchView from './searchView';
 import { useSelector, useDispatch } from 'react-redux';
 import FlatMaps from '../components/FlatMaps';
 import Maps from '../components/Maps';
-import { updateTripList } from '../redux/user';
+import { addTripList, updateTripList } from '../redux/user';
 import { setView } from '../redux/user';
 
 export default function DayTripView() {
@@ -87,6 +87,7 @@ export default function DayTripView() {
                     </div>
                     <button onClick={() => setSearch(true)}>Search</button>
                     <button onClick={() => dispatch(updateTripList(currentTripListState))}>Update</button>
+                    <button onClick={() => dispatch(addTripList(currentTripListState))}>Add</button>
                     <button onClick={() => dispatch(setView('Home'))}>Back</button>
 
                 </div>
@@ -103,6 +104,7 @@ export default function DayTripView() {
                     </div>
                     <button onClick={() => setSearch(true)}>Search</button>
                     <button onClick={() => dispatch(updateTripList(currentTripListState))}>Update</button>
+                    <button onClick={() => dispatch(addTripList(currentTripListState))}>Add</button>
                     <button onClick={() => dispatch(setView('Home'))}>Back</button>
 
                   

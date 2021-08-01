@@ -210,8 +210,15 @@ export const userSlice = createSlice({
                 ... state,
                 tripList: tripListArray
             }
+        },
+        addTripList: (state, action) => {
+            const {name, city, coordinates, destinations} = action.payload;
+            state.tripList.push({
+                name: name,
+                location: coordinates,
+                trip: destinations
+            })
         }
-
     }
 })
 
@@ -223,6 +230,7 @@ export const {
     setSearchTerm,
     setSearchResults,
     setView,
-    updateTripList
+    updateTripList,
+    addTripList
 } = userSlice.actions;
 export default userSlice.reducer

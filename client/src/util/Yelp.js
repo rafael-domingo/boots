@@ -38,53 +38,40 @@ export const Yelp = {
         
     },
 
-    buildTrip(location, timeDay, activities) {
-        const morning = timeDay.morning;
-        const midDay = timeDay.midDay;
-        const evening = timeDay.evening;
-        const eat = activities.eat;
-        const shop = activities.shop;
-        const caffeinate = activities.caffeinate;
-        const sightsee = activities.sightsee;
-        const drink = activities.drink;
+    buildTrip(location, timeDay, activities) {      
+        
+        // define search terms based on trip builder inputs        
+        var intineraryArray = [
+            {
+                food: timeDay.morning ? 'breakfast' : null,               
+                activity: activities.caffeinate ? 'coffee' : null 
+            },
+            {
+                food: timeDay.midDay ? 'lunch' : null,
+                activity: activities.sightsee ? 'tourist' : null
+            },
+            {
+                food: timeDay.midDay ? 'snack' : null,
+                activity: activities.shop ? 'shopping' : null
+            },
+            {
+                food: timeDay.evening ? 'dinner': null,
+                activity: activities.drink ? 'cocktails' : null
+            }
+        ];
 
-        var tripArray = [];
-        var foodSearchArray = [];
-        var searchArray = [];
-        if (eat) {
-            if (morning) {
-                foodSearchArray.push({
-                    time: 'morning',
-                    term: 'breakfast'
-                })
+        // build search term array based on trip builder inputs
+        var searchTermArray = [];
+        intineraryArray.map(section => {
+            if (section.food !== null) {
+                searchTermArray.push(section.food)
             }
-            if (midDay) {
-                foodSearchArray.push({
-                    time: 'midday',
-                    term: 'lunch'
-                })
+            if (section.activity !== null) {
+                searchTermArray.push(section.activity)
             }
-            if (evening) {
-                foodSearchArray.push({
-                    time: 'evening',
-                    term: 'dinner'
-                })
-            }
-        }      
-        if (shop) {
-            searchArray.push('shopping')
-        }
-        if (caffeinate) {
-            searchArray.push('coffee')
-        }
-        if (sightsee) {
-            searchArray.push('tourist')
-        }
-        if (drink) {
-            searchArray.push('cocktails')
-        }
+        })
 
 
-        console.log(tripArray);
+        console.log(searchTermArray);
     }
 }

@@ -1,27 +1,27 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+const initialState = {
+    city: '',
+    autoComplete: [],
+    selectedCity: {},
+    selectedCityLocation: '',
+    transportation: '',
+    autoBuild: '',
+    timeDay: {
+        morning: false,
+        midDay: false,
+        evening: false
+    },
+    activities: {
+        eat: false,
+        shop: false,
+        caffeinate: false,
+        sightsee: false,
+        drink: false
+    },
+}
 export const tripBuilderSlice = createSlice({
     name: 'TripBuilder',
-    initialState: {
-        city: '',
-        autoComplete: [],
-        selectedCity: {},
-        selectedCityLocation: '',
-        transportation: '',
-        autoBuild: '',
-        timeDay: {
-            morning: false,
-            midDay: false,
-            evening: false
-        },
-        activities: {
-            eat: false,
-            shop: false,
-            caffeinate: false,
-            sightsee: false,
-            drink: false
-        },
-    },
+    initialState: initialState,
     reducers: {
         setCity: (state, action) => {
             state.city = action.payload
@@ -46,7 +46,8 @@ export const tripBuilderSlice = createSlice({
         },
         setActivities: (state, action) => {
             state.activities = action.payload
-        }
+        },
+        resetTripBuilder: () => initialState 
     }
 })
 
@@ -58,6 +59,7 @@ export const {
     setTransportation,
     setAutoBuild,
     setTimeDay,
-    setActivities
+    setActivities,
+    resetTripBuilder
 } = tripBuilderSlice.actions;
 export default tripBuilderSlice.reducer

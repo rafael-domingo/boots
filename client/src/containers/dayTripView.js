@@ -7,6 +7,7 @@ import FlatMaps from '../components/FlatMaps';
 import Maps from '../components/Maps';
 import { addTripList, updateTripList } from '../redux/user';
 import { setView } from '../redux/user';
+import { resetTripBuilder } from '../redux/tripBuilder';
 
 export default function DayTripView() {
     const [search, setSearch] = React.useState(false);
@@ -87,7 +88,10 @@ export default function DayTripView() {
                     </div>
                     <button onClick={() => setSearch(true)}>Search</button>
                     <button onClick={() => dispatch(updateTripList(currentTripListState))}>Update</button>
-                    <button onClick={() => dispatch(addTripList(currentTripListState))}>Add</button>
+                    <button onClick={() => {
+                        dispatch(addTripList(currentTripListState))
+                        dispatch(resetTripBuilder())
+                        }}>Add</button>
                     <button onClick={() => dispatch(setView('Home'))}>Back</button>
 
                 </div>
@@ -104,7 +108,10 @@ export default function DayTripView() {
                     </div>
                     <button onClick={() => setSearch(true)}>Search</button>
                     <button onClick={() => dispatch(updateTripList(currentTripListState))}>Update</button>
-                    <button onClick={() => dispatch(addTripList(currentTripListState))}>Add</button>
+                    <button onClick={() => {
+                        dispatch(addTripList(currentTripListState))
+                        dispatch(resetTripBuilder())
+                        }}>Add</button>
                     <button onClick={() => dispatch(setView('Home'))}>Back</button>
 
                   

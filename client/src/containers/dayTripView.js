@@ -8,9 +8,11 @@ import Maps from '../components/Maps';
 import { addTripList, updateTripList } from '../redux/user';
 import { setView } from '../redux/user';
 import { resetTripBuilder } from '../redux/tripBuilder';
+import LocationDetail from '../components/LocationDetail';
 
 export default function DayTripView() {
     const [search, setSearch] = React.useState(false);
+    const [detail, setDetail] = React.useState(false);
     const locations = useSelector(state => state.currentTrip.destinations);
     const currentTripListState = useSelector(state => state.currentTrip);
     const tripListState = useSelector(state => state.user.tripList);
@@ -51,6 +53,11 @@ export default function DayTripView() {
         fontWeight: 'normal'
 
     }
+
+    const handleClick = () => {
+        setDetail(true);
+    }
+
     if (search) {
         return (
             <div style={divStyle}>
@@ -59,8 +66,30 @@ export default function DayTripView() {
             </div>
         )
     }
+    
     else {
-        if (locations.length > 0) {
+        if (detail) {
+            return (
+                <div style={divStyle}>
+                    <div style={mapDivStyle}>
+                        <Maps location={locationsArray} width={window.innerWidth} directions={true}/>
+
+                    </div>
+                    <div style={locationsDivStyle}>
+                    <LocationDetail />
+                        
+                    </div>
+                    <button onClick={() => setSearch(true)}>Search</button>
+                    <button onClick={() => dispatch(updateTripList(currentTripListState))}>Update</button>
+                    <button onClick={() => {
+                        dispatch(addTripList(currentTripListState))
+                        dispatch(resetTripBuilder())
+                        }}>Add</button>
+                    <button onClick={() => setDetail(false)}>Back</button>
+                </div>
+            )
+        }
+        else if (locations.length > 0) {
             var locationsArray = []
             locations.map((location) => {
                 locationsArray.push({ lat: location.coordinates.latitude, lng: location.coordinates.longitude})
@@ -81,6 +110,7 @@ export default function DayTripView() {
                                         picture={item.image_url} 
                                         location={item.location.address1} 
                                         locationInfo={item}
+                                        handleClick={handleClick}
                                     />
                                 )
                             })

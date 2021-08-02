@@ -1,7 +1,8 @@
 import React from 'react';
 import LocationPicture from '../assets/frenchtruckpic.jpg';
+import { useSelector } from 'react-redux';
 export default function LocationDetail() {
-
+    const locationDetailState = useSelector(state => state.user.locationDetail);
     const divStyle = {
         width: '100%',
         height: '100%',
@@ -23,8 +24,8 @@ export default function LocationDetail() {
 
     }
     const locationImageStyle = {
-        width: '100%',
-        height: 'auto',
+        width: 'auto',
+        height: '50vh',
         borderRadius: '50px'
     }
 
@@ -39,10 +40,10 @@ export default function LocationDetail() {
     }
     return (
         <div style={divStyle}>
-            <img style={locationImageStyle} src={LocationPicture} />
+            <img style={locationImageStyle} src={locationDetailState.image_url} />
             <div style={locationTextDivStyle}>
-                <p style={locationNameStyle}>French Truck Coffee</p>
-                <p style={locationAddressStyle}>4950 Government St, Baton Rouge, LA</p>
+                <p style={locationNameStyle}>{locationDetailState.name}</p>
+                <p style={locationAddressStyle}>{locationDetailState.location.display_address[0]}</p>
             </div>
             
         </div>

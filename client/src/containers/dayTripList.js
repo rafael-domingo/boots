@@ -6,6 +6,7 @@ import { setView } from '../redux/user';
 import { setName, setCity, setCoordinates, setDestinations } from '../redux/currentTrip';
 import FlatMaps from '../components/FlatMaps';
 import Maps from '../components/Maps';
+import { setCenter, setCityLocationArray, setTripLocationArray, setWindowWidth } from '../redux/maps';
 
 export default function DayTripList() {
     const tripListState = useSelector(state => state.user.tripList);
@@ -53,7 +54,7 @@ export default function DayTripList() {
     }
     const handleHover = (location) => {
         console.log(location)
-        setMapLocation([location])
+        dispatch(setCenter(location))
     }
 
     const handleClick = (trip) => {
@@ -63,9 +64,12 @@ export default function DayTripList() {
         dispatch(setDestinations(trip.trip))
         dispatch(setView('Trip'))
     }
+
+    dispatch(setCityLocationArray(tripListState))
+    dispatch(setWindowWidth(window.innerWidth))
     return (
         <div style={divStyle}>
-            <Maps location={mapLocation} width={window.innerWidth}/>
+            <Maps />
             <div style={tripCardStyle}>
                 {
                     tripListState.map(trip => {

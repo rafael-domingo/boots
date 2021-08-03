@@ -3,14 +3,22 @@ import { createSlice } from "@reduxjs/toolkit";
 export const mapSlice = createSlice({
     name: 'Map',
     initialState: {
-        locationArray: [],
+        cityLocationArray: [],
+        tripLocationArray: [],
+        searchLocationArray: [],
         windowWidth: '',
         directions: false,
         center: {},
     },
     reducers: {
-        setLocationArray: (state, action) => {
-            state.locationArray = action.payload
+        setCityLocationArray: (state, action) => {
+            state.cityLocationArray = action.payload
+        },
+        setTripLocationArray: (state, action) => {
+            state.tripLocationArray = action.payload
+        },
+        setSearchLocationArray: (state, action) => {
+            state.searchLocationArray = action.payload
         },
         setWindowWidth: (state, action) => {
             state.windowWidth = action.payload
@@ -26,7 +34,9 @@ export const mapSlice = createSlice({
 })
 
 export const {
-    setLocationArray,
+    setCityLocationArray,
+    setTripLocationArray,
+    setSearchLocationArray,
     setWindowWidth,
     setDirections,
     setCenter,

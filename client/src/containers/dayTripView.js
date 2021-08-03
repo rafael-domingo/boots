@@ -9,6 +9,7 @@ import { addTripList, updateTripList } from '../redux/user';
 import { setView } from '../redux/user';
 import { resetTripBuilder } from '../redux/tripBuilder';
 import LocationDetail from '../components/LocationDetail';
+import { setTripLocationArray } from '../redux/maps';
 
 export default function DayTripView() {
     const [search, setSearch] = React.useState(false);
@@ -18,6 +19,7 @@ export default function DayTripView() {
     const tripListState = useSelector(state => state.user.tripList);
     const [mapLocation, setMapLocation] = React.useState([currentTripListState.coordinates]);
     const dispatch = useDispatch();
+    dispatch(setTripLocationArray(locations))
     const divStyle = {
         height: '100%',
         width: '100%',
@@ -72,7 +74,7 @@ export default function DayTripView() {
             return (
                 <div style={divStyle}>
                     <div style={mapDivStyle}>
-                        <Maps location={locationsArray} width={window.innerWidth} directions={true}/>
+                        <Maps />
 
                     </div>
                     <div style={locationsDivStyle}>
@@ -97,7 +99,7 @@ export default function DayTripView() {
             return (
                 <div style={divStyle}>
                     <div style={mapDivStyle}>
-                        <Maps location={locationsArray} width={window.innerWidth} directions={true}/>
+                        <Maps />
 
                     </div>
                     <div style={locationsDivStyle}>
@@ -130,7 +132,7 @@ export default function DayTripView() {
             return (
                 <div style={divStyle}>
                     <div style={mapDivStyle}>
-                        <Maps location={mapLocation} width={window.innerWidth}/>
+                        <Maps />
                     </div>
                     <div style={locationsDivStyle}>
                     <h1 style={cityNameStyle}>{currentTripListState.name}</h1>

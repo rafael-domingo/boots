@@ -2,12 +2,17 @@ import React from 'react';
 import LargeMap from '../components/LargeMap';
 import SearchBox from '../components/SearchBox';
 import SearchResults from '../components/SearchResults';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Maps from '../components/Maps';
+import { setCenter, setCityLocationArray, setFitBounds, setSearchLocationArray, setTripLocationArray, setZoom } from '../redux/maps';
 
 export default function SearchView() {
     const currenttripListState = useSelector(state => state.currentTrip);
-    const [mapLocation, setMapLocation] = React.useState([currenttripListState.coordinates])
+    const [mapLocation, setMapLocation] = React.useState(currenttripListState.coordinates)
+    const dispatch = useDispatch();
+
+    dispatch(setCenter(mapLocation));
+    dispatch(setZoom(12))
 
     const divStyle = {
         display: 'flex',
@@ -50,13 +55,12 @@ export default function SearchView() {
             }
             locArray.push(location)
         })
-        setMapLocation(locArray);
-        console.log(locArray)
+        dispatch(setSearchLocationArray(locArray));
     }
     return (
         <div style={divStyle}>
             <div style={mapDivStyle}>
-                <Maps location={mapLocation} width={window.innerWidth}/>
+                <Maps />
             </div>
             <div style={searchDivStyle}>
                 <SearchResults />

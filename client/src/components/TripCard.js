@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-export default function TripCard({ handleHover, handleClick, tripDetails }) {
+export default function TripCard({ handleHoverExit, handleHover, handleClick, tripDetails }) {
 
     const divStyle = {
         display: 'flex',
@@ -21,7 +21,7 @@ export default function TripCard({ handleHover, handleClick, tripDetails }) {
         fontSize: '3em'
     }
     return (
-        <div style={divStyle} onClick={() => handleClick(tripDetails)} onMouseEnter={() => handleHover(tripDetails.location)}>
+        <div style={divStyle} onClick={() => handleClick(tripDetails)} onMouseLeave={() => handleHoverExit(tripDetails.location)} onMouseEnter={() => handleHover(tripDetails.location)}>
             <p style={textStyle}>{tripDetails.name}</p>
         </div>
     )

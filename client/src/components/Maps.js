@@ -27,6 +27,11 @@ export default function Maps({ location }) {
     mapState.cityLocationArray.map(item => {
       location.push(item.location);
     })
+  } 
+  if (mapState.searchLocationArray.length > 0) {
+    mapState.searchLocationArray.map(item => {
+      location.push(item);
+    })
   }
   
   console.log(location);
@@ -34,13 +39,15 @@ export default function Maps({ location }) {
   const width = mapState.windowWidth;
   const directions = mapState.directions;
   const center = mapState.center;
-
+  const zoom = mapState.zoom;
+  const setFitBounds = mapState.fitBounds;
   const mapStyle = {
     width: '100%',
     height: '100%',
     zIndex: '-1',
     position: 'absolute'
   }
+  var initialCenter = null;
   
   React.useEffect(() => {
     const loader = new Loader({
@@ -54,61 +61,31 @@ export default function Maps({ location }) {
        
         // create bounds for map to use for markers 
         bounds.current = new window.google.maps.LatLngBounds();  
-        // Determine how many markers to put on map
-        if (location.length == 1) {
-          // if only 1 marker, then set zoom level so it's not too close
-          createMarker(location)
-          googleMap.current.setCenter(location[0])
-          googleMap.current.setZoom(15);
-        } else {
-          if (directions === true) {
-            // instantiate directions service and renderer
-            directionService.current = new window.google.maps.DirectionsService();
-            directionRender.current = new window.google.maps.DirectionsRenderer();
-            createDirections(location)
-            directionRender.current.setMap(googleMap.current);
-            directionRender.current.setOptions({
-              preserveViewport: true
-            })
-          }
-          createMarker(location)
-          // Auto fit and Auto zoom based on markers (with 500px padding)
-          googleMap.current.fitBounds(bounds.current, {right: width / 2})
-          googleMap.current.panToBounds(bounds.current)
-
-   
+       
+        if (directions === true) {
+          // instantiate directions service and renderer
+          directionService.current = new window.google.maps.DirectionsService();
+          directionRender.current = new window.google.maps.DirectionsRenderer();
+          createDirections(location)
+          
         }
-        setTimeout(() => {
-          googleMap.current.fitBounds(bounds.current, {right: width / 2})
+        createMarker(location)
+        // Auto fit and Auto zoom based on markers (with 500px padding)
+        fitBounds();   
 
-        }, 1000);
       })
     } 
     // If googleMap is not null, modify the map with updated views or markers
     else {      
-        // bounds.current = new window.google.maps.LatLngBounds();  
-        // Determine how many markers to put on map
-        if (location.length == 1) {
-          console.log(location)
+      createMarker(location)
 
-          // if only 1 marker, then set zoom level so it's not too close
-          // createMarker(location)
-          googleMap.current.setCenter(location[0])
-          googleMap.current.setZoom(15);
-        } else {
-          console.log('center')
-          // createMarker(location)
-          googleMap.current.setCenter(center)
-          googleMap.current.setZoom(12);
-
-          // Auto fit and Auto zoom based on markers (with 500px padding)
-          // googleMap.current.fitBounds(bounds.current, {right: width / 2})
-          // googleMap.current.panToBounds(bounds.current)
-   
-          
-        }
+      if (setFitBounds) {
+        fitBounds()
+      } else {
+        centerMap(center, zoom)
         
-      // })
+        
+      }
     }
    
   }, [location])
@@ -336,7 +313,26 @@ export default function Maps({ location }) {
           directionRender.current.setDirections(result)
         }
       })
+      directionRender.current.setMap(googleMap.current);
+            directionRender.current.setOptions({
+              preserveViewport: true
+            })
     }
+
+    const centerMap = (location, zoom) => {
+      googleMap.current.panTo(location)
+      googleMap.current.setZoom(zoom);
+    }
+
+    const fitBounds = () => {
+      googleMap.current.panToBounds(bounds.current)
+      googleMap.current.fitBounds(bounds.current, {right: width / 2})
+      
+
+
+    }
+
+
   return (
     <div
       id="google-map"

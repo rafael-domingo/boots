@@ -9,6 +9,8 @@ export const mapSlice = createSlice({
         windowWidth: '',
         directions: false,
         center: {},
+        zoom: 8,
+        fitBounds: false
     },
     reducers: {
         setCityLocationArray: (state, action) => {
@@ -28,6 +30,12 @@ export const mapSlice = createSlice({
         },
         setCenter: (state, action) => {
             state.center = action.payload
+        },
+        setZoom: (state, action) => {
+            state.zoom = action.payload
+        },
+        setFitBounds: (state, action) => {
+            state.fitBounds = action.payload
         }
 
     }
@@ -40,5 +48,7 @@ export const {
     setWindowWidth,
     setDirections,
     setCenter,
+    setZoom,
+    setFitBounds
 } = mapSlice.actions;
 export default mapSlice.reducer

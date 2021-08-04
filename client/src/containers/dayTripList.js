@@ -6,7 +6,7 @@ import { setView } from '../redux/user';
 import { setName, setCity, setCoordinates, setDestinations } from '../redux/currentTrip';
 import FlatMaps from '../components/FlatMaps';
 import Maps from '../components/Maps';
-import { setCenter, setCityLocationArray, setTripLocationArray, setWindowWidth } from '../redux/maps';
+import { setCenter, setCityLocationArray, setDirections, setFitBounds, setTripLocationArray, setWindowWidth, setZoom } from '../redux/maps';
 
 export default function DayTripList() {
     const tripListState = useSelector(state => state.user.tripList);
@@ -55,6 +55,13 @@ export default function DayTripList() {
     const handleHover = (location) => {
         console.log(location)
         dispatch(setCenter(location))
+        dispatch(setZoom(12));
+        dispatch(setFitBounds(false))
+    }
+
+    const handleHoverExit = (location) => {
+        dispatch(setZoom(8));
+        dispatch(setFitBounds(true))
     }
 
     const handleClick = (trip) => {
@@ -66,14 +73,16 @@ export default function DayTripList() {
     }
 
     dispatch(setCityLocationArray(tripListState))
+    dispatch(setTripLocationArray([]))
     dispatch(setWindowWidth(window.innerWidth))
+    dispatch(setDirections(false))
     return (
         <div style={divStyle}>
             <Maps />
             <div style={tripCardStyle}>
                 {
                     tripListState.map(trip => {
-                        return (<TripCard handleHover={handleHover} handleClick={handleClick} tripDetails={trip}/>)
+                        return (<TripCard handleHoverExit={handleHoverExit} handleHover={handleHover} handleClick={handleClick} tripDetails={trip}/>)
                     })
                 }
                 <div style={{width: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center'}} onClick={() => dispatch(setView('Questions'))}>

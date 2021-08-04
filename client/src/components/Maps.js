@@ -28,9 +28,10 @@ export default function Maps({ location }) {
       location.push(item.location);
     })
   } 
+  var searchLocation = [];
   if (mapState.searchLocationArray.length > 0) {
     mapState.searchLocationArray.map(item => {
-      location.push(item);
+      searchLocation.push(item);
     })
   }
   
@@ -77,8 +78,13 @@ export default function Maps({ location }) {
     } 
     // If googleMap is not null, modify the map with updated views or markers
     else {      
-      createMarker(location)
-
+      if (searchLocation.length > 0) {
+        createSearchMarker(searchLocation)
+        setTimeout(() => {
+          googleMap.current.panToBounds(bounds.current)
+          googleMap.current.fitBounds(bounds.current, {right: width / 2})
+        }, 1000);
+      }
       if (setFitBounds) {
         fitBounds()
       } else {
@@ -261,6 +267,31 @@ export default function Maps({ location }) {
       styles: styles
     }
    return new window.google.maps.Map(googleMapRef.current, mapOptions);
+    }
+
+    const createSearchMarker = (location) => {
+      location.map((loc) => {
+        // add location to bounds for map to consider
+        bounds.current.extend(loc)
+        const svgMarker = {
+          path: "M10.453 14.016l6.563-6.609-1.406-1.406-5.156 5.203-2.063-2.109-1.406 1.406zM12 2.016q2.906 0 4.945 2.039t2.039 4.945q0 1.453-0.727 3.328t-1.758 3.516-2.039 3.070-1.711 2.273l-0.75 0.797q-0.281-0.328-0.75-0.867t-1.688-2.156-2.133-3.141-1.664-3.445-0.75-3.375q0-2.906 2.039-4.945t4.945-2.039z",
+          fillColor: "blue",
+          fillOpacity: 0.6,
+          strokeWeight: 0,
+          rotation: 0,
+          scale: 2,
+          anchor: new window.google.maps.Point(15, 30)
+        };
+        // draw marker on map
+        new window.google.maps.Marker({
+          position: loc,
+          label: 'Search',
+          // icon: svgMarker,
+          animation: window.google.maps.Animation.DROP,
+          map: googleMap.current
+        })
+      })
+     
     }
 
     const createMarker = (location) => {

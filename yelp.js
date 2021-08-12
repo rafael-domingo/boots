@@ -34,7 +34,7 @@ router.post('/autocomplete', async (req, res) => {
         text: searchTerm
       }).then(response => {
         console.log('autocomplete')
-        console.log(response.jsonBody);
+        res.json(response.jsonBody);
       }).catch(e => {
         console.log(e);
       });

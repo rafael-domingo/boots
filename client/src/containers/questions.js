@@ -36,11 +36,12 @@ export default function Questions() {
     const questionsDivStyle = {
         padding: '2em'
     }
-    
+
+  
     if (!formComplete) {
         return (
             <div style={divStyle}>
-                <img src={LeftArrow} onClick={() => setState(state - 1)}/>
+                <img src={LeftArrow} onClick={() => setState(state - 1)} style={state === 0 ? {display: 'none'} : null }/>
                 <div style={questionsDivStyle}>
                     {
                         view==='city' && <City sessionToken={sessionToken}/>

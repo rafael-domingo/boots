@@ -324,7 +324,7 @@ export default function Maps({ location }) {
       var end = location[location.length - 1];
       var waypoints = [];
       if (location.length > 2) {
-        for (let index = 1; index < location.length; index++){
+        for (let index = 1; index < location.length - 1; index++){
           waypoints.push({
             location: location[index],
             stopover: true
@@ -344,7 +344,7 @@ export default function Maps({ location }) {
           directionRender.current.setDirections(result)
         }
       })
-      directionRender.current.setMap(googleMap.current);
+      // directionRender.current.setMap(googleMap.current);
             directionRender.current.setOptions({
               preserveViewport: true
             })

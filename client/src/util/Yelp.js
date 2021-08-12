@@ -33,7 +33,7 @@ export const Yelp = {
                 })
             })
             .then(response => response.json())
-            .then(data => console.log(data))
+            .then(data => data)
         }
         
     },

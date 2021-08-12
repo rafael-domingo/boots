@@ -164,8 +164,6 @@ export const userSlice = createSlice({
             }
         ],
         locationDetail: {},
-        searchTerm: {},
-        searchResults: {},
         view : 'Home'
     },
     reducers: {
@@ -180,13 +178,7 @@ export const userSlice = createSlice({
         },          
         setLocationDetail: (state, action) => {
             state.locationDetail = action.payload
-        },
-        setSearchTerm: (state, action) => {
-            state.searchTerm = action.payload
-        },
-        setSearchResults: (state, action) => {
-            state.searchResults = action.payload
-        },
+        },       
         setView: (state, action) => {
             state.view = action.payload
         },
@@ -227,8 +219,6 @@ export const {
     setProfilePicture, 
     setTripList, 
     setLocationDetail, 
-    setSearchTerm,
-    setSearchResults,
     setView,
     updateTripList,
     addTripList

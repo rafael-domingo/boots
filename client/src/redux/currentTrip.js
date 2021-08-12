@@ -7,6 +7,10 @@ export const currentTripSlice = createSlice({
         city: '',
         coordinates: {},
         destinations: [],
+        searchTerm: {},
+        searchResults: {},
+        autoCompleteResults: {},
+        autoComplete: false
     },
     reducers: {
         setName: (state, action) => {
@@ -24,6 +28,18 @@ export const currentTripSlice = createSlice({
         addDestinations: (state, action) => {
             state.destinations.push(action.payload)
         },
+        setSearchTerm: (state, action) => {
+            state.searchTerm = action.payload
+        },
+        setSearchResults: (state, action) => {
+            state.searchResults = action.payload
+        },
+        setAutoCompleteResults: (state, action) => {
+            state.autoCompleteResults = action.payload
+        },
+        setAutoComplete: (state, action) => {
+            state.autoComplete = action.payload
+        }
     }
 })
 
@@ -32,6 +48,10 @@ export const {
     setCity,
     setCoordinates,
     setDestinations,
-    addDestinations
+    addDestinations,
+    setSearchTerm,
+    setSearchResults,
+    setAutoCompleteResults,
+    setAutoComplete
 } = currentTripSlice.actions;
 export default currentTripSlice.reducer

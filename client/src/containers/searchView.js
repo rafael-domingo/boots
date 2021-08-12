@@ -63,7 +63,7 @@ export default function SearchView() {
                 <Maps />
             </div>
             <div style={searchDivStyle}>
-                <SearchResults />
+                <SearchResults handleResults={handleResults}/>
                 <SearchBox handleResults={handleResults}/>
             </div>
         

@@ -5,7 +5,7 @@ import { addDestinations } from '../redux/currentTrip';
 import { setLocationDetail } from '../redux/user';
 // import { setCurrentTrip } from '../redux/user';
 
-export default function LocationCard({ name = "French Truck", picture = FrenchTruck, location = '4950 Government St', locationInfo }) {
+export default function LocationCard({ name = "French Truck", picture = FrenchTruck, location = '4950 Government St', locationInfo, handleClick }) {
     const dispatch = useDispatch();
     const destinationsState = useSelector(state => state.currentTrip.destinations);
     const divStyle = {
@@ -66,6 +66,7 @@ export default function LocationCard({ name = "French Truck", picture = FrenchTr
     return (
         <div style={divStyle} onClick={() => {
             dispatch(setLocationDetail(locationInfo))
+            handleClick()
             }}
         >
             <div style={imgDivStyle}>

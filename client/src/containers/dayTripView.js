@@ -15,6 +15,7 @@ export default function DayTripView() {
     const [search, setSearch] = React.useState(false);
     const [detail, setDetail] = React.useState(false);
     const locations = useSelector(state => state.currentTrip.destinations);
+    const travelTime = useSelector(state => state.currentTrip.travelTime);
     const currentTripListState = useSelector(state => state.currentTrip);
     const tripListState = useSelector(state => state.user.tripList);
     const [mapLocation, setMapLocation] = React.useState([currentTripListState.coordinates]);
@@ -94,11 +95,8 @@ export default function DayTripView() {
                 </div>
             )
         }
-        else if (locations.length > 0) {
-            var locationsArray = []
-            locations.map((location) => {
-                locationsArray.push({ lat: location.coordinates.latitude, lng: location.coordinates.longitude})
-            })
+        else if (locations.length > 0 && travelTime.length > 0) {
+
             return (
                 <div style={divStyle}>
                     <div style={mapDivStyle}>
@@ -108,15 +106,28 @@ export default function DayTripView() {
                     <div style={locationsDivStyle}>
                         <h1 style={cityNameStyle}>{currentTripListState.name}</h1>
                         {
-                            locations.map(item => {
+                            locations.map((item, i) => {
+                                console.log(i)
+                                if (i < travelTime.length) {
+                                    var distance = travelTime[i].distance
+                                    var time = travelTime[i].duration
+                                } else {
+                                    var distance = ''
+                                    var time = ''
+                                }
+                                console.log(travelTime[i])
                                 return (
-                                    <LocationCard 
-                                        name={item.name} 
-                                        picture={item.image_url} 
-                                        location={item.location.address1} 
-                                        locationInfo={item}
-                                        handleClick={handleClick}
-                                    />
+                                    <div>
+                                        <LocationCard 
+                                            name={item.name} 
+                                            picture={item.image_url} 
+                                            location={item.location.address1} 
+                                            locationInfo={item}
+                                            handleClick={handleClick}
+                                        />
+                                        {distance}
+                                        {time}
+                                    </div>
                                 )
                             })
                         }                     

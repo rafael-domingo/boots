@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { Loader } from '@googlemaps/js-api-loader';
 import { useSelector, useDispatch } from 'react-redux';
 import maps from '../redux/maps';
+import { setTravelTime } from '../redux/currentTrip';
 
 require('dotenv').config();
 
@@ -13,6 +14,7 @@ export default function Maps({ location }) {
   const bounds = useRef(null);
   const directionService = useRef(null);
   const directionRender = useRef(null);
+  const dispatch = useDispatch();
 
   const mapState = useSelector(state => state.map);
   var location = [];
@@ -340,7 +342,15 @@ export default function Maps({ location }) {
       }
       directionService.current.route(request, function(result, status) {
         if (status == 'OK') {
+          var legs = []
+          result.routes[0].legs.map(leg => {
+            legs.push({
+              duration: leg.duration.text,
+              distance: leg.distance.text
+            })
+          })
           console.log(result)
+          dispatch(setTravelTime(legs))
           directionRender.current.setDirections(result)
         }
       })

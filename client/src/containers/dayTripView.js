@@ -35,7 +35,7 @@ export default function DayTripView() {
         position: 'absolute',
         flexWrap: 'wrap',
         top: '0',
-        right: '0'
+        right: '0',
         // flexWrap: 'wrap'
     }
 
@@ -47,11 +47,14 @@ export default function DayTripView() {
 
     const locationsDivStyle = {
         width: '50%',
-        height: 'auto',
+        height: '100%',
         display: 'flex',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        flexWrap: 'wrap'
+        flexWrap: 'wrap',
+        overflowY: 'scroll',
+        overflowX: 'hidden'
+
         
     }
 
@@ -84,7 +87,7 @@ export default function DayTripView() {
 
                     </div>
                     <div style={locationsDivStyle}>
-                    <LocationDetail />
+                        <LocationDetail />
                         
                     </div>
                     <button onClick={() => setSearch(true)}>Search</button>
@@ -119,7 +122,7 @@ export default function DayTripView() {
                                 }
                                 console.log(travelTime[i])
                                 return (
-                                    <div>
+                                    <div style={{width: '100%'}}>
                                         <LocationCard 
                                             name={item.name} 
                                             picture={item.image_url} 

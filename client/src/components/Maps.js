@@ -45,11 +45,16 @@ export default function Maps({ location }) {
   const zoom = mapState.zoom;
   const setFitBounds = mapState.fitBounds;
   const mapStyle = {
-    width: '50%',
-    height: '100%',
-    left: '0',
+    width: '45%',
+    height: '90%',
+    borderRadius: '2em',
+    left: '2.5%',
+    top: '5%',
+    bottom: '5%',
     zIndex: '-1',
-    position: 'absolute'
+    position: 'absolute',
+    boxShadow: '0px 2px 4px 0px rgba(0,0,0,0.5)'
+
   }
   var initialCenter = null;
   
@@ -69,7 +74,7 @@ export default function Maps({ location }) {
         if (directions === true) {
           // instantiate directions service and renderer
           directionService.current = new window.google.maps.DirectionsService();
-          directionRender.current = new window.google.maps.DirectionsRenderer();
+          directionRender.current = new window.google.maps.DirectionsRenderer({ suppressMarkers: true });
           createDirections(location)
           
         }
@@ -275,7 +280,8 @@ export default function Maps({ location }) {
       zoom: 8,
       // mapTypeId: "satellite",
       // tilt: 45,
-      styles: styles
+      styles: styles,
+      disableDefaultUI: true
     }
    return new window.google.maps.Map(googleMapRef.current, mapOptions);
     }
@@ -363,9 +369,9 @@ export default function Maps({ location }) {
           directionRender.current.setDirections(result)
         }
       })
-      // directionRender.current.setMap(googleMap.current);
+      directionRender.current.setMap(googleMap.current);
             directionRender.current.setOptions({
-              preserveViewport: true
+              // preserveViewport: true
             })
     }
 

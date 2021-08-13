@@ -144,7 +144,27 @@ export const userSlice = createSlice({
                         display_phone: '(225) 372-2674',
                         distance: 2837.3819121736424
                     },
-                ]
+                ],
+                tripBuilder: {
+                    city: '',
+                    autoComplete: [],
+                    selectedCity: {},
+                    selectedCityLocation: '',
+                    transportation: '',
+                    autoBuild: '',
+                    timeDay: {
+                        morning: false,
+                        midDay: false,
+                        evening: false
+                    },
+                    activities: {
+                        eat: false,
+                        shop: false,
+                        caffeinate: false,
+                        sightsee: false,
+                        drink: false
+                    },
+                }
             },
             {
                 name: 'New Orleans',
@@ -152,7 +172,27 @@ export const userSlice = createSlice({
                     lat: 30.0329779,
                     lng: -89.9526028
                 },
-                trip: []
+                trip: [],
+                tripBuilder: {
+                    city: '',
+                    autoComplete: [],
+                    selectedCity: {},
+                    selectedCityLocation: '',
+                    transportation: '',
+                    autoBuild: '',
+                    timeDay: {
+                        morning: false,
+                        midDay: false,
+                        evening: false
+                    },
+                    activities: {
+                        eat: false,
+                        shop: false,
+                        caffeinate: false,
+                        sightsee: false,
+                        drink: false
+                    },
+                }
             },
             {
                 name: 'New York City',
@@ -160,7 +200,27 @@ export const userSlice = createSlice({
                     lat: 40.6974034,
                     lng: -74.1197618
                 },
-                trip: []
+                trip: [],
+                tripBuilder: {
+                    city: '',
+                    autoComplete: [],
+                    selectedCity: {},
+                    selectedCityLocation: '',
+                    transportation: '',
+                    autoBuild: '',
+                    timeDay: {
+                        morning: false,
+                        midDay: false,
+                        evening: false
+                    },
+                    activities: {
+                        eat: false,
+                        shop: false,
+                        caffeinate: false,
+                        sightsee: false,
+                        drink: false
+                    },
+                }
             }
         ],
         locationDetail: {},
@@ -204,11 +264,12 @@ export const userSlice = createSlice({
             }
         },
         addTripList: (state, action) => {
-            const {name, city, coordinates, destinations} = action.payload;
+            const {name, city, coordinates, destinations, tripBuilder} = action.payload;
             state.tripList.push({
                 name: name,
                 location: coordinates,
-                trip: destinations
+                trip: destinations,
+                tripBuilder: tripBuilder
             })
         }
     }

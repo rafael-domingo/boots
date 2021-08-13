@@ -13,6 +13,7 @@ export default function SearchView() {
 
     dispatch(setCenter(mapLocation));
     dispatch(setZoom(12))
+    dispatch(setFitBounds(true))
 
     const divStyle = {
         display: 'flex',

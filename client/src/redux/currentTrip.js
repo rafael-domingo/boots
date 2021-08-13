@@ -12,6 +12,7 @@ export const currentTripSlice = createSlice({
         autoCompleteResults: {},
         autoComplete: false,
         travelTime: [],
+        tripBuilder: {}
     },
     reducers: {
         setName: (state, action) => {
@@ -43,6 +44,9 @@ export const currentTripSlice = createSlice({
         },
         setTravelTime: (state, action) => {
             state.travelTime = action.payload
+        },
+        setTripBuilder: (state, action) => {
+            state.tripBuilder = action.payload
         }
     }
 })
@@ -57,6 +61,7 @@ export const {
     setSearchResults,
     setAutoCompleteResults,
     setAutoComplete,
-    setTravelTime 
+    setTravelTime,
+    setTripBuilder
 } = currentTripSlice.actions;
 export default currentTripSlice.reducer

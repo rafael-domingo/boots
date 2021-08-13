@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setName, setCity, setCoordinates, setDestinations, setTravelTime } from '../redux/currentTrip';
+import { setName, setCity, setCoordinates, setDestinations, setTravelTime, setTripBuilder } from '../redux/currentTrip';
 import { resetTripBuilder } from '../redux/tripBuilder';
 import { setTripList, setView, addTripList } from '../redux/user';
 import { Yelp } from '../util/Yelp';
@@ -12,7 +12,7 @@ export default function TripBuilderLoader() {
     dispatch(setName(tripBuilderState.selectedCity.description))
     dispatch(setCity(tripBuilderState.selectedCity.description))
     dispatch(setCoordinates(tripBuilderState.selectedCityLocation))    
-    
+    dispatch(setTripBuilder(tripBuilderState))
     if (tripBuilderState.autoBuild) {
         Yelp.buildTrip(tripBuilderState.selectedCityLocation, tripBuilderState.timeDay, tripBuilderState.activities)
         .then(response => {

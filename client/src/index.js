@@ -5,10 +5,11 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import store from './redux/store';
 import { Provider } from "react-redux";
-
+import Maps from './components/Maps';
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
+      {/* <Maps /> */}
       <App />
     </Provider>
   </React.StrictMode>,

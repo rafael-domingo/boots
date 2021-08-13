@@ -1,8 +1,16 @@
 import React from 'react';
 import LocationPicture from '../assets/frenchtruckpic.jpg';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setCenter, setFitBounds, setZoom } from '../redux/maps';
 export default function LocationDetail() {
     const locationDetailState = useSelector(state => state.user.locationDetail);
+    const dispatch = useDispatch()
+    dispatch(setFitBounds(false))
+    dispatch(setCenter({
+        lat: locationDetailState.coordinates.latitude,
+        lng: locationDetailState.coordinates.longitude
+    }))
+    dispatch(setZoom(18))
     const divStyle = {
         width: '100%',
         height: '100%',

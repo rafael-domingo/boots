@@ -45,8 +45,9 @@ export default function Maps({ location }) {
   const zoom = mapState.zoom;
   const setFitBounds = mapState.fitBounds;
   const mapStyle = {
-    width: '100%',
+    width: '50%',
     height: '100%',
+    left: '0',
     zIndex: '-1',
     position: 'absolute'
   }
@@ -74,8 +75,14 @@ export default function Maps({ location }) {
         }
         createMarker(location)
         // Auto fit and Auto zoom based on markers (with 500px padding)
-        fitBounds();   
+        if (setFitBounds) {        
 
+          fitBounds()
+        } else {
+         
+          centerMap(center, zoom)
+  
+        }
       })
     } 
     // If googleMap is not null, modify the map with updated views or markers
@@ -84,19 +91,21 @@ export default function Maps({ location }) {
         createSearchMarker(searchLocation)
         setTimeout(() => {
           googleMap.current.panToBounds(bounds.current)
-          googleMap.current.fitBounds(bounds.current, {right: width / 2})
+          googleMap.current.fitBounds(bounds.current)
         }, 1000);
       }
-      if (setFitBounds) {
+      if (setFitBounds) {        
+
         fitBounds()
       } else {
+       
         centerMap(center, zoom)
-        
-        
+
       }
+
     }
    
-  }, [location])
+  }, [location, mapState, center])
 
 
     const createGoogleMap = (location) => {
@@ -362,12 +371,13 @@ export default function Maps({ location }) {
 
     const centerMap = (location, zoom) => {
       googleMap.current.panTo(location)
-      googleMap.current.setZoom(zoom);
+      googleMap.current.setZoom(zoom);  
+    
     }
 
     const fitBounds = () => {
       googleMap.current.panToBounds(bounds.current)
-      googleMap.current.fitBounds(bounds.current, {right: width / 2})
+      googleMap.current.fitBounds(bounds.current)
       
 
 

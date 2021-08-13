@@ -9,7 +9,7 @@ import { addTripList, updateTripList } from '../redux/user';
 import { setView } from '../redux/user';
 import { resetTripBuilder } from '../redux/tripBuilder';
 import LocationDetail from '../components/LocationDetail';
-import { setCityLocationArray, setDirections, setSearchLocationArray, setTripLocationArray } from '../redux/maps';
+import { setCenter, setCityLocationArray, setDirections, setFitBounds, setSearchLocationArray, setTripLocationArray, setZoom } from '../redux/maps';
 
 export default function DayTripView() {
     const [search, setSearch] = React.useState(false);
@@ -24,6 +24,8 @@ export default function DayTripView() {
     dispatch(setCityLocationArray([]))
     dispatch(setDirections(true))
     dispatch(setSearchLocationArray({}))
+    dispatch(setZoom(12))
+    dispatch(setFitBounds(true))
     const divStyle = {
         height: '100%',
         width: '100%',
@@ -47,7 +49,7 @@ export default function DayTripView() {
         width: '50%',
         height: 'auto',
         display: 'flex',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         alignItems: 'center',
         flexWrap: 'wrap'
         
@@ -95,7 +97,7 @@ export default function DayTripView() {
                 </div>
             )
         }
-        else if (locations.length > 0 && travelTime.length > 0) {
+        else if (locations.length > 0) {
 
             return (
                 <div style={divStyle}>

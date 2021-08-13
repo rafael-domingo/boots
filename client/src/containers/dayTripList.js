@@ -41,6 +41,11 @@ export default function DayTripList() {
         position: 'absolute',
         marginRight: '5vw'
     }
+    const mapDivStyle = {
+        height: 'auto',
+        width: '100%',        
+        overflow: 'scroll'
+    }
 
     const newTripButtonStyle = {
         width: '3em',
@@ -78,7 +83,9 @@ export default function DayTripList() {
     dispatch(setDirections(false))
     return (
         <div style={divStyle}>
-            <Maps />
+            {/* <div style={mapDivStyle}> */}
+                <Maps />
+            {/* </div> */}
             <div style={tripCardStyle}>
                 {
                     tripListState.map(trip => {

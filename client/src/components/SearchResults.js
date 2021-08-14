@@ -42,12 +42,12 @@ export default function SearchResults({ handleResults }) {
     }
 
     const handleClick = () => {
-        setDetail(true)
+        setDetail(!detail)
     }
     if (searchResults !== undefined) {
         if (detail) {
             return (
-                <div style={divStyle}>
+                <div style={divStyle} onClick={() => handleClick()}>
                     <LocationDetail />
                 </div>
             )

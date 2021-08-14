@@ -88,10 +88,7 @@ export default function Maps({ location }) {
     else {      
       if (searchLocation.length > 0) {
         createSearchMarker(searchLocation)
-        setTimeout(() => {
-          googleMap.current.panToBounds(bounds.current)
-          googleMap.current.fitBounds(bounds.current)
-        }, 1000);
+       
       }
       if (setFitBounds) {        
 

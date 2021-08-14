@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setName, setCity, setCoordinates, setDestinations, setTravelTime, setTripBuilder } from '../redux/currentTrip';
+import { setTransportation } from '../redux/maps';
 import { resetTripBuilder } from '../redux/tripBuilder';
 import { setTripList, setView, addTripList } from '../redux/user';
 import { Yelp } from '../util/Yelp';

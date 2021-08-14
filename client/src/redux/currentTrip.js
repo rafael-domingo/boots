@@ -30,6 +30,12 @@ export const currentTripSlice = createSlice({
         addDestinations: (state, action) => {
             state.destinations.push(action.payload)
         },
+        removeDestinations: (state, action) => {
+            return {
+                ...state,
+                destinations: state.destinations.filter(item => item.id !== action.payload.id)
+            }
+        },
         setSearchTerm: (state, action) => {
             state.searchTerm = action.payload
         },
@@ -57,6 +63,7 @@ export const {
     setCoordinates,
     setDestinations,
     addDestinations,
+    removeDestinations,
     setSearchTerm,
     setSearchResults,
     setAutoCompleteResults,

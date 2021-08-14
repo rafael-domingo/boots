@@ -45,24 +45,24 @@ export default function Travel() {
                 <p style={questionStyle}>How will you be traveling?</p>
                 <div style={choicesDivStyle}>
                     <img 
-                        style={ tripBuilderState.transportation == 'Car' ? selectedStyle : null } 
+                        style={ tripBuilderState.transportation == 'DRIVING' ? selectedStyle : null } 
                         src={Car} 
                         onClick={() => {
-                            handleInput('Car')}
+                            handleInput('DRIVING')}
                             }
                     />
                     <img 
-                        style={ tripBuilderState.transportation == 'Bicycle' ? selectedStyle : null } 
+                        style={ tripBuilderState.transportation == 'BICYCLING' ? selectedStyle : null } 
                         src={Bicycle} 
                         onClick={() => {
-                            handleInput('Bicycle')}
+                            handleInput('BICYCLING')}
                             }
                     />
                      <img 
-                        style={ tripBuilderState.transportation == 'Walk' ? selectedStyle : null } 
+                        style={ tripBuilderState.transportation == 'WALKING' ? selectedStyle : null } 
                         src={Walk} 
                         onClick={() => {
-                            handleInput('Walk')}
+                            handleInput('WALKING')}
                             }
                     />
                 </div>

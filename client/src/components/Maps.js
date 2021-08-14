@@ -44,6 +44,7 @@ export default function Maps({ location }) {
   const center = mapState.center;
   const zoom = mapState.zoom;
   const setFitBounds = mapState.fitBounds;
+  const transportation = mapState.transportation;
   const mapStyle = {
     width: '45%',
     height: '90%',
@@ -80,14 +81,7 @@ export default function Maps({ location }) {
         }
         createMarker(location)
         // Auto fit and Auto zoom based on markers (with 500px padding)
-        if (setFitBounds) {        
-
-          fitBounds()
-        } else {
-         
-          centerMap(center, zoom)
-  
-        }
+        fitBounds()
       })
     } 
     // If googleMap is not null, modify the map with updated views or markers
@@ -353,7 +347,7 @@ export default function Maps({ location }) {
         origin: start,
         destination: end,
         waypoints: waypoints,
-        travelMode: 'DRIVING'
+        travelMode: transportation
       }
       directionService.current.route(request, function(result, status) {
         if (status == 'OK') {

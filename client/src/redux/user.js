@@ -150,7 +150,7 @@ export const userSlice = createSlice({
                     autoComplete: [],
                     selectedCity: {},
                     selectedCityLocation: '',
-                    transportation: '',
+                    transportation: 'DRIVING',
                     autoBuild: '',
                     timeDay: {
                         morning: false,
@@ -178,7 +178,7 @@ export const userSlice = createSlice({
                     autoComplete: [],
                     selectedCity: {},
                     selectedCityLocation: '',
-                    transportation: '',
+                    transportation: 'DRIVING',
                     autoBuild: '',
                     timeDay: {
                         morning: false,
@@ -206,7 +206,7 @@ export const userSlice = createSlice({
                     autoComplete: [],
                     selectedCity: {},
                     selectedCityLocation: '',
-                    transportation: '',
+                    transportation: 'DRIVING',
                     autoBuild: '',
                     timeDay: {
                         morning: false,
@@ -253,13 +253,13 @@ export const userSlice = createSlice({
                 }
                 // if found city, update necessary info
                 return {
-                    ... item,                 
+                    ...item,                 
                     trip: destinations
                 }
             })
             // return state with updated trip list
             return {
-                ... state,
+                ...state,
                 tripList: tripListArray
             }
         },

@@ -1,7 +1,7 @@
 import React from 'react';
 import FrenchTruck from '../assets/frenchtruck.jpg';
 import { useDispatch, useSelector } from 'react-redux';
-import { addDestinations } from '../redux/currentTrip';
+import { addDestinations, removeDestinations } from '../redux/currentTrip';
 import { setLocationDetail } from '../redux/user';
 // import { setCurrentTrip } from '../redux/user';
 
@@ -80,6 +80,9 @@ export default function LocationCard({ name = "French Truck", picture = FrenchTr
                 <button onClick={() => {                  
                     dispatch(addDestinations(locationInfo))
                 }}>+</button>
+                <button onClick={() => {
+                    dispatch(removeDestinations(locationInfo))
+                }}>-</button>
             </div>
            
         </div>

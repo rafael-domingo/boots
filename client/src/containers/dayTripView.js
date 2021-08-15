@@ -1,10 +1,10 @@
 import React from 'react';
-import LocationCard from '../components/LocationCard';
 import SmallMap from '../components/SmallMap';
 import SearchView from './searchView';
 import { useSelector, useDispatch } from 'react-redux';
 import FlatMaps from '../components/FlatMaps';
 import Maps from '../components/Maps';
+import List from '../components/List';
 import { addTripList, updateTripList } from '../redux/user';
 import { setView } from '../redux/user';
 import { resetTripBuilder } from '../redux/tripBuilder';
@@ -55,7 +55,7 @@ export default function DayTripView() {
         justifyContent: 'flex-start',
         alignItems: 'center',
         flexWrap: 'wrap',
-        overflowY: 'scroll',
+        overflowY: 'hidden',
         overflowX: 'hidden'
 
         
@@ -66,6 +66,12 @@ export default function DayTripView() {
         fontSize: '5em',
         fontWeight: 'normal'
 
+    }
+
+    const listDivStyle = {
+        overflowY: 'scroll',
+        overflowX: 'hidden',
+        height: '100%'
     }
 
     const handleClick = () => {
@@ -117,52 +123,14 @@ export default function DayTripView() {
                         <Maps />
 
                     </div>
+
                     <div style={locationsDivStyle}>
-                        <h1 style={cityNameStyle}>{currentTripListState.name}</h1>
-                        <DragDropContext onDragEnd={onDragEnd}>
-                            <Droppable droppableId="destinations">
-                                {(provided) => (
-                                    <ul {...provided.droppableProps} ref={provided.innerRef}>
-                                        {
-                                            locations.map((item, i) => {
-                                                console.log(i)
-                                                if (i < travelTime.length) {
-                                                    var distance = travelTime[i].distance
-                                                    var time = travelTime[i].duration
-                                                } else {
-                                                    var distance = ''
-                                                    var time = ''
-                                                }
-                                                console.log(travelTime[i])
-                                                return (
-                                                    <Draggable key={item.id} draggableId={item.id} index={i}>
-                                                        {(provided) => (
-                                                            <li ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                                                            <div style={{width: '100%'}} {...provided.droppableProps} ref={provided.innerRef}>
-                                                                <LocationCard 
-                                                                    name={item.name} 
-                                                                    picture={item.image_url} 
-                                                                    location={item.location.address1} 
-                                                                    locationInfo={item}
-                                                                    handleClick={handleClick}
-                                                                />
-                                                                {distance}
-                                                                {time}
-                                                            </div>
-                                                            </li>         
-                                                        )}
-                                                                                                  
-                                                    </Draggable>
-                                                
-                                                )
-                                            })
-                                        }               
-                                        {provided.placeholder}
-                                    </ul>
-                                )}
-                            
-                            </Droppable>
-                        </DragDropContext>
+
+                    <h1 style={cityNameStyle}>{currentTripListState.name}</h1>
+                    <div style={listDivStyle}>
+                        <List locations={locations} handleClick={handleClick} travelTime={travelTime}/>
+                    </div>
+
                              
                     </div>
                     <button onClick={() => setSearch(true)}>Search</button>

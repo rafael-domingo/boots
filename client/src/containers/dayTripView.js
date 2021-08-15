@@ -71,7 +71,7 @@ export default function DayTripView() {
     const listDivStyle = {
         overflowY: 'scroll',
         overflowX: 'hidden',
-        height: '100%'
+        height: '80%'
     }
 
     const handleClick = () => {

@@ -3,11 +3,16 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { useDispatch } from 'react-redux';
 import { setDestinations } from '../redux/currentTrip';
 import LocationCard from '../components/LocationCard';
+import TimeDistance from './TimeDistance';
 
 export default function List({ locations, handleClick, travelTime }) {
     const dispatch = useDispatch();
-    
+    const [reorder, setReorder] = React.useState(false);
+
     const onDragEnd = (result) => {
+        if (!result.destination) {
+            return
+        };
         const arrayMod = Array.from(locations);
         const [reorderedItem] = arrayMod.splice(result.source.index, 1)
         arrayMod.splice(result.destination.index, 0, reorderedItem);        
@@ -31,7 +36,7 @@ export default function List({ locations, handleClick, travelTime }) {
                                                 }
                                                 console.log(travelTime[i])
                                                 return (
-                                                    <Draggable key={item.id} draggableId={item.id} index={i}>
+                                                    <Draggable key={item.id} draggableId={item.id} index={i} isDragDisabled={!reorder}>
                                                         {(provided) => (
                                                             <li ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
                                                             <div style={{width: '100%'}} {...provided.droppableProps} ref={provided.innerRef}>
@@ -42,8 +47,10 @@ export default function List({ locations, handleClick, travelTime }) {
                                                                     locationInfo={item}
                                                                     handleClick={handleClick}
                                                                 />
-                                                                {distance}
-                                                                {time}
+                                                                {
+                                                                    !reorder && <TimeDistance time={time} distance={distance}/>
+                                                                }
+                                                                
                                                             </div>
                                                             </li>         
                                                         )}

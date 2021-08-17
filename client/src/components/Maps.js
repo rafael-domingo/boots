@@ -7,15 +7,19 @@ import { setTravelTime } from '../redux/currentTrip';
 require('dotenv').config();
 
 export default function Maps({ location }) {
+
+  // USE REFS
   const apiKey = `${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`;
   const googleMapRef = React.createRef()
   const googleMap = useRef(null);
-  const marker = useRef(null);
+  let tripMarkers = useRef([]);
+  let searchMarkers = useRef([]);
   const bounds = useRef(null);
   const directionService = useRef(null);
   const directionRender = useRef(null);
-  const dispatch = useDispatch();
 
+  // STATE MANAGEMENT
+  const dispatch = useDispatch();
   const mapState = useSelector(state => state.map);
   var location = [];
   if (mapState.tripLocationArray.length >  0) {
@@ -35,11 +39,10 @@ export default function Maps({ location }) {
     mapState.searchLocationArray.map(item => {
       searchLocation.push(item);
     })
-  }
+  } 
   
   console.log(location);
-  const searches = mapState.searchLocationArray;
-  const width = mapState.windowWidth;
+
   const directions = mapState.directions;
   const center = mapState.center;
   const zoom = mapState.zoom;
@@ -57,9 +60,10 @@ export default function Maps({ location }) {
     boxShadow: '0px 2px 4px 0px rgba(0,0,0,0.5)'
 
   }
-  var initialCenter = null;
   
   React.useEffect(() => {
+    console.log(searchLocation)
+
     const loader = new Loader({
       apiKey: apiKey,
     })
@@ -79,17 +83,21 @@ export default function Maps({ location }) {
           createDirections(location)
           
         }
-        createMarker(location)
+        createMarker(location, 'trip');
         // Auto fit and Auto zoom based on markers (with 500px padding)
         fitBounds()
       })
     } 
     // If googleMap is not null, modify the map with updated views or markers
-    else {      
+    else {     
+      if (searchMarkers.current.length > 0) {
+        removeMarkers(searchMarkers.current)
+      } 
       if (searchLocation.length > 0) {
-        createSearchMarker(searchLocation)
+        
+        createMarker(searchLocation, 'search')
        
-      }
+      } 
       if (setFitBounds) {        
 
         fitBounds()
@@ -98,10 +106,10 @@ export default function Maps({ location }) {
         centerMap(center, zoom)
 
       }
-
+    
     }
    
-  }, [location, mapState, center])
+  }, [location, mapState, center, searchLocation])
 
 
     const createGoogleMap = (location) => {
@@ -277,7 +285,7 @@ export default function Maps({ location }) {
    return new window.google.maps.Map(googleMapRef.current, mapOptions);
     }
 
-    const createSearchMarker = (location) => {
+    const createMarker = (location, type) => {
       location.map((loc) => {
         // add location to bounds for map to consider
         bounds.current.extend(loc)
@@ -290,41 +298,41 @@ export default function Maps({ location }) {
           scale: 2,
           anchor: new window.google.maps.Point(15, 30)
         };
-        // draw marker on map
-        new window.google.maps.Marker({
-          position: loc,
-          label: 'Search',
-          // icon: svgMarker,
-          animation: window.google.maps.Animation.DROP,
-          map: googleMap.current
-        })
+
+        if (type === 'trip') {
+          // draw marker on map
+          const marker = new window.google.maps.Marker({
+            position: loc,
+            label: 'A',
+            // icon: svgMarker,
+            animation: window.google.maps.Animation.DROP,
+            map: googleMap.current
+          })
+          tripMarkers.current.push(marker)
+
+        } else if (type === 'search') {
+           // draw marker on map
+           const marker = new window.google.maps.Marker({
+            position: loc,
+            label: 'A',
+            icon: svgMarker,
+            animation: window.google.maps.Animation.DROP,
+            map: googleMap.current
+          })
+          searchMarkers.current.push(marker)
+
+        }
+        
       })
      
     }
 
-    const createMarker = (location) => {
-      location.map((loc) => {
-        // add location to bounds for map to consider
-        bounds.current.extend(loc)
-        const svgMarker = {
-          path: "M10.453 14.016l6.563-6.609-1.406-1.406-5.156 5.203-2.063-2.109-1.406 1.406zM12 2.016q2.906 0 4.945 2.039t2.039 4.945q0 1.453-0.727 3.328t-1.758 3.516-2.039 3.070-1.711 2.273l-0.75 0.797q-0.281-0.328-0.75-0.867t-1.688-2.156-2.133-3.141-1.664-3.445-0.75-3.375q0-2.906 2.039-4.945t4.945-2.039z",
-          fillColor: "blue",
-          fillOpacity: 0.6,
-          strokeWeight: 0,
-          rotation: 0,
-          scale: 2,
-          anchor: new window.google.maps.Point(15, 30)
-        };
-        // draw marker on map
-        new window.google.maps.Marker({
-          position: loc,
-          label: 'A',
-          // icon: svgMarker,
-          animation: window.google.maps.Animation.DROP,
-          map: googleMap.current
-        })
-      })
-     
+    const removeMarkers = (markers) => {
+      console.log(markers)
+      for (let i = 0; i < markers.length; i++) {
+        markers[i].setMap(null);
+      }
+      return markers
     }
 
     const createDirections = (location) => {

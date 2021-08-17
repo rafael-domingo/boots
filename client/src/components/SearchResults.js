@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setSearchTerm, setSearchResults, setAutoCompleteResults } from '../redux/currentTrip';
 import { Yelp } from '../util/Yelp';
 import LocationDetail from './LocationDetail';
-import { setFitBounds, setZoom } from '../redux/maps';
+import { setFitBounds, setSearchLocationArray, setZoom } from '../redux/maps';
 
 export default function SearchResults({ handleResults }) {
     const [detail, setDetail] = React.useState(false);
@@ -43,6 +43,7 @@ export default function SearchResults({ handleResults }) {
 
     const handleClick = () => {
         setDetail(!detail)
+        // dispatch(setSearchLocationArray({}))
     }
     if (searchResults !== undefined) {
         if (detail) {

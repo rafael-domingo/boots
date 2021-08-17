@@ -56,6 +56,7 @@ export default function SearchView() {
             }
             locArray.push(location)
         })
+        console.log(locArray)
         dispatch(setSearchLocationArray(locArray));
     }
     return (

@@ -7,6 +7,7 @@ export default function SearchBox({ handleResults }) {
     const dispatch = useDispatch();
     const searchTerm = useSelector(state => state.currentTrip.searchTerm);
     const coordinates = useSelector(state => state.currentTrip.coordinates);
+    const currentDestinations = useSelector(state => state.currentTrip.destinations);
     const divStyle = {
         width: '100%',
         display: 'flex',
@@ -29,8 +30,21 @@ export default function SearchBox({ handleResults }) {
         console.log(e.target.value)
         Yelp.search(searchTerm, coordinates).then(results => 
             {
-                dispatch(setSearchResults(results))
-                handleResults(results)
+                var resultsArray = [];
+                var destinationsArray = [];
+                currentDestinations.map(item => {
+                    destinationsArray.push(item.id)
+                })
+                // filter out results that are already in trip
+                results.businesses.map(resultItem => {
+                    if (destinationsArray.includes(resultItem.id)) {
+                        return
+                    } else {
+                        resultsArray.push(resultItem)                    
+                    }
+                })
+                dispatch(setSearchResults(resultsArray))
+                handleResults(resultsArray)
             }
         )
         

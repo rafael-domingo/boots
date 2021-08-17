@@ -9,10 +9,11 @@ import { setFitBounds, setSearchLocationArray, setZoom } from '../redux/maps';
 export default function SearchResults({ handleResults }) {
     const [detail, setDetail] = React.useState(false);
     const dispatch = useDispatch();
-    const searchResults = useSelector(state => state.currentTrip.searchResults.businesses);
+    const searchResults = useSelector(state => state.currentTrip.searchResults);
     const autoCompleteResults = useSelector(state => state.currentTrip.autoCompleteResults.terms);
     const autoComplete = useSelector(state => state.currentTrip.autoComplete);
     const coordinates = useSelector(state => state.currentTrip.coordinates);
+    const currentDestinations = useSelector(state => state.currentTrip.destinations);
     console.log(autoCompleteResults)
     dispatch(setZoom(12))
     dispatch(setFitBounds(true))
@@ -35,8 +36,21 @@ export default function SearchResults({ handleResults }) {
     const handleSelection = (item) => {
         Yelp.search(item.text, coordinates).then(results => 
             {
-                dispatch(setSearchResults(results))
-                handleResults(results)
+                var resultsArray = [];
+                var destinationsArray = [];
+                currentDestinations.map(item => {
+                    destinationsArray.push(item.id)
+                })
+                // filter out results that are already in trip
+                results.businesses.map(resultItem => {
+                    if (destinationsArray.includes(resultItem.id)) {
+                        return
+                    } else {
+                        resultsArray.push(resultItem)                    
+                    }
+                })
+                dispatch(setSearchResults(resultsArray))
+                handleResults(resultsArray)
             }
         )
     }
@@ -45,7 +59,7 @@ export default function SearchResults({ handleResults }) {
         setDetail(!detail)
         // dispatch(setSearchLocationArray({}))
     }
-    if (searchResults !== undefined) {
+    if (searchResults.length > 0) {
         if (detail) {
             return (
                 <div style={divStyle} onClick={() => handleClick()}>

@@ -47,7 +47,7 @@ export default function SearchView() {
 
     const handleResults = (results) => {
         var locArray = []
-        results.businesses.map(business => {
+        results.map(business => {
             const latitude = business.coordinates.latitude;
             const longitude = business.coordinates.longitude;
             const location = {

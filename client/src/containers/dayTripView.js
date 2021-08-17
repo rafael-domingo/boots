@@ -10,8 +10,8 @@ import { setView } from '../redux/user';
 import { resetTripBuilder } from '../redux/tripBuilder';
 import LocationDetail from '../components/LocationDetail';
 import { setCenter, setCityLocationArray, setDirections, setFitBounds, setSearchLocationArray, setTransportation, setTripLocationArray, setZoom } from '../redux/maps';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { setDestinations } from '../redux/currentTrip';
+import TripBuilderWidget from '../components/TripBuilderWidget';
 export default function DayTripView() {
     const [search, setSearch] = React.useState(false);
     const [detail, setDetail] = React.useState(false);
@@ -127,6 +127,7 @@ export default function DayTripView() {
                     <div style={locationsDivStyle}>
 
                     <h1 style={cityNameStyle}>{currentTripListState.name}</h1>
+                    <TripBuilderWidget />
                     <div style={listDivStyle}>
                         <List locations={locations} handleClick={handleClick} travelTime={travelTime}/>
                     </div>

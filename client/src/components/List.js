@@ -7,7 +7,7 @@ import TimeDistance from './TimeDistance';
 
 export default function List({ locations, handleClick, travelTime }) {
     const dispatch = useDispatch();
-    const [reorder, setReorder] = React.useState(false);
+    const [reorder, setReorder] = React.useState(true);
 
     const onDragEnd = (result) => {
         if (!result.destination) {

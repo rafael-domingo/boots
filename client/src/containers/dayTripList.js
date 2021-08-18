@@ -7,7 +7,7 @@ import { setName, setCity, setCoordinates, setDestinations, setTripBuilder } fro
 import FlatMaps from '../components/FlatMaps';
 import Maps from '../components/Maps';
 import { setCenter, setCityLocationArray, setDirections, setFitBounds, setTripLocationArray, setWindowWidth, setZoom } from '../redux/maps';
-
+import { signInWithGoogle, signOut, auth } from '../util/Firebase';
 export default function DayTripList() {
     const tripListState = useSelector(state => state.user.tripList);
     const [mapLocation, setMapLocation] = React.useState([tripListState[0].location, tripListState[1].location, tripListState[2].location]);
@@ -84,9 +84,11 @@ export default function DayTripList() {
     dispatch(setDirections(false))
     return (
         <div style={divStyle}>
+            
             {/* <div style={mapDivStyle}> */}
                 <Maps />
             {/* </div> */}
+            
             <div style={tripCardStyle}>
                 {
                     tripListState.map(trip => {
@@ -99,7 +101,8 @@ export default function DayTripList() {
                     </div>
                 </div>
             
-                
+                <button onClick={() => signInWithGoogle().then(result => console.log(result))}>Sign In</button>
+            <button onClick={() => signOut()}>Sign Out</button>
             </div>
         </div>
     )

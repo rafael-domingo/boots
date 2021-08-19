@@ -1,8 +1,6 @@
 import firebase from 'firebase/app';
 import "firebase/auth";
-import "firebase/database";
-import { getFirestore } from "firebase/firestore"
-
+import 'firebase/firestore';
 const firebaseConfig = {
     apiKey: "AIzaSyDR60DEacc2LyalXSgd9kHZA6MMGlrSZgE",
     authDomain: "boots-da11f.firebaseapp.com",
@@ -43,5 +41,7 @@ export const updateUser = (trips) => {
     firestore.collection("users").add({
         email: 'helo',
         trips: trips
+    }).catch((error) => {
+        console.log(error)
     })
 }

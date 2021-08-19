@@ -7,7 +7,7 @@ import { setName, setCity, setCoordinates, setDestinations, setTripBuilder } fro
 import FlatMaps from '../components/FlatMaps';
 import Maps from '../components/Maps';
 import { setCenter, setCityLocationArray, setDirections, setFitBounds, setTripLocationArray, setWindowWidth, setZoom } from '../redux/maps';
-import { signInWithGoogle, signOut, auth } from '../util/Firebase';
+import { signInWithGoogle, signOut, auth, updateUser } from '../util/Firebase';
 export default function DayTripList() {
     const tripListState = useSelector(state => state.user.tripList);
     const [mapLocation, setMapLocation] = React.useState([tripListState[0].location, tripListState[1].location, tripListState[2].location]);
@@ -103,6 +103,7 @@ export default function DayTripList() {
             
                 <button onClick={() => signInWithGoogle().then(result => console.log(result))}>Sign In</button>
             <button onClick={() => signOut()}>Sign Out</button>
+            <button onClick={() => updateUser(tripListState)}>Firestore</button>
             </div>
         </div>
     )

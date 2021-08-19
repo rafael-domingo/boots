@@ -1,7 +1,7 @@
 import firebase from 'firebase/app';
 import "firebase/auth";
 import "firebase/database";
-
+import { getFirestore } from "firebase/firestore"
 
 const firebaseConfig = {
     apiKey: "AIzaSyDR60DEacc2LyalXSgd9kHZA6MMGlrSZgE",
@@ -16,7 +16,7 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 export const auth = firebase.auth();
-// export const firestore = firebase.firestore();
+export const firestore = firebase.firestore();
 
 
 const provider = new firebase.auth.GoogleAuthProvider();
@@ -33,5 +33,15 @@ export const signOut = () => {
         console.log(auth.currentUser)
     }).catch((error) => {
         console.log('Sign Out Error')
+    })
+}
+
+export const updateUser = (trips) => {
+    // firestore.settings({
+    //     timestampsInSnapshots: true
+    // })
+    firestore.collection("users").add({
+        email: 'helo',
+        trips: trips
     })
 }

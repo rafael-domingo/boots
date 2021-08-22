@@ -25,23 +25,49 @@ export const signInWithGoogle = async () => {
   return result
 };
 
-export const signOut = () => {
-    auth.signOut().then(() => {
+export const signInWithPhone = async (phoneNumber, appVerifier) => {
+    const result = await auth.signInWithPhoneNumber(phoneNumber, appVerifier).then(result => {
+        let code = prompt('enter the otp', '');
+        if (code === null) {
+            console.log(result)
+        } 
+        result.confirm(code).then(result => {
+            console.log(result)
+        })
+    }).catch((error) => {
+        console.log(error)
+        console.log('Phone Sign In Error')
+    })
+}
+
+  
+export const signOut = async () => {
+    const result = await auth.signOut().then(() => {
         console.log('Signed Out')
         console.log(auth.currentUser)
+        return auth.currentUser
     }).catch((error) => {
         console.log('Sign Out Error')
     })
 }
 
-export const updateUser = (trips) => {
+export const updateUser = (name, email, uid, trips) => {
     // firestore.settings({
     //     timestampsInSnapshots: true
     // })
-    firestore.collection("users").add({
-        email: 'helo',
+    firestore.collection("users").doc(auth.currentUser.uid).set({
+        name: name,
+        email: email,
         trips: trips
     }).catch((error) => {
-        console.log(error)
+        console.log('Update Error')
+    })
+}
+
+export const deleteUser = () => {
+    firestore.collection("users").doc(auth.currentUser.uid).delete().then(() => {
+        console.log('User delete successfully')
+    }).catch((error) => {
+        console.log('Error in deleting user')
     })
 }

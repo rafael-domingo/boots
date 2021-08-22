@@ -3,7 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 export const userSlice = createSlice({
     name: 'User',
     initialState: {
-        username: {},
+        username: '',
+        email: '',
+        uid: '',
         profilePicture: {},
         tripList: [
             {
@@ -230,6 +232,12 @@ export const userSlice = createSlice({
         setUserName: (state, action) => {
             state.username = action.payload
         },
+        setEmail: (state, action) => {
+            state.email = action.payload
+        },
+        setUid: (state, action) => {
+            state.uid = action.payload
+        },
         setProfilePicture: (state, action) => {
             state.profilePicture = action.payload
         },
@@ -277,6 +285,8 @@ export const userSlice = createSlice({
 
 export const { 
     setUserName, 
+    setEmail,
+    setUid,
     setProfilePicture, 
     setTripList, 
     setLocationDetail, 

@@ -65,6 +65,19 @@ export const updateUser = (name, email, uid, trips) => {
     })
 }
 
+export const getUser = async () => {
+    const result = await firestore.collection("users").doc(auth.currentUser.uid).get().then((doc) => {
+        if (doc.exists) {
+            console.log('doc exists')
+            return doc.data()
+        } else {
+            console.log('new user!')
+        }
+        
+    })
+    return result
+}
+  
 export const deleteUser = () => {
     firestore.collection("users").doc(auth.currentUser.uid).delete().then(() => {
         console.log('User delete successfully')

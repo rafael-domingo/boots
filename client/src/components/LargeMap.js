@@ -8,11 +8,12 @@ export default class LargeMap extends Component {
 
   googleMapRef = React.createRef()
   componentDidMount() {
-
+    
     const apiKey = `${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`;
     // Load Google Maps API before drawing the map
     const loader = new Loader({
       apiKey: apiKey,
+      id: '2d',
       version: "beta",
       
     });
@@ -20,6 +21,7 @@ export default class LargeMap extends Component {
     loader.load().then(() => {
       this.googleMap = this.createGoogleMap(this.props.location)
     });
+    
 
   }
 
@@ -45,7 +47,7 @@ export default class LargeMap extends Component {
     tilt: 0,
     heading: 0,
     zoom: 17,
-    center: location,
+    center: { lat: 35.6594945, lng: 139.6999859 },
     mapId: "15431d2b469f209e",
     // disable interactions due to animation loop and moveCamera
     disableDefaultUI: true,
@@ -151,7 +153,7 @@ export default class LargeMap extends Component {
 
   render() {
     const largeMapStyle = {
-      width: '150vw',
+      width: '100vw',
       height: '100%',
       zIndex: '-1',
       position: 'absolute'

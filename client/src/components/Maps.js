@@ -66,6 +66,9 @@ export default function Maps({ location }) {
 
     const loader = new Loader({
       apiKey: apiKey,
+      id: '2d',
+      version: "beta",
+
     })
     // Prevent redundant API calls by checking if googleMap is null
     if (googleMap.current === null) {

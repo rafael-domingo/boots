@@ -140,7 +140,7 @@ export default function DayTripView() {
                         dispatch(addTripList(currentTripListState))
                         dispatch(resetTripBuilder())
                         }}>Add</button>
-                    <button onClick={() => dispatch(setView('Home'))}>Back</button>
+                    <button onClick={() => dispatch(setView('UserHome'))}>Back</button>
 
                 </div>
             )
@@ -160,7 +160,7 @@ export default function DayTripView() {
                         dispatch(addTripList(currentTripListState))
                         dispatch(resetTripBuilder())
                         }}>Add</button>
-                    <button onClick={() => dispatch(setView('Home'))}>Back</button>
+                    <button onClick={() => dispatch(setView('UserHome'))}>Back</button>
 
                   
                 </div>

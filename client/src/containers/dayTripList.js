@@ -2,12 +2,12 @@ import React from 'react';
 import LargeMap from '../components/LargeMap';
 import TripCard from '../components/TripCard';
 import { useSelector, useDispatch } from 'react-redux';
-import { setEmail, setUid, setUserName, setView } from '../redux/user';
+import { setEmail, setTripList, setUid, setUserName, setView } from '../redux/user';
 import { setName, setCity, setCoordinates, setDestinations, setTripBuilder } from '../redux/currentTrip';
 import FlatMaps from '../components/FlatMaps';
 import Maps from '../components/Maps';
 import { setCenter, setCityLocationArray, setDirections, setFitBounds, setTripLocationArray, setWindowWidth, setZoom } from '../redux/maps';
-import { signInWithGoogle, signOut, auth, updateUser, deleteUser, signInWithPhone } from '../util/Firebase';
+import { signInWithGoogle, signOut, auth, updateUser, deleteUser, signInWithPhone, getUser } from '../util/Firebase';
 import Account from '../components/Account';
 
 export default function DayTripList() {
@@ -131,6 +131,7 @@ export default function DayTripList() {
             })}>Sign Out</button>
             <button onClick={() => updateUser(userName, email, uid, tripListState)}>Firestore</button>
             <button onClick={() => deleteUser()}>Delete User</button>
+           
             <Account />
             </div>
         </div>

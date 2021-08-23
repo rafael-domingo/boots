@@ -2,13 +2,14 @@ import React from 'react';
 import Button from '@material-ui/core/Button'
 import { Icon, IconButton, FormControl, InputLabel, Input } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
-import { setEmail, setPhone, setUid, setUserName, setView } from '../redux/user';
+import { setEmail, setPhone, setTripList, setUid, setUserName, setView } from '../redux/user';
 import { SvgIcon } from '@material-ui/core';
 import PhoneIcon from '@material-ui/icons/Phone';
-import { signInWithGoogle } from '../util/Firebase';
+import { getUser, signInWithGoogle } from '../util/Firebase';
 import NumberFormat from 'react-number-format';
 import { signInWithPhone } from '../util/Firebase';
 import firebase from 'firebase';
+import LargeMap from '../components/LargeMap';
 
 function PhoneNumberFormat(props) {
   const { inputRef, onChange, ...other } = props;
@@ -93,7 +94,12 @@ export default function Home() {
         dispatch(setUserName(result.user.displayName))
         dispatch(setEmail(result.user.email))
         dispatch(setUid(result.user.uid))
-        dispatch(setView('UserHome'))        
+        getUser().then(result => {
+          dispatch(setTripList(result.trips))
+          dispatch(setView('UserHome'))
+        }).catch((error) => {
+          console.log('Error in getting user data')
+        })
       }).catch((error) => {
         console.log('Something went wrong')
       })
@@ -142,8 +148,14 @@ export default function Home() {
           dispatch(setEmail(result.user.email))
           dispatch(setPhone(result.user.phoneNumber))
           dispatch(setUid(result.user.uid))
-          dispatch(setView('UserHome'))
+          getUser().then(result => {
+            dispatch(setTripList(result.trips))
+            dispatch(setView('UserHome'))
+          }).catch((error) => {
+            console.log('Error in getting user data')
+          })
         }).catch((error) => {
+          // Reset Verification Code input if code is wrong
           console.log('Incorrect verification code, try again')
           setVerificationCode('')
         })

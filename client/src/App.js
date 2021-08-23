@@ -14,6 +14,7 @@ import SearchView from './containers/searchView';
 import { setView } from './redux/user';
 import { useDispatch, useSelector } from 'react-redux';
 import Login from './containers/login';
+import LargeMap from './components/LargeMap';
 
 function App() {
   const [drawer, setDrawer] = React.useState(false)
@@ -23,6 +24,7 @@ function App() {
   if (viewState === 'Home') {
     return (
       <div>
+        <LargeMap />
         <Home />
       </div>
     

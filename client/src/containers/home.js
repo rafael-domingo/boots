@@ -95,8 +95,13 @@ export default function Home() {
         dispatch(setEmail(result.user.email))
         dispatch(setUid(result.user.uid))
         getUser().then(result => {
-          dispatch(setTripList(result.trips))
-          dispatch(setView('UserHome'))
+          if (result.trips !== undefined) {
+            dispatch(setTripList(result.trips))
+            dispatch(setView('UserHome'))
+          } else {
+            dispatch(setView('Questions'))
+          }
+         
         }).catch((error) => {
           console.log('Error in getting user data')
         })

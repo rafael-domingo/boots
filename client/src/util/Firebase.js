@@ -71,7 +71,7 @@ export const getUser = async () => {
             console.log('doc exists')
             return doc.data()
         } else {
-            console.log('new user!')
+            return 'New User'
         }
         
     })

@@ -13,7 +13,6 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import SearchView from './containers/searchView';
 import { setView } from './redux/user';
 import { useDispatch, useSelector } from 'react-redux';
-import Login from './containers/login';
 import LargeMap from './components/LargeMap';
 
 function App() {
@@ -30,20 +29,7 @@ function App() {
     
     )
   } 
-  else if (viewState === 'Login') {
-    return (
-      <div>
-        <Login state='Login'/>
-      </div>
-    )
-  }
-  else if (viewState === 'SignUp') {
-    return (
-      <div>
-        <Login state='SignUp'/>
-      </div>
-    )
-  }
+
   else if (viewState === 'UserHome') {
     return (
       <div>

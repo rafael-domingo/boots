@@ -25,7 +25,6 @@ export default function Account() {
             <p>{user.username}</p>
             <p>{user.email}</p>
             <p>{user.uid}</p>
-            {/* <div id="recaptcha"></div> */}
             <button type="submit" id="recaptcha" onClick={() => handlePhoneClick()}>Sign in With Phone</button>
         </div>
     )

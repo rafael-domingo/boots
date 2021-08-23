@@ -13,6 +13,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import SearchView from './containers/searchView';
 import { setView } from './redux/user';
 import { useDispatch, useSelector } from 'react-redux';
+import Login from './containers/login';
 
 function App() {
   const [drawer, setDrawer] = React.useState(false)
@@ -22,21 +23,37 @@ function App() {
   if (viewState === 'Home') {
     return (
       <div>
-        {
-          drawer && <Drawer />
-        }
-        <Logo onMouseEnter={() => setDrawer(true)}/>
-        <DayTripList />
+        <Home />
       </div>
     
     )
   } 
+  else if (viewState === 'Login') {
+    return (
+      <div>
+        <Login state='Login'/>
+      </div>
+    )
+  }
+  else if (viewState === 'SignUp') {
+    return (
+      <div>
+        <Login state='SignUp'/>
+      </div>
+    )
+  }
+  else if (viewState === 'UserHome') {
+    return (
+      <div>
+
+      <Logo onMouseEnter={() => setDrawer(true)}/>
+      <DayTripList />
+    </div>
+    )
+  }
   else if (viewState === 'Trip') {
     return (
       <div>
-        {
-          drawer && <Drawer />
-        }
         <Logo onMouseEnter={() => setDrawer(true)}/>
         <DayTripView />
       </div>
@@ -45,45 +62,12 @@ function App() {
   else if (viewState === 'Questions') {
     return (
       <div>
-      {
-        drawer && <Drawer />
-      }
       <Logo onMouseEnter={() => setDrawer(true)}/>
       <Questions />
     </div>
     )
   }
-  // return (
-  //   <Router>
-  //     <Logo />
-  //     {
-  //       drawer && <Drawer />        
-  //     }
-  //     <Switch>
-  //       <Route path="/list">
-  //         <DayTripList />
-  //       </Route>
-  //       <Route path="/trip">
-  //         <DayTripView />
-  //       </Route>
-  //       <Route path="/location">
-  //         <Location />
-  //       </Route>
-  //       <Route path="/questions">
-  //         <Questions />
-  //       </Route>
-  //       <Route path="/search">
-  //         <SearchView />
-  //       </Route>
-  //       <Route path="/">
-  //         <Home />
-  //       </Route>
-  //     </Switch>    
-  //   </Router>
 
-   
-  
-  // );
 }
 
 export default App;

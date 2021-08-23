@@ -27,26 +27,27 @@ export const signInWithGoogle = async () => {
 
 export const signInWithPhone = async (phoneNumber, appVerifier) => {
     const result = await auth.signInWithPhoneNumber(phoneNumber, appVerifier).then(result => {
-        let code = prompt('enter the otp', '');
-        if (code === null) {
-            console.log(result)
-        } 
-        result.confirm(code).then(result => {
-            console.log(result)
-        })
+        // let code = prompt('enter the otp', '');
+        // if (code === null) {
+        //     console.log(result)
+        // } 
+        // result.confirm(code).then(result => {
+        //     console.log(result)
+        // })
+        // pass result object to window to be accessible by other functions
+        window.result = result
     }).catch((error) => {
         console.log(error)
         console.log('Phone Sign In Error')
     })
 }
-
   
 export const signOut = async () => {
     const result = await auth.signOut().then(() => {
         console.log('Signed Out')
         console.log(auth.currentUser)
         return auth.currentUser
-    }).catch((error) => {
+    }).catch((error) => {   
         console.log('Sign Out Error')
     })
 }

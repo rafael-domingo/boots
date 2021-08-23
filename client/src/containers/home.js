@@ -2,7 +2,7 @@ import React from 'react';
 import Button from '@material-ui/core/Button'
 import { Icon, IconButton, FormControl, InputLabel, Input } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
-import { setEmail, setUid, setUserName, setView } from '../redux/user';
+import { setEmail, setPhone, setUid, setUserName, setView } from '../redux/user';
 import { SvgIcon } from '@material-ui/core';
 import PhoneIcon from '@material-ui/icons/Phone';
 import { signInWithGoogle } from '../util/Firebase';
@@ -106,13 +106,11 @@ export default function Home() {
     
 
     const handlePhoneChange = (event) => {
-      console.log("event")
-
+      // keep track of phone input state
       setPhoneInput(event.target.value)
-      console.log(phoneInput)
-      if (event.target.value.length === 10 && phoneVisible) {
-        
-        let number = '+1 650-123-4567';
+
+      if (event.target.value.length === 10 && phoneVisible) {        
+        // Call recaptcha before calling SignIn API
         let recaptcha = new firebase.auth.RecaptchaVerifier('recaptcha', {
             'size': 'invisible',
             'callback': (response) => {
@@ -121,27 +119,33 @@ export default function Home() {
              
             }
         });
-        console.log(event.target.value)
+        // format phone number for Firebase Auth
+        let number = '+1 ' + event.target.value
         signInWithPhone(number, recaptcha).then(() => {
           console.log(window.result)
           setPhoneVisible(false)
           setCodeVisible(true)
         }) 
-      }
-    
-
+      }    
     }
 
     const handleCodeChange = (event) => {
-      console.log("event")
-
+      // keep track of verification code input state
       setVerificationCode(event.target.value)
       
+      // automatically check verification code once required length is reached
       if (event.target.value.length === 6 && codeVisible) {
         window.result.confirm(event.target.value).then(result => {
           console.log('code successful')
           console.log(result)
+          dispatch(setUserName(result.user.displayName))
+          dispatch(setEmail(result.user.email))
+          dispatch(setPhone(result.user.phoneNumber))
+          dispatch(setUid(result.user.uid))
           dispatch(setView('UserHome'))
+        }).catch((error) => {
+          console.log('Incorrect verification code, try again')
+          setVerificationCode('')
         })
       }
 

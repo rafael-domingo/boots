@@ -5,6 +5,7 @@ export const userSlice = createSlice({
     initialState: {
         username: '',
         email: '',
+        phone: '',
         uid: '',
         profilePicture: {},
         tripList: [
@@ -235,6 +236,9 @@ export const userSlice = createSlice({
         setEmail: (state, action) => {
             state.email = action.payload
         },
+        setPhone: (state, action) => {
+            state.phone = action.payload
+        },
         setUid: (state, action) => {
             state.uid = action.payload
         },
@@ -286,6 +290,7 @@ export const userSlice = createSlice({
 export const { 
     setUserName, 
     setEmail,
+    setPhone,
     setUid,
     setProfilePicture, 
     setTripList, 

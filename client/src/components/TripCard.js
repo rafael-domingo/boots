@@ -8,7 +8,7 @@ export default function TripCard({ handleHoverExit, handleHover, handleClick, tr
         justifyContent: 'center',
         alignItems: 'center',
         flexWrap: 'wrap',  
-        width: '50%',
+        width: '100%',
         height: 'auto',
         margin: '10px',
         backgroundColor: 'rgba(64,112,191,1)',

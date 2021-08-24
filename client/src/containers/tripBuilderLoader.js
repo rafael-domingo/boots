@@ -5,11 +5,19 @@ import { setTransportation } from '../redux/maps';
 import { resetTripBuilder } from '../redux/tripBuilder';
 import { setTripList, setView, addTripList } from '../redux/user';
 import { Yelp } from '../util/Yelp';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 export default function TripBuilderLoader() {
     const dispatch = useDispatch();
     const tripBuilderState = useSelector(state => state.tripBuilder);
     const currentTripListState = useSelector(state => state.curentTrip);
-
+    const divStyle = {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100vw',
+        height: '100vh'
+    }
     dispatch(setName(tripBuilderState.selectedCity))
     dispatch(setCity(tripBuilderState.selectedCity))
     dispatch(setCoordinates(tripBuilderState.selectedCityLocation))    
@@ -29,8 +37,8 @@ export default function TripBuilderLoader() {
     }
         
     return (
-        <div>
-            Loading
+        <div style={divStyle}>
+            <CircularProgress />
         </div>
     )
 }

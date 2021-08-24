@@ -9,6 +9,9 @@ import Maps from '../components/Maps';
 import { setCenter, setCityLocationArray, setDirections, setFitBounds, setTripLocationArray, setWindowWidth, setZoom } from '../redux/maps';
 import { signInWithGoogle, signOut, auth, updateUser, deleteUser, signInWithPhone, getUser } from '../util/Firebase';
 import Account from '../components/Account';
+import Card from '@material-ui/core/Card';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
 
 export default function DayTripList() {
     const tripListState = useSelector(state => state.user.tripList);
@@ -37,13 +40,14 @@ export default function DayTripList() {
     }
     const tripCardStyle = {
         display: 'flex',
-        height: '50%',
-        width: '75%',        
+        height: '100%',
+        width: '50%',        
         justifyContent: 'flex-end',
         alignItems: 'flex-start',
         flexWrap: 'wrap',
         position: 'absolute',
-        marginRight: '5vw'
+        
+        overflow: 'scroll'
     }
     const mapDivStyle = {
         height: 'auto',
@@ -100,7 +104,11 @@ export default function DayTripList() {
             <div style={tripCardStyle}>
                 {
                     tripListState.map(trip => {
-                        return (<TripCard handleHoverExit={handleHoverExit} handleHover={handleHover} handleClick={handleClick} tripDetails={trip}/>)
+                        return (
+                        <Card style={{width: '100%', margin: '1em', backgroundColor: 'rgba(64,112,191,1)'}}>
+                            <TripCard handleHoverExit={handleHoverExit} handleHover={handleHover} handleClick={handleClick} tripDetails={trip}/>
+                        </Card>
+                        )
                     })
                 }
                 <div style={{width: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center'}} onClick={() => dispatch(setView('Questions'))}>
@@ -133,7 +141,11 @@ export default function DayTripList() {
             <button onClick={() => deleteUser()}>Delete User</button>
            
             <Account />
+            
             </div>
+            <Fab color="secondary" aria-label="add" style={{position: 'absolute', bottom: '3em', right: '3em'}}>
+                <AddIcon />
+            </Fab>
         </div>
     )
 }

@@ -1,6 +1,4 @@
 import React from 'react';
-import RightArrow from '../assets/right-arrow.png';
-import LeftArrow from '../assets/left-arrow.png';
 
 import { useSelector } from 'react-redux';
 
@@ -12,9 +10,13 @@ import Proceed from '../components/questions/Proceed';
 import Time from '../components/questions/Time';
 import Activity from '../components/questions/Activity';
 import TripBuilderLoader from './tripBuilderLoader';
-
+import Fab from '@material-ui/core/Fab';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 export default function Questions() {
     // STATE MANAGEMENT
+    const [showSearch, setShowSearch] = React.useState(true);
+
     // Handle which question to show based on flow
     var [state, setState] = React.useState(0);
     const views = ['city', 'travel', 'proceed', 'time', 'activity'];
@@ -28,23 +30,38 @@ export default function Questions() {
     // DIV STYLES
     const divStyle = {
         display: 'flex',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         alignItems: 'center',
         flexWrap: 'wrap',
+        height: '100vh',
+        width: '100vw'
     }
 
     const questionsDivStyle = {
-        padding: '2em'
+        padding: '2em',
+        width: '70%'
     }
 
   
+    const handleSearch = () => {
+        setShowSearch(!showSearch)
+    }
+
     if (!formComplete) {
         return (
             <div style={divStyle}>
-                <img src={LeftArrow} onClick={() => setState(state - 1)} style={state === 0 ? {display: 'none'} : null }/>
+                <Fab
+                    color="primary"
+                    aria-label="previous"
+                    onClick={() => setState(state - 1)} 
+                    style={state === 0 ? {display: 'none'} : null }
+                >
+                    <ArrowBackIcon />
+                </Fab>
+                {/* <img src={LeftArrow} onClick={() => setState(state - 1)} style={state === 0 ? {display: 'none'} : null }/> */}
                 <div style={questionsDivStyle}>
                     {
-                        view==='city' && <City sessionToken={sessionToken}/>
+                        view==='city' && <City sessionToken={sessionToken} showSearch={showSearch} handleSearch={handleSearch}/>
                     }
                     {
                         view==='travel' && <Travel />
@@ -58,9 +75,10 @@ export default function Questions() {
                     {
                         view==='activity' && <Activity />
                     }               
-                </div>     
-                <img 
-                    src={RightArrow} 
+                </div> 
+                <Fab 
+                    color="primary" 
+                    aria-label="next"
                     onClick={() => {
                         if (autoBuild === false || state + 1 == views.length) {
                             setFormComplete(true)
@@ -70,7 +88,9 @@ export default function Questions() {
                         
                         }
                     }
-                />
+                >
+                    <ArrowForwardIcon />
+                </Fab>                   
             </div>
         )
     } else {

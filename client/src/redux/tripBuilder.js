@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     city: '',
     autoComplete: [],
-    selectedCity: {},
+    selectedCity: '',
     selectedCityLocation: '',
     transportation: '',
     autoBuild: '',

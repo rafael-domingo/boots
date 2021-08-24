@@ -10,8 +10,8 @@ export default function TripBuilderLoader() {
     const tripBuilderState = useSelector(state => state.tripBuilder);
     const currentTripListState = useSelector(state => state.curentTrip);
 
-    dispatch(setName(tripBuilderState.selectedCity.description))
-    dispatch(setCity(tripBuilderState.selectedCity.description))
+    dispatch(setName(tripBuilderState.selectedCity))
+    dispatch(setCity(tripBuilderState.selectedCity))
     dispatch(setCoordinates(tripBuilderState.selectedCityLocation))    
     dispatch(setTripBuilder(tripBuilderState))
     if (tripBuilderState.autoBuild) {

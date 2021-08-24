@@ -1,6 +1,8 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAutoBuild } from '../../redux/tripBuilder';
+import Button from '@material-ui/core/Button';
+
 export default function Proceed() {
     const tripBuilderState = useSelector(state => state.tripBuilder);
     const dispatch = useDispatch();
@@ -32,29 +34,8 @@ export default function Proceed() {
         flexWrap: 'wrap'
     }
 
-    const answerStyle = {
-        width: '50%',
-        backgroundColor: 'rgb(64, 112, 191)',
-        borderRadius: '30px',
-        color: 'white',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: '1em',
-        margin: '1em'
-    }
-    const selectedStyle = {
-        width: '50%',
-        backgroundColor: 'rgb(64, 112, 191)',
-        borderRadius: '30px',
-        border: '1px solid rgb(64, 112, 191)',
-        color: 'rgb(64, 112, 191)',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: '1em',
-        margin: '1em',
-        backgroundColor: 'white'
+    const buttonStyle = {
+        margin: '2em'
     }
 
     const handleInput = (autoBuild) => {
@@ -65,18 +46,22 @@ export default function Proceed() {
             <div style={questionDivStyle}>
                 <p style={questionStyle}>How do you want to proceed?</p>
                 <div style={answerDivStyle}>
-                    <div 
-                        style={tripBuilderState.autoBuild === true ? selectedStyle : answerStyle}
+                    <Button
+                        style={buttonStyle}
+                        variant={tripBuilderState.autoBuild === true ? "contained" : "outlined"}
+                        color="primary"
                         onClick={() => handleInput(true)}
                     >
                         Build me an intinerary
-                    </div>
-                    <div 
-                        style={tripBuilderState.autoBuild === false ? selectedStyle : answerStyle}
+                    </Button>
+                    <Button
+                        style={buttonStyle}
+                        variant={tripBuilderState.autoBuild === false ? "contained" : "outlined"}
+                        color="primary"
                         onClick={() => handleInput(false)}
                     >
                         I'll choose my own adventure
-                    </div>
+                    </Button>
                 </div>
             </div>
         </div>

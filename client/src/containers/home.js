@@ -154,8 +154,13 @@ export default function Home() {
           dispatch(setPhone(result.user.phoneNumber))
           dispatch(setUid(result.user.uid))
           getUser().then(result => {
-            dispatch(setTripList(result.trips))
-            dispatch(setView('UserHome'))
+            if (result.trips !== undefined) {
+              dispatch(setTripList(result.trips))
+              dispatch(setView('UserHome'))
+            } else {
+              dispatch(setView('Questions'))
+            }
+       
           }).catch((error) => {
             console.log('Error in getting user data')
           })
@@ -191,10 +196,11 @@ export default function Home() {
                 </div>
               </div>
               
-              <FormControl>
+              <FormControl variant="outlined">
                   <div style={phoneVisible ? {} : {display: 'none'}} >
                     <InputLabel style={inputLabelStyle} htmlFor="formatted-text-mask-input">Enter phone number</InputLabel>
                     <Input
+                    disableUnderline={false}
                     style={inputStyle}
                     value={phoneInput}
                     onChange={handlePhoneChange}

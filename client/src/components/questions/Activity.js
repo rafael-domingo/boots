@@ -6,7 +6,12 @@ import Sightsee from '../../assets/sightsee.png';
 import Drink from '../../assets/drink.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { setActivities } from '../../redux/tripBuilder';
-
+import Button from '@material-ui/core/Button';
+import RestaurantIcon from '@material-ui/icons/Restaurant';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import LocalCafeIcon from '@material-ui/icons/LocalCafe';
+import PanoramaIcon from '@material-ui/icons/Panorama';
+import LocalBarIcon from '@material-ui/icons/LocalBar';
 export default function Activity() {
     const tripBuilderState = useSelector(state => state.tripBuilder);
     const dispatch = useDispatch();
@@ -40,24 +45,13 @@ export default function Activity() {
         width: '100%',
         display: 'flex',
         justifyContent: 'space-between',
-        alignItems: 'center'
-    }
-
-    const answerDivStyle = {
-        display: 'flex',
-        justifyContent: 'center',
         alignItems: 'center',
         flexWrap: 'wrap'
     }
 
-    const answerTextStyle = {
-        width: '100%',
-        fontSize: '1em',
-        color: 'rgb(103, 140, 203)',
-        textAlign: 'center'
-    }
-    const selectedStyle = {
-        backgroundColor: 'black'
+    const buttonStyle = {
+        margin: '2em',
+        
     }
 
     // Hook to pass activities to parent
@@ -76,46 +70,51 @@ export default function Activity() {
             <div style={questionDivStyle}>
                 <p style={questionStyle}>What activities would you like to do?</p>
                 <div style={answersDivStyle}>
-                    <div 
-                        style={answerDivStyle}
-                        style={eat ? selectedStyle : null}
+                    <Button
+                        style={buttonStyle}
+                        variant={eat ? "contained" : "outlined"}
+                        color="primary"
+                        startIcon={<RestaurantIcon/>}
                         onClick={() => setEat(!eat)} 
                     >
-                        <img src={Eat}/>
-                        <p style={answerTextStyle}>Eat</p>
-                    </div>
-                    <div 
-                        style={answerDivStyle}
-                        style={shop ? selectedStyle : null}
+                        Eat
+                    </Button>
+                    <Button
+                        style={buttonStyle}
+                        variant={shop ? "contained" : "outlined"}
+                        color="primary"
+                        startIcon={<ShoppingCartIcon/>}
                         onClick={() => setShop(!shop)}
                     >
-                        <img src={Shop}/>
-                        <p style={answerTextStyle}>Shop</p>
-                    </div>
-                    <div 
-                        style={answerDivStyle}
-                        style={caffeinate ? selectedStyle : null}
+                        Shop
+                    </Button>
+                    <Button
+                        style={buttonStyle}
+                        variant={caffeinate ? "contained" : "outlined"}
+                        color="primary"
+                        startIcon={<LocalCafeIcon/>}
                         onClick={() => setCaffeinate(!caffeinate)}
                     >
-                        <img src={Caffeinate}/>
-                        <p style={answerTextStyle}>Caffeinate</p>
-                    </div>
-                    <div 
-                        style={answerDivStyle}
-                        style={sightsee ? selectedStyle : null}
+                        Coffee
+                    </Button>
+                    <Button
+                        style={buttonStyle}
+                        variant={sightsee ? "contained" : "outlined"}
+                        color="primary"
+                        startIcon={<PanoramaIcon/>}
                         onClick={() => setSightsee(!sightsee)}
                     >
-                        <img src={Sightsee}/>
-                        <p style={answerTextStyle}>Sight-see</p>                        
-                    </div>
-                    <div 
-                        style={answerDivStyle}
-                        style={drink ? selectedStyle : null}
+                        Sight-see
+                    </Button>
+                    <Button
+                        style={buttonStyle}
+                        variant={drink ? "contained" : "outlined"}
+                        color="primary"
+                        startIcon={<LocalBarIcon/>}
                         onClick={() => setDrink(!drink)}
                     >
-                        <img src={Drink}/>
-                        <p style={answerTextStyle}>Drink</p>
-                    </div>
+                        Drink
+                    </Button>                   
                 </div>
             </div>
         </div>

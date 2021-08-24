@@ -2,8 +2,14 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCity, setAutoComplete, setSelectedCity, setSelectedCityLocation } from '../../redux/tripBuilder';
 import { Maps } from '../../util/Maps';
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import EditIcon from '@material-ui/icons/Edit';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import Button from '@material-ui/core/Button'
 
-export default function City({ sessionToken }) {
+export default function City({ sessionToken, showSearch, handleSearch }) {
     const tripBuilderState = useSelector(state => state.tripBuilder)
     const dispatch = useDispatch()
 
@@ -11,58 +17,55 @@ export default function City({ sessionToken }) {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        flexWrap: 'wrap'
+        flexWrap: 'wrap',
+       
     }
 
     const questionDivStyle = {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        flexWrap: 'wrap'
+        flexWrap: 'wrap',
+        minWidth: '350px',
+        height: 'auto'
     }
     
     const questionStyle = {
-        width: '100%',
+        width: '80%',
         color: 'rgb(103, 140, 203)',
         fontSize: '2em',
-        textAlign: 'center'
+        textAlign: 'center',
+        height: 'auto'
+
     }
 
     const textBoxStyle = {
-        width: '100%'
+        width: '50%'
     }
     
     const resultsDivStyle = {
-        color: 'black',
-        width: '100%',
-        margin: '2em'
+        color: 'rgb(103, 140, 203)',
+        minWidth: '350px',
+        margin: '2em',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexWrap: 'wrap',
+        height: 'auto'
     }
 
-    const resultStyle = {
-        width: '80%',
-        height: '2em',
-        border: '1px solid black',
-        borderRadius: '20px',
-        padding: '2em',
-        margin: '1em'
-    }
-
-    const selectedResultStyle = {
-        width: '80%',
-        height: '2em',
-        border: '1px solid black',
-        borderRadius: '20px',
-        padding: '2em',
-        margin: '1em',
-        backgroundColor: 'rgb(103, 140, 203)',
-        color: 'white'
-    }
+    const buttonStyle = {
+        backgroundColor: 'rgb(64,112,191)',
+        color: 'white',
+        margin: '20px'
+      }
 
     const handleSelected = (item) => {
-        dispatch(setSelectedCity(item))
+        dispatch(setSelectedCity(item.description))
         Maps.placeDetails(item.place_id, sessionToken).then(data => {
             dispatch(setSelectedCityLocation(data.result.geometry.location))
         })
+        handleSearch()
     }
 
     const handleInput = (e) => {
@@ -70,29 +73,48 @@ export default function City({ sessionToken }) {
         Maps.autoComplete(e.target.value, sessionToken).then(data => {
             dispatch(setAutoComplete(data.predictions))
         })
-        dispatch(setSelectedCity({}))
+        dispatch(setSelectedCity(''))
     }
     return(
         <div style={divStyle}>
-            <div style={questionDivStyle}>
-                <p style={questionStyle}>What city would you like to visit?</p>
-                <input style={textBoxStyle} onChange={e => handleInput(e)} type="text" name="city" value={tripBuilderState.city}></input>
+           <div style={{width: '80%', display: 'flex', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap', height: 'auto'}}>
+            <p style={questionStyle}>What city would you like to visit?</p>
+
+                <Autocomplete
+                    freeSolo
+                    id="searchCity"
+                    disableClearable
+                    style={textBoxStyle}
+                    style={showSearch ? questionDivStyle : {display: 'none'}}
+                    options={tripBuilderState.autoComplete}                         
+                    getOptionLabel={(option) => option.description}              
+                    onChange={(event, newValue) => {
+                        console.log(event)
+                        handleSelected(newValue)
+                    }}                    
+                    renderInput={(params) => (
+                    <TextField
+                        {...params}
+                        label="Search city"
+                        margin="normal"
+                        variant="outlined"
+                        color="primary"
+                        onChange={e => handleInput(e)} 
+                        InputProps={{ ...params.InputProps, type: 'search', startAdornment: (
+                            <InputAdornment position="start">
+                              <LocationOnIcon />
+                            </InputAdornment>
+                          ) }}
+                    />
+                    )}
+                />
+            <div style={showSearch ? {display: 'none'} : resultsDivStyle}>
+                <h1 style={{width: '100%', textAlign: 'center'}}>{tripBuilderState.selectedCity}</h1>
+                <Button style={buttonStyle} onClick={() => handleSearch()}>
+                <EditIcon />
+                Change Location
+                </Button>                   
             </div>
-            <div style={resultsDivStyle}>
-                {
-                    tripBuilderState.autoComplete.map(item =>{
-                        return  (
-                        <div 
-                            onClick={() => {
-                                handleSelected(item)
-                            }}
-                            style={tripBuilderState.selectedCity.description === item.description ? selectedResultStyle : resultStyle}
-                        >
-                            {item.description}
-                        </div>
-                        )
-                    })
-                }
             </div>
         </div>
     )

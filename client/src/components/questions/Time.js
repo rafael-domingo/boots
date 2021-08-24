@@ -4,7 +4,10 @@ import Sunset from '../../assets/sunset.png';
 import Midday from '../../assets/midday.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTimeDay } from '../../redux/tripBuilder';
-
+import Button from '@material-ui/core/Button';
+import NightsStayIcon from '@material-ui/icons/NightsStay';
+import Brightness5Icon from '@material-ui/icons/Brightness5';
+import Brightness4Icon from '@material-ui/icons/Brightness4';
 export default function Time() {
     const tripBuilderState = useSelector(state => state.tripBuilder);
     const [morning, setMorning] = React.useState(tripBuilderState.timeDay.morning);
@@ -39,23 +42,8 @@ export default function Time() {
         alignItems: 'center',
     }
 
-    const answerDivStyle = {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexWrap: 'wrap'
-    }
-
-    const answerTextStyle = {
-        fontSize: '1em',
-        color: 'rgb(103, 140, 203)',
-        width: '100%',
-        textAlign: 'center'
-        
-    }
-
-    const selectedStyle = {
-        backgroundColor: 'black'
+    const buttonStyle = {
+        margin: '2em'
     }
 
     // Pass time object up to parent whenever state changes
@@ -73,30 +61,33 @@ export default function Time() {
             <div style={questionDivStyle}>
                 <p style={questionStyle}>What time(s) of day are you visting?</p>
                 <div style={answersDivStyle}>
-                    <div 
-                        style={answerDivStyle} 
-                        style={ morning === true ? selectedStyle : null} 
+                    <Button
+                        style={buttonStyle}
+                        variant={morning === true ? "contained" : "outlined"}
+                        color="primary"
+                        startIcon={<Brightness4Icon/>}
                         onClick={() => setMorning(!morning)}
                     >
-                        <img src={Sunrise}/>
-                        <p style={answerTextStyle}>Morning</p>
-                    </div>
-                    <div 
-                        style={answerDivStyle}
-                        style={ midDay === true ? selectedStyle : null}
+                        Morning
+                    </Button>
+                    <Button
+                        style={buttonStyle}
+                        variant={midDay === true ? "contained" : "outlined"}
+                        color="primary"
+                        startIcon={<Brightness5Icon/>}
                         onClick={() => setmidDay(!midDay)}
                     >
-                        <img src={Midday}/>
-                        <p style={answerTextStyle}>Mid-day</p>
-                    </div>
-                    <div 
-                        style={answerDivStyle}
-                        style={ evening === true ? selectedStyle : null}
+                        Mid-day
+                    </Button>
+                    <Button
+                        style={buttonStyle}
+                        variant={evening === true ? "contained" : "outlined"}
+                        color="primary"
+                        startIcon={<NightsStayIcon/>}
                         onClick={() => setEvening(!evening)}
                     >
-                        <img src={Sunset}/>
-                        <p style={answerTextStyle}>Evening</p>
-                    </div>
+                        Evening
+                    </Button>                    
                 </div>
             </div>            
         </div>

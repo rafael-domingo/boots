@@ -1,17 +1,19 @@
 import React from 'react';
-import Bicycle from '../../assets/bicycle.png';
-import Car from '../../assets/car.png';
-import Walk from '../../assets/walk.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTransportation } from '../../redux/tripBuilder';
-
+import Button from '@material-ui/core/Button';
+import DirectionsCarIcon from '@material-ui/icons/DirectionsCar';
+import DirectionsBikeIcon from '@material-ui/icons/DirectionsBike';
+import DirectionsWalkIcon from '@material-ui/icons/DirectionsWalk';
 export default function Travel() {
     const tripBuilderState = useSelector(state => state.tripBuilder);
     const dispatch = useDispatch();
     const divStyle = {
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        flexWrap: 'wrap',
+        height: 'auto'
     }
 
     const questionDivStyle = {
@@ -29,11 +31,11 @@ export default function Travel() {
     const choicesDivStyle = {
         width: '100%',
         display: 'flex',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         alignItems: 'center'
     }
-    const selectedStyle = {
-        backgroundColor: 'black'
+    const buttonStyle = {
+        margin: '2em'
     }
 
     const handleInput = (transport) => {
@@ -44,27 +46,42 @@ export default function Travel() {
             <div style={questionDivStyle}>
                 <p style={questionStyle}>How will you be traveling?</p>
                 <div style={choicesDivStyle}>
-                    <img 
-                        style={ tripBuilderState.transportation == 'DRIVING' ? selectedStyle : null } 
-                        src={Car} 
-                        onClick={() => {
-                            handleInput('DRIVING')}
-                            }
-                    />
-                    <img 
-                        style={ tripBuilderState.transportation == 'BICYCLING' ? selectedStyle : null } 
-                        src={Bicycle} 
-                        onClick={() => {
-                            handleInput('BICYCLING')}
-                            }
-                    />
-                     <img 
-                        style={ tripBuilderState.transportation == 'WALKING' ? selectedStyle : null } 
-                        src={Walk} 
-                        onClick={() => {
-                            handleInput('WALKING')}
-                            }
-                    />
+                <Button
+                    style={buttonStyle}
+                    variant={tripBuilderState.transportation === 'DRIVING' ? "contained" : "outlined"}
+                    color="primary"
+                    // disabled={tripBuilderState.transportation === 'DRIVING' ? false : true}
+                    startIcon={<DirectionsCarIcon />}
+                    onClick={() => {
+                        handleInput('DRIVING')}
+                        }
+                >
+                    Car
+                </Button>
+                <Button
+                    style={buttonStyle}
+                    variant={tripBuilderState.transportation === 'BICYCLING' ? "contained" : "outlined"}
+                    color="primary"
+                    // disabled={tripBuilderState.transportation === 'BICYCLING' ? false : true}
+                    startIcon={<DirectionsBikeIcon />}
+                    onClick={() => {
+                        handleInput('BICYCLING')}
+                        }
+                >
+                    Bike
+                </Button>
+                <Button
+                    style={buttonStyle}
+                    variant={tripBuilderState.transportation === 'WALKING' ? "contained" : "outlined"}
+                    color="primary"
+                    // disabled={tripBuilderState.transportation === 'BICYCLING' ? false : true}
+                    startIcon={<DirectionsWalkIcon />}
+                    onClick={() => {
+                        handleInput('WALKING')}
+                        }
+                >
+                    Walk
+                </Button>                 
                 </div>
             </div>
         </div>

@@ -32,7 +32,7 @@ export default function TimeDistance({time, distance}) {
                 <p style={textStyle}>{time}</p>
             </div>
            
-            <div style={lineStyle}></div>
+            {/* <div style={lineStyle}></div> */}
         </div>
     )
 }

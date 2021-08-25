@@ -4,8 +4,9 @@ import { useDispatch } from 'react-redux';
 import { setDestinations } from '../redux/currentTrip';
 import LocationCard from '../components/LocationCard';
 import TimeDistance from './TimeDistance';
+import Card from '@material-ui/core/Card';
 
-export default function List({ locations, handleClick, travelTime }) {
+export default function List({ locations, handleClick, travelTime, reorderList }) {
     const dispatch = useDispatch();
     const [reorder, setReorder] = React.useState(true);
 
@@ -23,33 +24,43 @@ export default function List({ locations, handleClick, travelTime }) {
         <DragDropContext onDragEnd={onDragEnd}>
                             <Droppable droppableId="destinations">
                                 {(provided) => (
-                                    <ul {...provided.droppableProps} ref={provided.innerRef}>
+                                    <ul style={{listStyleType: 'none', margin: '0', padding: '0', width: '100%', height: '100%'}} {...provided.droppableProps} ref={provided.innerRef}>
                                         {
                                             locations.map((item, i) => {
                                                 console.log(i)
-                                                if (i < travelTime.length) {
-                                                    var distance = travelTime[i].distance
-                                                    var time = travelTime[i].duration
+                                                if (i >= 1 && i <= travelTime.length) {
+                                                    var distance = travelTime[i-1].distance
+                                                    var time = travelTime[i-1].duration
                                                 } else {
                                                     var distance = ''
                                                     var time = ''
                                                 }
                                                 console.log(travelTime[i])
                                                 return (
-                                                    <Draggable key={item.id} draggableId={item.id} index={i} isDragDisabled={!reorder}>
+                                                    <Draggable key={item.id} draggableId={item.id} index={i} isDragDisabled={!reorderList}>
                                                         {(provided) => (
                                                             <li ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
                                                             <div style={{width: '100%'}} {...provided.droppableProps} ref={provided.innerRef}>
-                                                                <LocationCard 
-                                                                    name={item.name} 
-                                                                    picture={item.image_url} 
-                                                                    location={item.location.address1} 
-                                                                    locationInfo={item}
-                                                                    handleClick={handleClick}
-                                                                />
-                                                                {
-                                                                    !reorder && <TimeDistance time={time} distance={distance}/>
-                                                                }
+                                                                <Card style={{width: '100%', marginBottom: '1em'}}>
+                                                                    <LocationCard 
+                                                                        name={item.name} 
+                                                                        picture={item.image_url} 
+                                                                        location={item.location.address1} 
+                                                                        locationInfo={item}
+                                                                        handleClick={handleClick}
+                                                                        time={time} 
+                                                                        distance={distance}
+                                                                        reorder={reorderList}
+                                                                    />
+                                                                </Card>
+                                                             
+                                                                {/* {
+                                                                    !reorderList && (
+                                                                    <Card style={{width: '50%'}} elevation={3}>
+                                                                        <TimeDistance time={time} distance={distance}/>
+                                                                    </Card>
+                                                                    )
+                                                                } */}
                                                                 
                                                             </div>
                                                             </li>         

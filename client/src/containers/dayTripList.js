@@ -55,16 +55,6 @@ export default function DayTripList() {
         overflow: 'scroll'
     }
 
-    const newTripButtonStyle = {
-        width: '3em',
-        height: '3em',
-        borderRadius: '50%',
-        backgroundColor: 'rgba(64,112,191,1)',
-        color: 'white',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center'
-    }
     const handleHover = (location) => {
         console.log(location)
         dispatch(setCenter(location))
@@ -110,13 +100,7 @@ export default function DayTripList() {
                         </Card>
                         )
                     })
-                }
-                <div style={{width: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center'}} onClick={() => dispatch(setView('Questions'))}>
-                    <div style={newTripButtonStyle}>
-                    +
-                    </div>
-                </div>
-            
+                }                           
                 <button onClick={() => signInWithGoogle().then(result => {
                     console.log(result)
                     dispatch(setUserName(result.user.displayName))
@@ -143,7 +127,12 @@ export default function DayTripList() {
             <Account />
             
             </div>
-            <Fab color="secondary" aria-label="add" style={{position: 'absolute', bottom: '3em', right: '3em'}}>
+            <Fab 
+                color="secondary" 
+                aria-label="add" 
+                style={{position: 'absolute', bottom: '3em', right: '3em'}}
+                onClick={() => dispatch(setView('Questions'))}
+            >
                 <AddIcon />
             </Fab>
         </div>

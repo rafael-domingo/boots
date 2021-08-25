@@ -12,9 +12,17 @@ import LocationDetail from '../components/LocationDetail';
 import { setCenter, setCityLocationArray, setDirections, setFitBounds, setSearchLocationArray, setTransportation, setTripLocationArray, setZoom } from '../redux/maps';
 import { setDestinations } from '../redux/currentTrip';
 import TripBuilderWidget from '../components/TripBuilderWidget';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import Fab from '@material-ui/core/Fab';
+import SearchIcon from '@material-ui/icons/Search';
+import Button from '@material-ui/core/Button';
+import EditIcon from '@material-ui/icons/Edit';
+import BuildIcon from '@material-ui/icons/Build';
+import DeleteIcon from '@material-ui/icons/Delete';
 export default function DayTripView() {
     const [search, setSearch] = React.useState(false);
     const [detail, setDetail] = React.useState(false);
+    const [reorder, setReorder] = React.useState(false);
     const locations = useSelector(state => state.currentTrip.destinations);
     const travelTime = useSelector(state => state.currentTrip.travelTime);
     const transportation = useSelector(state => state.currentTrip.tripBuilder.transportation)
@@ -63,15 +71,28 @@ export default function DayTripView() {
 
     const cityNameStyle = {
         color: 'rgb(64, 112, 191)',
-        fontSize: '5em',
-        fontWeight: 'normal'
-
+        fontSize: '3em',
+        fontWeight: 'normal',
+  
     }
 
     const listDivStyle = {
         overflowY: 'scroll',
         overflowX: 'hidden',
-        height: '80%'
+        height: '75%',
+        width: '100%'
+    }
+
+    const backButtonStyle = {
+        position: 'absolute',
+        top: '5em',
+        left: '3em'
+    }
+
+    const searchButtonStyle = {
+        position: 'absolute',
+        bottom: '5em',
+        right: '3em'
     }
 
     const handleClick = () => {
@@ -97,6 +118,14 @@ export default function DayTripView() {
         if (detail) {
             return (
                 <div style={divStyle}>
+                      <Fab
+                        style={backButtonStyle}
+                        color="primary"
+                        aria-label="previous"
+                        onClick={() => dispatch(setView('UserHome'))}                     
+                        >
+                            <ArrowBackIcon />
+                        </Fab>
                     <div style={mapDivStyle}>
                         <Maps />
 
@@ -105,6 +134,14 @@ export default function DayTripView() {
                         <LocationDetail />
                         
                     </div>
+                    <Fab
+                        style={searchButtonStyle}
+                        color="secondary"
+                        aria-label="previous"
+                        onClick={() => setSearch(true)}                     
+                        >
+                            <SearchIcon />
+                        </Fab>
                     <button onClick={() => setSearch(true)}>Search</button>
                     <button onClick={() => dispatch(updateTripList(currentTripListState))}>Update</button>
                     <button onClick={() => {
@@ -119,6 +156,14 @@ export default function DayTripView() {
 
             return (
                 <div style={divStyle}>
+                      <Fab
+                        style={backButtonStyle}
+                        color="primary"
+                        aria-label="previous"
+                        onClick={() => dispatch(setView('UserHome'))}                     
+                        >
+                            <ArrowBackIcon />
+                        </Fab>
                     <div style={mapDivStyle}>
                         <Maps />
 
@@ -127,13 +172,28 @@ export default function DayTripView() {
                     <div style={locationsDivStyle}>
 
                     <h1 style={cityNameStyle}>{currentTripListState.name}</h1>
-                    <TripBuilderWidget />
-                    <div style={listDivStyle}>
-                        <List locations={locations} handleClick={handleClick} travelTime={travelTime}/>
+                    {/* <TripBuilderWidget /> */}
+                    <div style={{display: 'flex', width: '100%', justifyContent: 'flex-end', alignItems: 'center'}}>
+                        <Button style={reorder ? {display: 'none'} : null} startIcon={<EditIcon/>} color="primary" onClick={() => setReorder(!reorder)}>Edit</Button>
+                        <Button style={reorder ? {marginRight: '1em'} : {display: 'none'}} variant="contained" startIcon={<DeleteIcon/>} color="secondary" onClick={() => setReorder(!reorder)}>Delete This Trip</Button>                    
+                        <Button style={reorder ? {marginRight: '1em'} : {display: 'none'}} variant="outlined" startIcon={<BuildIcon/>} color="primary" onClick={() => setReorder(!reorder)}>Trip Builder</Button>                    
+                        <Button style={reorder ? {marginRight: '1em'} : {display: 'none'}} variant="contained" startIcon={<EditIcon/>} color="primary" onClick={() => setReorder(!reorder)}>Done</Button>
+
+                    </div>
+                  <div style={listDivStyle}>
+                        <List locations={locations} handleClick={handleClick} travelTime={travelTime} reorderList={reorder}/>
                     </div>
 
                              
                     </div>
+                    <Fab
+                        style={searchButtonStyle}
+                        color="secondary"
+                        aria-label="previous"
+                        onClick={() => setSearch(true)}                     
+                        >
+                            <SearchIcon />
+                        </Fab>
                     <button onClick={() => setSearch(true)}>Search</button>
                     <button onClick={() => dispatch(updateTripList(currentTripListState))}>Update</button>
                     <button onClick={() => {
@@ -147,6 +207,14 @@ export default function DayTripView() {
         } else {
             return (
                 <div style={divStyle}>
+                    <Fab
+                        style={backButtonStyle}
+                        color="primary"
+                        aria-label="previous"
+                        onClick={() => dispatch(setView('UserHome'))}                     
+                        >
+                            <ArrowBackIcon />
+                        </Fab>
                     <div style={mapDivStyle}>
                         <Maps />
                     </div>
@@ -154,6 +222,14 @@ export default function DayTripView() {
                     <h1 style={cityNameStyle}>{currentTripListState.name}</h1>
                         
                     </div>
+                    <Fab
+                        style={searchButtonStyle}
+                        color="secondary"
+                        aria-label="previous"
+                        onClick={() => setSearch(true)}                     
+                        >
+                            <SearchIcon />
+                        </Fab>
                     <button onClick={() => setSearch(true)}>Search</button>
                     <button onClick={() => dispatch(updateTripList(currentTripListState))}>Update</button>
                     <button onClick={() => {

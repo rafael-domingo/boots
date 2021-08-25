@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { v4 as uuidv4 } from 'uuid'
 
@@ -13,10 +13,13 @@ import TripBuilderLoader from './tripBuilderLoader';
 import Fab from '@material-ui/core/Fab';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import CloseIcon from '@material-ui/icons/Close';
+import { setView } from '../redux/user';
+
 export default function Questions() {
     // STATE MANAGEMENT
     const [showSearch, setShowSearch] = React.useState(true);
-
+    const dispatch = useDispatch()
     // Handle which question to show based on flow
     var [state, setState] = React.useState(0);
     const views = ['city', 'travel', 'proceed', 'time', 'activity'];
@@ -50,6 +53,14 @@ export default function Questions() {
     if (!formComplete) {
         return (
             <div style={divStyle}>
+                <Fab
+                    color="secondary"
+                    aria-label="close"
+                    onClick={() => dispatch(setView('UserHome'))} 
+                    style={state === 0 ? null : {display: 'none'} }
+                >
+                    <CloseIcon />
+                </Fab>
                 <Fab
                     color="primary"
                     aria-label="previous"

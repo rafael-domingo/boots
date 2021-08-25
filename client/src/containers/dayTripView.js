@@ -62,9 +62,10 @@ export default function DayTripView() {
         display: 'flex',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        flexWrap: 'wrap',
+        flexWrap: 'nowrap',
         overflowY: 'hidden',
-        overflowX: 'hidden'
+        overflowX: 'hidden',
+        flexDirection: 'column'
 
         
     }
@@ -79,7 +80,7 @@ export default function DayTripView() {
     const listDivStyle = {
         overflowY: 'scroll',
         overflowX: 'hidden',
-        height: '75%',
+        height: '100%',
         width: '100%'
     }
 

@@ -5,6 +5,7 @@ import { setSearchTerm, setSearchResults, setAutoCompleteResults } from '../redu
 import { Yelp } from '../util/Yelp';
 import LocationDetail from './LocationDetail';
 import { setFitBounds, setSearchLocationArray, setZoom } from '../redux/maps';
+import SearchCard from './SearchCard';
 
 export default function SearchResults({ handleResults }) {
     const [detail, setDetail] = React.useState(false);
@@ -73,7 +74,7 @@ export default function SearchResults({ handleResults }) {
                     {
                         searchResults.map(item => {
                             return (
-                                <LocationCard 
+                                <SearchCard 
                                     name={item.name} 
                                     picture={item.image_url} 
                                     location={item.location.address1} 

@@ -174,7 +174,7 @@ export default function DayTripView() {
                     <h1 style={cityNameStyle}>{currentTripListState.name}</h1>
                     {/* <TripBuilderWidget /> */}
                     <div style={{display: 'flex', width: '100%', justifyContent: 'flex-end', alignItems: 'center'}}>
-                        <Button style={reorder ? {display: 'none'} : null} startIcon={<EditIcon/>} color="primary" onClick={() => setReorder(!reorder)}>Edit</Button>
+                        <Button style={reorder ? {display: 'none'} : {marginRight: '1em'}} startIcon={<EditIcon/>} color="primary" onClick={() => setReorder(!reorder)}>Edit</Button>
                         <Button style={reorder ? {marginRight: '1em'} : {display: 'none'}} variant="contained" startIcon={<DeleteIcon/>} color="secondary" onClick={() => setReorder(!reorder)}>Delete This Trip</Button>                    
                         <Button style={reorder ? {marginRight: '1em'} : {display: 'none'}} variant="outlined" startIcon={<BuildIcon/>} color="primary" onClick={() => setReorder(!reorder)}>Trip Builder</Button>                    
                         <Button style={reorder ? {marginRight: '1em'} : {display: 'none'}} variant="contained" startIcon={<EditIcon/>} color="primary" onClick={() => setReorder(!reorder)}>Done</Button>

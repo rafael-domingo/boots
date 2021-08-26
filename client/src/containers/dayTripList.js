@@ -16,7 +16,7 @@ import AddIcon from '@material-ui/icons/Add';
 export default function DayTripList() {
     const tripListState = useSelector(state => state.user.tripList);
     // const user = useSelector(state => state.user);
-    const [mapLocation, setMapLocation] = React.useState([tripListState[0].location, tripListState[1].location, tripListState[2].location]);
+    
     const dispatch = useDispatch();
     const captchaRef = React.useRef(null);
 
@@ -27,7 +27,7 @@ export default function DayTripList() {
         justifyContent: 'flex-end',
         alignItems: 'flex-start',
         flexWrap: 'wrap',
-        overflowY: 'scroll'
+        overflowY: 'scroll',
 
     }
     const cityDivStyle = {
@@ -47,6 +47,7 @@ export default function DayTripList() {
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
         flexWrap: 'wrap',
+        
         // position: 'absolute',        
     }
     const mapDivStyle = {

@@ -14,8 +14,6 @@ import SearchView from './containers/searchView';
 import { setView } from './redux/user';
 import { useDispatch, useSelector } from 'react-redux';
 import LargeMap from './components/LargeMap';
-import MenuIcon from '@material-ui/icons/Menu';
-import IconButton from '@material-ui/core/IconButton';
 
 function App() {
   const [drawer, setDrawer] = React.useState(false)
@@ -34,17 +32,10 @@ function App() {
 
   else if (viewState === 'UserHome') {
     return (
-      <div>
-
+      <div>        
       <AppDrawer drawer={drawer} setDrawer={setDrawer}/>
-      {
-        !drawer && (
-        <IconButton onClick={() => setDrawer(true)}>
-          <MenuIcon/>
-        </IconButton>
-        ) 
-      }
-      {/* <Logo onClick={() => setDrawer(true)} onMouseEnter={() => setDrawer(true)}/> */}
+        
+      <Logo setDrawer={setDrawer} drawer={drawer}/>
       <DayTripList/>
     </div>
     )

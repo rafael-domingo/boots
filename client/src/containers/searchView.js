@@ -28,15 +28,18 @@ export default function SearchView() {
     }
 
     const mapDivStyle = {
-        height: 'auto',
-        width: '50%',        
-        overflow: 'scroll'
+        height: '100vh',
+        width: '50%',       
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'flex-start' 
+        // overflow: 'scroll'
     }
 
 
     const searchDivStyle = {
-        width: '50%',
-        height: '100vh',
+        width: '100%',
+        height: '90vh',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -61,14 +64,19 @@ export default function SearchView() {
     }
     return (
         <div style={divStyle}>
+
             <div style={mapDivStyle}>
                 <Maps />
             </div>
-            <div style={searchDivStyle}>
-                <SearchResults handleResults={handleResults}/>
+            <div style={{display: 'flex', justifyContent: 'center', flexWrap: 'wrap', width: '50%'}}>
                 <SearchBox handleResults={handleResults}/>
+                <div style={searchDivStyle}>
+                    <SearchResults handleResults={handleResults}/>
+
+                </div>
             </div>
-        
+           
+
         </div>
     )
 }

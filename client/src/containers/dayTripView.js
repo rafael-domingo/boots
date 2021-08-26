@@ -19,6 +19,8 @@ import Button from '@material-ui/core/Button';
 import EditIcon from '@material-ui/icons/Edit';
 import BuildIcon from '@material-ui/icons/Build';
 import DeleteIcon from '@material-ui/icons/Delete';
+import CloseIcon from '@material-ui/icons/Close';
+
 export default function DayTripView() {
     const [search, setSearch] = React.useState(false);
     const [detail, setDetail] = React.useState(false);
@@ -98,19 +100,20 @@ export default function DayTripView() {
 
     const handleClick = () => {
         setDetail(!detail);
-    }
-    
-    const onDragEnd = (result) => {
-        const arrayMod = Array.from(locations);
-        const [reorderedItem] = arrayMod.splice(result.source.index, 1)
-        arrayMod.splice(result.destination.index, 0, reorderedItem);        
-        dispatch(setDestinations(arrayMod))
-    }
+    }    
+  
     if (search) {
         return (
             <div style={divStyle}>
                 <SearchView />                
-                <button onClick={() => setSearch(false)}>Trip View</button>
+                <Fab
+                        style={searchButtonStyle}
+                        color="secondary"
+                        aria-label="close"
+                        onClick={() => setSearch(false)}                     
+                        >
+                            <CloseIcon />
+                        </Fab>
             </div>
         )
     }

@@ -9,7 +9,7 @@ export const currentTripSlice = createSlice({
         destinations: [],
         searchTerm: {},
         searchResults: {},
-        autoCompleteResults: {},
+        autoCompleteResults: [],
         autoComplete: false,
         travelTime: [],
         tripBuilder: {}

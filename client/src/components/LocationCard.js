@@ -28,7 +28,7 @@ export default function LocationCard({ name = "French Truck", picture = FrenchTr
     }
 
     const textDivStyle = {
-        width: '35%',
+        width: '100%',
         color: 'rgb(64, 112, 191)',      
         fontSize: '1.5em',
         lineHeight: '0',
@@ -57,7 +57,7 @@ export default function LocationCard({ name = "French Truck", picture = FrenchTr
 
     }
     const imgDivStyle = {
-        width: '25%',
+        width: '20%',
         height: '10em',
         display: 'flex',
         justifyContent: 'flex-start',
@@ -79,45 +79,48 @@ export default function LocationCard({ name = "French Truck", picture = FrenchTr
             <div style={imgDivStyle}>
                 <img style={imgStyle}src={picture} />
             </div>
-            <div style={textDivStyle}>
-                <p style={nameStyle}>{name}</p>
-                <p style={addressStyle}>{location}</p>
-              
+            <div style={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center', width: '75%'}}>
+                <div style={textDivStyle}>
+                    <p style={nameStyle}>{name}</p>
+                    <p style={addressStyle}>{location}</p>
+                
+                </div>
+                <div style={{display: 'flex', justifyContent: 'flex-end', width: '30%'}}>
+                    {
+                        !reorder && (
+                            <div>
+                            <Chip 
+                            label={time} 
+                            style={currentTripListState.tripBuilder.transportation === 'DRIVING' ? null : {display: 'none'}}
+                            icon={<DirectionsCarIcon/>}
+                            variant="outlined"
+                            />
+                            <Chip 
+                            label={time} 
+                            style={currentTripListState.tripBuilder.transportation === 'BICYCLING' ? null : {display: 'none'}}
+                            icon={<DirectionsBikeIcon/>}
+                            variant="outlined"
+                            />
+                            <Chip 
+                            label={time} 
+                            style={currentTripListState.tripBuilder.transportation === 'WALKING' ? null : {display: 'none'}}
+                            icon={<DirectionsWalkIcon/>}
+                            variant="outlined"
+                            />
+                            </div>
+                        )
+                    }
+                
+                    {
+                        reorder && (
+                            <IconButton aria-label="reorder">
+                                <ReorderIcon/>
+                            </IconButton>
+                        )
+                    }
+                </div>
             </div>
-            <div style={{display: 'flex', justifyContent: 'flex-end', width: '30%'}}>
-                {
-                    !reorder && (
-                        <div>
-                        <Chip 
-                        label={time} 
-                        style={currentTripListState.tripBuilder.transportation === 'DRIVING' ? null : {display: 'none'}}
-                        icon={<DirectionsCarIcon/>}
-                        variant="outlined"
-                        />
-                         <Chip 
-                        label={time} 
-                        style={currentTripListState.tripBuilder.transportation === 'BICYCLING' ? null : {display: 'none'}}
-                        icon={<DirectionsBikeIcon/>}
-                        variant="outlined"
-                        />
-                        <Chip 
-                        label={time} 
-                        style={currentTripListState.tripBuilder.transportation === 'WALKING' ? null : {display: 'none'}}
-                        icon={<DirectionsWalkIcon/>}
-                        variant="outlined"
-                        />
-                        </div>
-                    )
-                }
-            
-                {
-                    reorder && (
-                        <IconButton aria-label="reorder">
-                            <ReorderIcon/>
-                        </IconButton>
-                    )
-                }
-            </div>
+           
             
            
             {/* <div style={buttonDivStyle}>

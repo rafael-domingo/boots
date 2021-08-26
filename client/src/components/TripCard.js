@@ -18,7 +18,8 @@ export default function TripCard({ handleHoverExit, handleHover, handleClick, tr
 
     const textStyle = {
         width: '100%',
-        fontSize: '3em'
+        fontSize: '1em',
+        textAlign: 'center'
     }
     return (
         <div style={divStyle} onClick={() => handleClick(tripDetails)} onMouseLeave={() => handleHoverExit(tripDetails.location)} onMouseEnter={() => handleHover(tripDetails.location)}>

@@ -21,12 +21,13 @@ export default function DayTripList() {
     const captchaRef = React.useRef(null);
 
     const divStyle = {
-        height: '100vh',
+        height: '90vh',
         width: '100vw',
         display: 'flex',
         justifyContent: 'flex-end',
-        alignItems: 'center',
+        alignItems: 'flex-start',
         flexWrap: 'wrap',
+        overflowY: 'scroll'
 
     }
     const cityDivStyle = {
@@ -40,14 +41,13 @@ export default function DayTripList() {
     }
     const tripCardStyle = {
         display: 'flex',
-        height: '100%',
+        // marginTop: '100px',
+        // height: '90vh',
         width: '50%',        
-        justifyContent: 'flex-end',
+        justifyContent: 'flex-start',
         alignItems: 'flex-start',
         flexWrap: 'wrap',
-        position: 'absolute',
-        
-        overflow: 'scroll'
+        // position: 'absolute',        
     }
     const mapDivStyle = {
         height: 'auto',
@@ -92,16 +92,17 @@ export default function DayTripList() {
             {/* </div> */}
             
             <div style={tripCardStyle}>
+                <h1 style={{width: '100%'}}>Your Trips</h1>
                 {
                     tripListState.map(trip => {
                         return (
-                        <Card style={{width: '100%', margin: '1em', backgroundColor: 'rgba(64,112,191,1)'}}>
+                        <Card style={{display: 'flex', justifyContent: 'center', alignItems: 'center', width: '175px', height: '175px', borderRadius: '50%', margin: '1em', backgroundColor: 'rgba(64,112,191,1)', boxShadow: '0px 2px 4px 0px rgba(0,0,0,0.5)'}}>
                             <TripCard handleHoverExit={handleHoverExit} handleHover={handleHover} handleClick={handleClick} tripDetails={trip}/>
                         </Card>
                         )
                     })
                 }                           
-                <button onClick={() => signInWithGoogle().then(result => {
+                {/* <button onClick={() => signInWithGoogle().then(result => {
                     console.log(result)
                     dispatch(setUserName(result.user.displayName))
                     dispatch(setEmail(result.user.email))
@@ -125,7 +126,7 @@ export default function DayTripList() {
             <button onClick={() => deleteUser()}>Delete User</button>
            
             <Account />
-            
+             */}
             </div>
             <Fab 
                 color="secondary" 

@@ -1,14 +1,16 @@
 import React from 'react';
 import Profile from '../assets/profile.jpeg';
-
-export default function Drawer() {
+import Drawer from '@material-ui/core/Drawer';
+import IconButton from '@material-ui/core/IconButton';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+export default function AppDrawer({drawer, setDrawer}) {
+    console.log(drawer)
     const divStyle = {
         width: '25vw',
-        height: '100vh',
-        zIndex: '1000',
+        height: '100%',
         backgroundColor: 'rgba(103, 140, 203, 0.8)',
         display: 'flex',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         alignItems: 'flex-start',
         flexWrap: 'wrap'
 
@@ -51,19 +53,24 @@ export default function Drawer() {
     }
 
     return (
-        <div style={divStyle}>
+        <Drawer anchor='left' open={drawer} onClose={() => setDrawer(false)}>
+            
+        <div style={divStyle} onClick={() => setDrawer(false)}>
+            <IconButton onClick={() => setDrawer(false)}>
+                <ArrowBackIcon style={{color: 'white'}}/>
+            </IconButton>
             <div style={profileDivStyle}>
                 <img src={Profile} style={profilePicStyle}/>
                 <p style={profileNameStyle}>Rafael Domingo</p>
             </div>
             <div style={buttonsDivStyle}>
-                <p style={buttonsStyle}>Daytrips</p>
+                <p style={buttonsStyle} onClick={() => setDrawer(false)}>Daytrips</p>
                 <p style={buttonsStyle}>Profile</p>
                 <p style={buttonsStyle}>Settings</p>
                 <p style={buttonsStyle}>Logout</p>
             </div>
            
         </div>
-
+        </Drawer>
     )
 }

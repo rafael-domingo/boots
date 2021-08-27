@@ -61,7 +61,7 @@ export const Yelp = {
         ];
 
         // build search term array based on trip builder inputs
-        var searchTermArray = [];
+        var searchTermArray = [];        
         intineraryArray.map(section => {
             if (section.food !== null) {
                 searchTermArray.push(section.food)
@@ -70,9 +70,10 @@ export const Yelp = {
                 searchTermArray.push(section.activity)
             }
         })
-
+        console.log(searchTermArray)
         // call Yelp API to populate trip array
         var tripArray = [];
+        var tripIdArray = [];
         // create timer to rate-limit call to Yelp API
         const timer = ms => new Promise(res => setTimeout(res, ms))
         // async function to call Yelp API
@@ -81,7 +82,14 @@ export const Yelp = {
                 const term = searchTermArray[index];
                 this.search(term, location)
                 .then(response => {
-                   tripArray.push(response.businesses[0])
+                    var randomNum = Math.floor(Math.random() * 20);
+                    var business = response.businesses[randomNum]
+                    while (tripIdArray.includes(response.businesses[randomNum].id)) {
+                        randomNum = Math.floor(Math.random() * 20);
+                        business = response.businesses[randomNum];
+                    }
+                    tripArray.push(business);
+                    
                     
                 })
                 await timer(1000);

@@ -5,6 +5,7 @@ export const currentTripSlice = createSlice({
     initialState: {
         name: '',
         city: '',
+        tripId: '',
         coordinates: {},
         destinations: [],
         searchTerm: {},
@@ -20,6 +21,9 @@ export const currentTripSlice = createSlice({
         },
         setCity: (state, action) => {
             state.city = action.payload
+        },
+        setTripId: (state, action) => {
+            state.tripId = action.payload
         },
         setCoordinates: (state, action) => {
             state.coordinates = action.payload
@@ -60,6 +64,7 @@ export const currentTripSlice = createSlice({
 export const {
     setName,
     setCity,
+    setTripId,
     setCoordinates,
     setDestinations,
     addDestinations,

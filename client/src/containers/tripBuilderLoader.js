@@ -1,16 +1,18 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setName, setCity, setCoordinates, setDestinations, setTravelTime, setTripBuilder } from '../redux/currentTrip';
+import { setName, setCity, setCoordinates, setDestinations, setTravelTime, setTripBuilder, setTripId } from '../redux/currentTrip';
 import { setTransportation } from '../redux/maps';
 import { resetTripBuilder } from '../redux/tripBuilder';
 import { setTripList, setView, addTripList } from '../redux/user';
 import { Yelp } from '../util/Yelp';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function TripBuilderLoader() {
     const dispatch = useDispatch();
     const tripBuilderState = useSelector(state => state.tripBuilder);
     const currentTripListState = useSelector(state => state.curentTrip);
+    const tripId = uuidv4();
     const divStyle = {
         display: 'flex',
         justifyContent: 'center',
@@ -18,6 +20,7 @@ export default function TripBuilderLoader() {
         width: '100vw',
         height: '100vh'
     }
+    dispatch(setTripId(tripId))
     dispatch(setName(tripBuilderState.selectedCity))
     dispatch(setCity(tripBuilderState.selectedCity))
     dispatch(setCoordinates(tripBuilderState.selectedCityLocation))    

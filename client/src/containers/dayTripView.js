@@ -10,7 +10,7 @@ import { setView } from '../redux/user';
 import { resetTripBuilder } from '../redux/tripBuilder';
 import LocationDetail from '../components/LocationDetail';
 import { setCenter, setCityLocationArray, setDirections, setFitBounds, setSearchLocationArray, setTransportation, setTripLocationArray, setZoom } from '../redux/maps';
-import { setAutoComplete, setAutoCompleteResults, setDestinations, setSearchResults, setSearchTerm } from '../redux/currentTrip';
+import { setAutoComplete, setAutoCompleteResults, setDestinations, setSearchResults, setSearchTerm, setTripId } from '../redux/currentTrip';
 import TripBuilderWidget from '../components/TripBuilderWidget';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import Fab from '@material-ui/core/Fab';
@@ -212,7 +212,7 @@ export default function DayTripView() {
                     <div style={{display: 'flex', width: '100%', justifyContent: 'flex-end', alignItems: 'center'}}>
                         <Button style={reorder ? {display: 'none'} : {marginRight: '1em'}} startIcon={<EditIcon/>} color="primary" onClick={() => setReorder(!reorder)}>Edit</Button>
                         <Button style={reorder ? {marginRight: '1em'} : {display: 'none'}} variant="contained" startIcon={<DeleteIcon/>} color="secondary" onClick={() => {
-                            dispatch(deleteTrip(currentTripListState.name))
+                            dispatch(deleteTrip(currentTripListState.tripId))
                             dispatch(setView('UserHome'))
                         }}
                         >
@@ -277,7 +277,7 @@ export default function DayTripView() {
                     <div style={{display: 'flex', width: '100%', justifyContent: 'flex-end', alignItems: 'center'}}>
                         <Button style={reorder ? {display: 'none'} : {marginRight: '1em'}} startIcon={<EditIcon/>} color="primary" onClick={() => setReorder(!reorder)}>Edit</Button>
                         <Button style={reorder ? {marginRight: '1em'} : {display: 'none'}} variant="contained" startIcon={<DeleteIcon/>} color="secondary" onClick={() => {
-                            dispatch(deleteTrip(currentTripListState.name))
+                            dispatch(deleteTrip(currentTripListState.tripId))
                             dispatch(setView('UserHome'))
                         }}
                         >

@@ -3,7 +3,7 @@ import LargeMap from '../components/LargeMap';
 import TripCard from '../components/TripCard';
 import { useSelector, useDispatch } from 'react-redux';
 import { setEmail, setTripList, setUid, setUserName, setView } from '../redux/user';
-import { setName, setCity, setCoordinates, setDestinations, setTripBuilder } from '../redux/currentTrip';
+import { setName, setCity, setCoordinates, setDestinations, setTripBuilder, setTripId } from '../redux/currentTrip';
 import FlatMaps from '../components/FlatMaps';
 import Maps from '../components/Maps';
 import { setCenter, setCityLocationArray, setDirections, setFitBounds, setTripLocationArray, setWindowWidth, setZoom } from '../redux/maps';
@@ -75,6 +75,7 @@ export default function DayTripList() {
         dispatch(setCity(trip.name))
         dispatch(setCoordinates(trip.location))
         dispatch(setDestinations(trip.trip))
+        dispatch(setTripId(trip.tripId))
         dispatch(setView('Trip'))
         dispatch(setTripBuilder(trip.tripBuilder))
     }

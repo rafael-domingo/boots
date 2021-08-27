@@ -10,7 +10,7 @@ import DirectionsBikeIcon from '@material-ui/icons/DirectionsBike';
 import DirectionsWalkIcon from '@material-ui/icons/DirectionsWalk';
 import ReorderIcon from '@material-ui/icons/Reorder';
 import IconButton from '@material-ui/core/IconButton';
-
+import DeleteIcon from '@material-ui/icons/Delete';
 export default function LocationCard({ name = "French Truck", picture = FrenchTruck, location = '4950 Government St', locationInfo, handleClick, time, distance, reorder }) {
     const dispatch = useDispatch();
     const destinationsState = useSelector(state => state.currentTrip.destinations);
@@ -72,8 +72,11 @@ export default function LocationCard({ name = "French Truck", picture = FrenchTr
     }
     return (
         <div style={divStyle} onClick={() => {
-            dispatch(setLocationDetail(locationInfo))
-            handleClick()
+            if (!reorder) {
+                dispatch(setLocationDetail(locationInfo))
+                handleClick()
+            }
+            
             }}
         >
             <div style={imgDivStyle}>
@@ -113,9 +116,14 @@ export default function LocationCard({ name = "French Truck", picture = FrenchTr
                 
                     {
                         reorder && (
-                            <IconButton aria-label="reorder">
-                                <ReorderIcon/>
-                            </IconButton>
+                            <div>
+                                <IconButton aria-label="reorder">
+                                    <ReorderIcon/>
+                                </IconButton>
+                                <IconButton color="secondary" aria-label="delete" onClick={() => dispatch(removeDestinations(locationInfo))}>
+                                    <DeleteIcon/>
+                                </IconButton>
+                            </div>
                         )
                     }
                 </div>

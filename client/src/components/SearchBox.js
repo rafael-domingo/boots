@@ -15,7 +15,8 @@ export default function SearchBox({ handleResults }) {
     
     const divStyle = {
         position: 'relative',
-        top: '50px',
+        top: '0px',
+        marginBottom: '10px',
         width: '90%',
         display: 'flex',
         justifyContent: 'center',
@@ -56,7 +57,8 @@ export default function SearchBox({ handleResults }) {
 
     const handleChange = (e) => {
         dispatch(setSearchTerm(e.target.value))
-       
+        dispatch(setSearchResults([]))
+        dispatch(setAutoCompleteResults([]))
         if (e.target.value.length > 2) {
             Yelp.autoComplete(e.target.value).then(results => {
                 dispatch(setAutoCompleteResults(results.terms))
@@ -66,15 +68,9 @@ export default function SearchBox({ handleResults }) {
        
     }
 
-    const onKeyDown = (e) => {
-        if (e.keyCode == 8) {
-            dispatch(setSearchResults({}))
-            dispatch(setSearchLocationArray({}))
-        }
-    }
     return (
         <div style={divStyle}>
-            <form style={{width: '90%', paddingBottom: '5px'}} onSubmit={handleSubmit}>              
+            <form style={{width: '95%', paddingBottom: '5px'}} onSubmit={handleSubmit}>              
                 <Autocomplete
                     freeSolo
                     id="searchCity"

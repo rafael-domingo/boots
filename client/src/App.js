@@ -43,7 +43,8 @@ function App() {
   else if (viewState === 'Trip') {
     return (
       <div>
-        <Logo onMouseEnter={() => setDrawer(true)}/>
+         <AppDrawer drawer={drawer} setDrawer={setDrawer}/>
+         <Logo setDrawer={setDrawer} drawer={drawer}/>
         <DayTripView />
       </div>
     )
@@ -51,7 +52,8 @@ function App() {
   else if (viewState === 'Questions') {
     return (
       <div>
-      <Logo onMouseEnter={() => setDrawer(true)}/>
+       <AppDrawer drawer={drawer} setDrawer={setDrawer}/>
+         <Logo setDrawer={setDrawer} drawer={drawer}/>
       <Questions />
     </div>
     )

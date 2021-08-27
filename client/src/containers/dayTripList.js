@@ -15,6 +15,8 @@ import AddIcon from '@material-ui/icons/Add';
 
 export default function DayTripList() {
     const tripListState = useSelector(state => state.user.tripList);
+    const user = useSelector(state => state.user);
+    updateUser(user.username, user.email, user.uid, tripListState)
     // const user = useSelector(state => state.user);
     
     const dispatch = useDispatch();

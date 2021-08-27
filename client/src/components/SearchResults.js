@@ -21,7 +21,7 @@ export default function SearchResults({ handleResults }) {
     const divStyle = {
         width: '100%',
         display: 'flex',
-        justifyContent: 'flex-end',
+        justifyContent: 'center',
         alignItems: 'center',
         flexWrap: 'wrap',
     }

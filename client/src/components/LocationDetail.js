@@ -1,12 +1,18 @@
 import React from 'react';
-import LocationPicture from '../assets/frenchtruckpic.jpg';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCenter, setFitBounds, setZoom } from '../redux/maps';
-import HalfStar from '../assets/halfstar.png';
-import FullStar from '../assets/filledstar.png';
-import EmptyStar from '../assets/emptystar.png';
-import Dollar from '../assets/dollar.png';
-
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Button from '@material-ui/core/Button';
+import Chip from '@material-ui/core/Chip';
+import StarIcon from '@material-ui/icons/Star';
+import StarOutlineIcon from '@material-ui/icons/StarOutline';
+import StarHalfIcon from '@material-ui/icons/StarHalf';
+import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
+import Divider from '@material-ui/core/Divider';
+import LaunchIcon from '@material-ui/icons/Launch';
+import Fab from '@material-ui/core/Fab';
+import CloseIcon from '@material-ui/icons/Close';
 export default function LocationDetail() {
     const locationDetailState = useSelector(state => state.user.locationDetail);
     const dispatch = useDispatch()
@@ -37,19 +43,18 @@ export default function LocationDetail() {
         flexWrap: 'wrap',
         padding: '2em',
         color: 'rgb(64, 112, 191)',
-        overflow: 'auto'
-       
+        overflow: 'auto',
 
     }
     const locationImageStyle = {
         width: '100%',
-        height: '35vh',
-        objectFit: 'cover'
+        height: '100%',
+        objectFit: 'cover',
+        zIndex: '0'
     }
 
     const locationNameStyle = {
         fontSize: '3em',
-        lineHeight: '0em',
         fontWeight: 'bold',
         width: '100%',
         
@@ -59,22 +64,14 @@ export default function LocationDetail() {
         fontSize: '2em',
         fontWeight: 'normal',
         width: '100%',
-        lineHeight: '0em'
     }
 
-    const categoryArrayStyle = {
-        width: 'auto',
-        margin: '1em',
-        padding: '1em',
-        borderRadius: '2em',
-        backgroundColor: 'rgb(64, 112, 191)',
-        color: 'white'
-    }
+
     // create JSX for price symbols
     var priceArray = [];
     if (locationDetailState.price !== undefined) {
         for (let index = 0; index < locationDetailState.price.length; index++) {
-            priceArray.push(<img style={{height: '100%', width: 'auto'}} src={Dollar}/>)        
+            priceArray.push(<MonetizationOnIcon fontSize="large"/>)        
         }
     }
     
@@ -82,14 +79,14 @@ export default function LocationDetail() {
     var ratingArray = [];
     if (locationDetailState.rating !== undefined) {
         for (let index = 0; index < Math.floor(locationDetailState.rating); index++) {
-            ratingArray.push(<img style={{height: '100%', width: 'auto'}} src={FullStar} />)        
+            ratingArray.push(<StarIcon fontSize="large"/>)        
         }
         if (locationDetailState.rating % Math.floor(locationDetailState.rating) !== 0) {
-            ratingArray.push(<img style={{height: '100%', width: 'auto'}} src={HalfStar} />)
+            ratingArray.push(<StarHalfIcon fontSize="large"/>)
         }
         if (ratingArray.length < 5) {
             for (let index = ratingArray.length; index < 5; index++) {
-                ratingArray.push(<img style={{height: '100%', width: 'auto'}} src={EmptyStar} />)
+                ratingArray.push(<StarOutlineIcon fontSize="large"/>)
                 
             }
         }
@@ -106,21 +103,37 @@ export default function LocationDetail() {
     if (locationDetailState.categories !== undefined) {
         locationDetailState.categories.map(category => {
             categoryArray.push(
-                <div style={categoryArrayStyle}>
-                    {category.title}
-                </div>
+                <Chip
+                    label={category.title}
+                    color="primary"
+                    style={{margin: '5px'}}
+                />
+                // <div style={categoryArrayStyle}>
+                //     {category.title}
+                // </div>
                 )
         })
        
     }
    
     return (
-        <div style={divStyle}>
+        <Card style={{color: 'rgb(64, 112, 191)', width: '80%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+            <div style={{display: 'flex', height: '100%', width: '50%'}}>
+            <Fab style={{left: '10%', zIndex: '100'}} color="primary" variant="contained">
+                    <CloseIcon/>
+                </Fab>
+
             <img style={locationImageStyle} src={locationDetailState.image_url} />
-            <div style={{display: 'flex', height: 'auto', justifyContent: 'flex-start'}}>
-                {categoryArray}
+
             </div>
-            <div style={locationTextDivStyle}>
+
+            {/* <div style={locationTextDivStyle}> */}
+            <CardContent>
+            
+                {categoryArray}
+                
+                <Divider variant="middle"/>
+
                 <p style={locationNameStyle}>{locationDetailState.name}</p>
                 {
                     locationDetailState.location.display_address.map(item => {
@@ -129,16 +142,23 @@ export default function LocationDetail() {
                         )
                     })
                 }
-              
-                <div style={{width: '100%', height: '2em'}}>
+                <Divider variant="middle"/>
+                <div style={{width: '100%', margin: '5px'}}>
                 {priceArray}
                 </div>
-                <div style={{width: '100%', height: '2em'}}>
+
+                <div style={{width: '100%', margin: '5px'}}>
                 {ratingArray}
                 </div>
-                {phoneArray}
-            </div>  
-            
-        </div>
+                <div style={{width: '100%', margin: '5px'}}>
+                    {phoneArray}
+                </div>
+            {/* </div>   */}
+                <Divider variant="middle"/>                
+                <Button onClick={() => window.open(locationDetailState.url)} style={{margin: '5px'}} color="primary" variant="outlined" startIcon={<LaunchIcon/>}>Open in Yelp</Button>
+            </CardContent>
+ 
+        </Card>
+       
     )
 }

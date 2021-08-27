@@ -283,6 +283,18 @@ export const userSlice = createSlice({
                 trip: destinations,
                 tripBuilder: tripBuilder
             })
+        },
+        deleteTrip: (state, action) => {
+            const newTripListArray = [];
+            const tripListArray = state.tripList.map((item) => {
+                if (item.name !== action.payload) {
+                    newTripListArray.push(item)
+                }
+            })
+            return {
+                ...state,
+                tripList: newTripListArray
+            }
         }
     }
 })
@@ -297,6 +309,7 @@ export const {
     setLocationDetail, 
     setView,
     updateTripList,
-    addTripList
+    addTripList,
+    deleteTrip
 } = userSlice.actions;
 export default userSlice.reducer

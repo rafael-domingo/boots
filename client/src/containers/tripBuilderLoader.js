@@ -32,7 +32,9 @@ export default function TripBuilderLoader() {
         })
     } else {
         // dispatch(addTripList(currentTripListState))
+        dispatch(setDestinations([]))
         dispatch(setView('Trip'))
+
 
     }
         

@@ -80,12 +80,13 @@ export default function AppDrawer({drawer, setDrawer}) {
                         startIcon={<ExitToAppIcon />}
                         onClick={() => signOut().then((result) => {
                             console.log(result)
+                            dispatch(setView('Home'))
                             if (result === undefined) {
                                 dispatch(setUserName(''))
                                 dispatch(setEmail(''))
                                 dispatch(setUid(''))
                                 dispatch(setTripList([]))
-                                dispatch(setView('Home'))
+                                
 
                             } else {
                                 console.log('Sign out Error')

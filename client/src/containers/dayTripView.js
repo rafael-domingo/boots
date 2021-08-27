@@ -24,6 +24,7 @@ import CloseIcon from '@material-ui/icons/Close';
 export default function DayTripView() {
     const [search, setSearch] = React.useState(false);
     const [detail, setDetail] = React.useState(false);
+    const [dialog, setDialog] = React.useState(false);
     const [reorder, setReorder] = React.useState(false);
     const tripBuilder = useSelector(state => state.tripBuilder)
     const locations = useSelector(state => state.currentTrip.destinations);
@@ -104,6 +105,9 @@ export default function DayTripView() {
         setDetail(!detail);
     }    
   
+    const handleDialog = () => {
+        setDialog(!dialog)
+    }
     if (search) {
         return (
             <div style={divStyle}>
@@ -135,13 +139,15 @@ export default function DayTripView() {
                         color="primary"
                         aria-label="previous"
                         onClick={() => {
-                            dispatch(setView('UserHome'))
                             if (tripBuilder.selectedCity.length > 0) {
                                 dispatch(addTripList(currentTripListState))
                                 dispatch(resetTripBuilder())
                             } else {
+                                console.log('logged')
                                 dispatch(updateTripList(currentTripListState))
                             }
+                            dispatch(setView('UserHome'))
+
                         }}  
                         >
                             <ArrowBackIcon />
@@ -186,6 +192,8 @@ export default function DayTripView() {
                                 dispatch(addTripList(currentTripListState))
                                 dispatch(resetTripBuilder())
                             } else {
+                                console.log('logged')
+
                                 dispatch(updateTripList(currentTripListState))
                             }
                         }}  
@@ -200,7 +208,7 @@ export default function DayTripView() {
                     <div style={locationsDivStyle}>
 
                     <h1 style={cityNameStyle}>{currentTripListState.name}</h1>
-                    {/* <TripBuilderWidget /> */}
+                    <TripBuilderWidget open={dialog} handleOpen={handleDialog}/>
                     <div style={{display: 'flex', width: '100%', justifyContent: 'flex-end', alignItems: 'center'}}>
                         <Button style={reorder ? {display: 'none'} : {marginRight: '1em'}} startIcon={<EditIcon/>} color="primary" onClick={() => setReorder(!reorder)}>Edit</Button>
                         <Button style={reorder ? {marginRight: '1em'} : {display: 'none'}} variant="contained" startIcon={<DeleteIcon/>} color="secondary" onClick={() => {
@@ -210,7 +218,7 @@ export default function DayTripView() {
                         >
                             Delete This Trip
                         </Button>                    
-                        <Button style={reorder ? {marginRight: '1em'} : {display: 'none'}} variant="outlined" startIcon={<BuildIcon/>} color="primary" onClick={() => setReorder(!reorder)}>Trip Builder</Button>                    
+                        <Button style={reorder ? {marginRight: '1em'} : {display: 'none'}} variant="outlined" startIcon={<BuildIcon/>} color="primary" onClick={() => setDialog(true)}>Trip Builder</Button>                    
                         <Button style={reorder ? {marginRight: '1em'} : {display: 'none'}} variant="contained" startIcon={<EditIcon/>} color="primary" onClick={() => setReorder(!reorder)}>Done</Button>
 
                     </div>
@@ -245,7 +253,17 @@ export default function DayTripView() {
                         style={backButtonStyle}
                         color="primary"
                         aria-label="previous"
-                        onClick={() => dispatch(setView('UserHome'))}                     
+                        onClick={() => {
+                            dispatch(setView('UserHome'))
+                            if (tripBuilder.selectedCity.length > 0) {
+                                dispatch(addTripList(currentTripListState))
+                                dispatch(resetTripBuilder())
+                            } else {
+                                console.log('logged')
+
+                                dispatch(updateTripList(currentTripListState))
+                            }
+                        }}  
                         >
                             <ArrowBackIcon />
                         </Fab>
@@ -254,6 +272,8 @@ export default function DayTripView() {
                     </div>
                     <div style={locationsDivStyle}>
                     <h1 style={cityNameStyle}>{currentTripListState.name}</h1>
+                    <TripBuilderWidget open={dialog} handleOpen={handleDialog}/>
+
                     <div style={{display: 'flex', width: '100%', justifyContent: 'flex-end', alignItems: 'center'}}>
                         <Button style={reorder ? {display: 'none'} : {marginRight: '1em'}} startIcon={<EditIcon/>} color="primary" onClick={() => setReorder(!reorder)}>Edit</Button>
                         <Button style={reorder ? {marginRight: '1em'} : {display: 'none'}} variant="contained" startIcon={<DeleteIcon/>} color="secondary" onClick={() => {
@@ -263,7 +283,7 @@ export default function DayTripView() {
                         >
                             Delete This Trip
                         </Button>                    
-                        <Button style={reorder ? {marginRight: '1em'} : {display: 'none'}} variant="outlined" startIcon={<BuildIcon/>} color="primary" onClick={() => setReorder(!reorder)}>Trip Builder</Button>                    
+                        <Button style={reorder ? {marginRight: '1em'} : {display: 'none'}} variant="outlined" startIcon={<BuildIcon/>} color="primary" onClick={() => setDialog(true)}>Trip Builder</Button>                    
                         <Button style={reorder ? {marginRight: '1em'} : {display: 'none'}} variant="contained" startIcon={<EditIcon/>} color="primary" onClick={() => setReorder(!reorder)}>Done</Button>
 
                     </div>

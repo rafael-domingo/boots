@@ -256,7 +256,9 @@ export const userSlice = createSlice({
         },
         updateTripList: (state, action) => {
             // object destructuring from payload
-            const {name, city, coordinates, destinations} = action.payload;
+            const {name, city, coordinates, destinations, tripBuilder} = action.payload;
+            console.log(destinations)
+            console.log(name)
             // set a new trip list array 
             const tripListArray = state.tripList.map((item) => {
                 // check to see what city to update
@@ -266,7 +268,8 @@ export const userSlice = createSlice({
                 // if found city, update necessary info
                 return {
                     ...item,                 
-                    trip: destinations
+                    trip: destinations,
+                    tripBuilder: tripBuilder
                 }
             })
             // return state with updated trip list

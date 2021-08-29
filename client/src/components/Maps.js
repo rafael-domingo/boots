@@ -55,7 +55,7 @@ export default function Maps({ location }) {
     left: '2.5%',
     top: '5%',
     bottom: '5%',
-    zIndex: '-1',
+    // zIndex: '-1',
     position: 'absolute',
     boxShadow: '0px 2px 4px 0px rgba(0,0,0,0.5)'
 
@@ -93,6 +93,7 @@ export default function Maps({ location }) {
     } 
     // If googleMap is not null, modify the map with updated views or markers
     else {     
+      
       if (searchMarkers.current.length > 0) {
         removeMarkers(searchMarkers.current)
       } 
@@ -289,7 +290,7 @@ export default function Maps({ location }) {
     }
 
     const createMarker = (location, type) => {
-      location.map((loc) => {
+      location.map((loc, index) => {
         // add location to bounds for map to consider
         bounds.current.extend(loc)
         const svgMarker = {
@@ -298,18 +299,23 @@ export default function Maps({ location }) {
           fillOpacity: 0.6,
           strokeWeight: 0,
           rotation: 0,
-          scale: 2,
+          scale: 1,
           anchor: new window.google.maps.Point(15, 30)
         };
-
+        console.log(index)
+        var label = index + 1
+        label = label.toString()
         if (type === 'trip') {
           // draw marker on map
           const marker = new window.google.maps.Marker({
             position: loc,
-            label: 'A',
+            label: label,
             // icon: svgMarker,
-            animation: window.google.maps.Animation.DROP,
+            // animation: window.google.maps.Animation.DROP,
             map: googleMap.current
+          })
+          marker.addListener('click', () => {
+            console.log(`${marker.label} marker`)
           })
           tripMarkers.current.push(marker)
 
@@ -317,11 +323,17 @@ export default function Maps({ location }) {
            // draw marker on map
            const marker = new window.google.maps.Marker({
             position: loc,
-            label: 'A',
-            icon: svgMarker,
-            animation: window.google.maps.Animation.DROP,
+            label: label,
+            // icon: svgMarker,
+            icon: {
+              url: "http://maps.google.com/mapfiles/ms/icons/blue.png",
+              labelOrigin: new window.google.maps.Point(15,10)
+              // anchor: new window.google.maps.Point(15, 30)
+            },            
+            // animation: window.google.maps.Animation.DROP,
             map: googleMap.current
           })
+
           searchMarkers.current.push(marker)
 
         }
@@ -334,6 +346,7 @@ export default function Maps({ location }) {
       console.log(markers)
       for (let i = 0; i < markers.length; i++) {
         markers[i].setMap(null);
+        markers[i].removeListener()
       }
       return markers
     }

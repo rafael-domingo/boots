@@ -60,6 +60,6 @@ export const {
     setAutoBuild,
     setTimeDay,
     setActivities,
-    resetTripBuilder
+    resetTripBuilder,
 } = tripBuilderSlice.actions;
 export default tripBuilderSlice.reducer

@@ -15,7 +15,7 @@ export default function SearchResults({ handleResults }) {
     const autoComplete = useSelector(state => state.currentTrip.autoComplete);
     const coordinates = useSelector(state => state.currentTrip.coordinates);
     const currentDestinations = useSelector(state => state.currentTrip.destinations);
-    console.log(autoCompleteResults)
+    
     dispatch(setZoom(12))
     dispatch(setFitBounds(true))
     const divStyle = {

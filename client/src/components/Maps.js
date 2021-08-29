@@ -1,12 +1,13 @@
 import React, { useRef } from 'react';
 import { Loader } from '@googlemaps/js-api-loader';
 import { useSelector, useDispatch } from 'react-redux';
-import maps from '../redux/maps';
+import maps, { setDirections } from '../redux/maps';
+import { setAutoComplete } from '../redux/tripBuilder';
 import { setTravelTime } from '../redux/currentTrip';
 
 require('dotenv').config();
 
-export default function Maps({ location }) {
+export default function Maps({ }) {
 
   // USE REFS
   const apiKey = `${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`;
@@ -21,6 +22,8 @@ export default function Maps({ location }) {
   // STATE MANAGEMENT
   const dispatch = useDispatch();
   const mapState = useSelector(state => state.map);
+
+  // Set up trip location array to draw markers
   var location = [];
   if (mapState.tripLocationArray.length >  0) {
     mapState.tripLocationArray.map(item => {
@@ -34,20 +37,23 @@ export default function Maps({ location }) {
       location.push(item.location);
     })
   } 
+
+  // Set up search location array to draw markers
   var searchLocation = [];
   if (mapState.searchLocationArray.length > 0) {
     mapState.searchLocationArray.map(item => {
       searchLocation.push(item);
     })
   } 
-  
-  console.log(location);
 
+  // Set up state variables
   const directions = mapState.directions;
   const center = mapState.center;
   const zoom = mapState.zoom;
   const setFitBounds = mapState.fitBounds;
   const transportation = mapState.transportation;
+
+  // Map component styling
   const mapStyle = {
     width: '45%',
     height: '90%',
@@ -55,64 +61,64 @@ export default function Maps({ location }) {
     left: '2.5%',
     top: '5%',
     bottom: '5%',
-    // zIndex: '-1',
     position: 'absolute',
     boxShadow: '0px 2px 4px 0px rgba(0,0,0,0.5)'
-
   }
   
   React.useEffect(() => {
-    console.log(searchLocation)
-
     const loader = new Loader({
       apiKey: apiKey,
       id: '2d',
       version: "beta",
-
     })
     // Prevent redundant API calls by checking if googleMap is null
     if (googleMap.current === null) {
       loader.load().then(() => {
         // instantiate instance of google map
-        googleMap.current = createGoogleMap(location)
-       
+        googleMap.current = createGoogleMap(location)       
         // create bounds for map to use for markers 
-        bounds.current = new window.google.maps.LatLngBounds();  
-       
+        bounds.current = new window.google.maps.LatLngBounds();         
         if (directions === true) {
           // instantiate directions service and renderer
           directionService.current = new window.google.maps.DirectionsService();
           directionRender.current = new window.google.maps.DirectionsRenderer({ suppressMarkers: true });
           createDirections(location)
-          
+         
+
         }
         createMarker(location, 'trip');
         // Auto fit and Auto zoom based on markers (with 500px padding)
         fitBounds()
+      }).catch((error) => {
+        console.log(error)
       })
     } 
     // If googleMap is not null, modify the map with updated views or markers
-    else {     
-      
+    else {          
       if (searchMarkers.current.length > 0) {
         removeMarkers(searchMarkers.current)
       } 
-      if (searchLocation.length > 0) {
-        
-        createMarker(searchLocation, 'search')
-       
+      if (tripMarkers.current.length > 0) {
+        removeMarkers(tripMarkers.current)
       } 
-      if (setFitBounds) {        
-
-        fitBounds()
-      } else {
-       
-        centerMap(center, zoom)
-
+      if (location.length > 0) {
+        createMarker(location, 'trip')      
       }
-    
-    }
-   
+      if (directions === true) {
+         createDirections(location)         
+         console.log(directionRender)        
+         console.log(directionService)
+      }    
+      if (searchLocation.length > 0) {        
+        createMarker(searchLocation, 'search')       
+      } 
+      // Determine how to set viewport
+      if (setFitBounds) {        
+        fitBounds()
+      } else {       
+        centerMap(center, zoom)
+      }    
+    }   
   }, [location, mapState, center, searchLocation])
 
 
@@ -281,8 +287,6 @@ export default function Maps({ location }) {
     const mapOptions = {
       center: location,
       zoom: 8,
-      // mapTypeId: "satellite",
-      // tilt: 45,
       styles: styles,
       disableDefaultUI: true
     }
@@ -293,47 +297,35 @@ export default function Maps({ location }) {
       location.map((loc, index) => {
         // add location to bounds for map to consider
         bounds.current.extend(loc)
-        const svgMarker = {
-          path: "M10.453 14.016l6.563-6.609-1.406-1.406-5.156 5.203-2.063-2.109-1.406 1.406zM12 2.016q2.906 0 4.945 2.039t2.039 4.945q0 1.453-0.727 3.328t-1.758 3.516-2.039 3.070-1.711 2.273l-0.75 0.797q-0.281-0.328-0.75-0.867t-1.688-2.156-2.133-3.141-1.664-3.445-0.75-3.375q0-2.906 2.039-4.945t4.945-2.039z",
-          fillColor: "blue",
-          fillOpacity: 0.6,
-          strokeWeight: 0,
-          rotation: 0,
-          scale: 1,
-          anchor: new window.google.maps.Point(15, 30)
-        };
-        console.log(index)
+       
         var label = index + 1
         label = label.toString()
-        if (type === 'trip') {
-          // draw marker on map
+
+        // Determine which markers to draw if displaying Trip markers or Search markers
+        if (type === 'trip') {          
           const marker = new window.google.maps.Marker({
             position: loc,
-            label: label,
-            // icon: svgMarker,
-            // animation: window.google.maps.Animation.DROP,
+            label: label,            
             map: googleMap.current
           })
           marker.addListener('click', () => {
             console.log(`${marker.label} marker`)
           })
           tripMarkers.current.push(marker)
-
-        } else if (type === 'search') {
-           // draw marker on map
+        } 
+        else if (type === 'search') {           
            const marker = new window.google.maps.Marker({
             position: loc,
             label: label,
-            // icon: svgMarker,
             icon: {
               url: "http://maps.google.com/mapfiles/ms/icons/blue.png",
               labelOrigin: new window.google.maps.Point(15,10)
-              // anchor: new window.google.maps.Point(15, 30)
             },            
-            // animation: window.google.maps.Animation.DROP,
             map: googleMap.current
           })
-
+          marker.addListener('click', () => {
+            console.log(`${marker.label} marker`)
+          })
           searchMarkers.current.push(marker)
 
         }
@@ -346,8 +338,9 @@ export default function Maps({ location }) {
       console.log(markers)
       for (let i = 0; i < markers.length; i++) {
         markers[i].setMap(null);
-        markers[i].removeListener()
+        // markers[i].removeListener()
       }
+      console.log(markers)
       return markers
     }
 
@@ -355,6 +348,7 @@ export default function Maps({ location }) {
       var start = location[0];
       var end = location[location.length - 1];
       var waypoints = [];
+      var legs = [];
       if (location.length > 2) {
         for (let index = 1; index < location.length - 1; index++){
           waypoints.push({
@@ -372,15 +366,12 @@ export default function Maps({ location }) {
       }
       directionService.current.route(request, function(result, status) {
         if (status == 'OK') {
-          var legs = []
           result.routes[0].legs.map(leg => {
             legs.push({
               duration: leg.duration.text,
               distance: leg.distance.text
             })
           })
-          console.log(result)
-          dispatch(setTravelTime(legs))
           directionRender.current.setDirections(result)
         }
       })
@@ -388,6 +379,8 @@ export default function Maps({ location }) {
             directionRender.current.setOptions({
               // preserveViewport: true
             })
+
+      console.log(legs)
     }
 
     const centerMap = (location, zoom) => {

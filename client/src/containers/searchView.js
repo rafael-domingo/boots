@@ -15,6 +15,9 @@ export default function SearchView() {
     dispatch(setZoom(12))
     dispatch(setFitBounds(true))
 
+    React.useEffect(() => {
+        dispatch(setSearchLocationArray({}))
+    }, [0])
     const divStyle = {
         display: 'flex',
         justifyContent: 'space-between',
@@ -64,11 +67,11 @@ export default function SearchView() {
     }
     return (
         <div style={divStyle}>
-
+{/* 
             <div style={mapDivStyle}>
                 <Maps />
-            </div>
-            <div style={{display: 'flex', justifyContent: 'center', flexWrap: 'wrap', width: '50%'}}>
+            </div> */}
+            <div style={{display: 'flex', justifyContent: 'center', flexWrap: 'wrap', width: '100%'}}>
                 <SearchBox handleResults={handleResults}/>
                 <div style={searchDivStyle}>
                     <SearchResults handleResults={handleResults}/>

@@ -10,7 +10,7 @@ import { setView } from '../redux/user';
 import { resetTripBuilder } from '../redux/tripBuilder';
 import LocationDetail from '../components/LocationDetail';
 import { setCenter, setCityLocationArray, setDirections, setFitBounds, setSearchLocationArray, setTransportation, setTripLocationArray, setZoom } from '../redux/maps';
-import { setAutoComplete, setAutoCompleteResults, setDestinations, setSearchResults, setSearchTerm, setTripId } from '../redux/currentTrip';
+import { setAutoComplete, setAutoCompleteResults, setDestinations, setSearchResults, setSearchTerm, setTravelTime, setTripId } from '../redux/currentTrip';
 import TripBuilderWidget from '../components/TripBuilderWidget';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import Fab from '@material-ui/core/Fab';
@@ -34,13 +34,14 @@ export default function DayTripView() {
     const tripListState = useSelector(state => state.user.tripList);
     const [mapLocation, setMapLocation] = React.useState([currentTripListState.coordinates]);
     const dispatch = useDispatch();
-    dispatch(setTripLocationArray(locations))
-    dispatch(setCityLocationArray([]))
-    dispatch(setDirections(true))
-    dispatch(setSearchLocationArray({}))
-    dispatch(setTransportation(transportation))
-    dispatch(setZoom(12))
-    dispatch(setFitBounds(true))
+    React.useEffect(() => {
+        console.log('useeffect')
+        dispatch(setTripLocationArray(locations))
+        dispatch(setCityLocationArray([]))        
+        dispatch(setTransportation(transportation))
+        dispatch(setZoom(12))
+        dispatch(setFitBounds(true))
+    }, [currentTripListState])
     const divStyle = {
         height: '90vh',
         width: '100%',
@@ -108,10 +109,18 @@ export default function DayTripView() {
     const handleDialog = () => {
         setDialog(!dialog)
     }
+
     if (search) {
+        dispatch(setDirections(false))
         return (
             <div style={divStyle}>
-                <SearchView />                
+                <div style={mapDivStyle}>
+                    <Maps />
+                </div>
+                <div style={locationsDivStyle}>
+                    <SearchView />               
+                </div>
+                 
                 <Fab
                         style={searchButtonStyle}
                         color="secondary"
@@ -131,7 +140,9 @@ export default function DayTripView() {
     }
     
     else {
+        dispatch(setSearchLocationArray({}))
         if (detail) {
+            dispatch(setDirections(false))
             return (
                 <div style={divStyle}>
                       <Fab
@@ -179,7 +190,7 @@ export default function DayTripView() {
             )
         }
         else if (locations.length > 0) {
-
+            dispatch(setDirections(true))
             return (
                 <div style={divStyle}>
                       <Fab

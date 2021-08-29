@@ -1,10 +1,11 @@
 import React from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { useDispatch } from 'react-redux';
-import { setDestinations } from '../redux/currentTrip';
+import { setDestinations, setTravelTime } from '../redux/currentTrip';
 import LocationCard from '../components/LocationCard';
 import TimeDistance from './TimeDistance';
 import Card from '@material-ui/core/Card';
+import { Loader } from '@googlemaps/js-api-loader';
 
 export default function List({ locations, handleClick, travelTime, reorderList }) {
     const dispatch = useDispatch();
@@ -19,7 +20,6 @@ export default function List({ locations, handleClick, travelTime, reorderList }
         arrayMod.splice(result.destination.index, 0, reorderedItem);        
         dispatch(setDestinations(arrayMod))
     }
-
     return (
         <DragDropContext onDragEnd={onDragEnd}>
                             <Droppable droppableId="destinations">

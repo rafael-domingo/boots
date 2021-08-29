@@ -58,6 +58,7 @@ export default function SearchBox({ handleResults }) {
     const handleChange = (e) => {
         dispatch(setSearchTerm(e.target.value))
         dispatch(setSearchResults([]))
+        dispatch(setSearchLocationArray([]))
         dispatch(setAutoCompleteResults([]))
         if (e.target.value.length > 2) {
             Yelp.autoComplete(e.target.value).then(results => {
@@ -65,6 +66,7 @@ export default function SearchBox({ handleResults }) {
                 dispatch(setAutoComplete(true))
             })
         }
+        
        
     }
 

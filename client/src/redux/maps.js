@@ -41,7 +41,7 @@ export const mapSlice = createSlice({
         setTransportation: (state, action) => {
             state.transportation = action.payload
         }
-
+    
     }
 })
 
@@ -54,6 +54,6 @@ export const {
     setCenter,
     setZoom,
     setFitBounds,
-    setTransportation
+    setTransportation,
 } = mapSlice.actions;
 export default mapSlice.reducer

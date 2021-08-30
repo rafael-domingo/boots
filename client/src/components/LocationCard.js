@@ -59,12 +59,6 @@ export default function LocationCard({ name, picture, location, locationInfo, ha
         alignItems: 'center'
     }
 
-    const buttonDivStyle = {
-        width: '25%',
-        display: 'flex',
-        justifyContent: 'flex-end',
-        alignItems: 'center'
-    }
     return (
         <div style={divStyle} onClick={() => {
             if (!reorder) {

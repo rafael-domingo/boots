@@ -7,7 +7,6 @@ import DayTripList from './containers/dayTripList';
 import Logo from './components/Logo';
 import DayTripView from './containers/dayTripView';
 import AppDrawer from './containers/drawer';
-import Location from './containers/location';
 import Questions from './containers/questions';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 

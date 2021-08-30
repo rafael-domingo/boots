@@ -25,30 +25,6 @@ export default function LocationDetail({handleClick}) {
     dispatch(setZoom(18))
     }, [])
     
-    const divStyle = {
-        width: '100%',
-        height: '90%',
-        display: 'flex',
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
-        flexWrap: 'wrap',
-        boxShadow: '0px 2px 4px 0px rgba(0,0,0,0.5)',
-        overflow: 'hidden',
-        borderRadius: '50px',
-
-
-    }
-
-    const locationTextDivStyle = {
-        display: 'flex',
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
-        flexWrap: 'wrap',
-        padding: '2em',
-        color: 'rgb(64, 112, 191)',
-        overflow: 'auto',
-
-    }
     const locationImageStyle = {
         width: '100%',
         height: '100%',
@@ -111,9 +87,6 @@ export default function LocationDetail({handleClick}) {
                     color="primary"
                     style={{margin: '5px'}}
                 />
-                // <div style={categoryArrayStyle}>
-                //     {category.title}
-                // </div>
                 )
         })
        
@@ -130,7 +103,6 @@ export default function LocationDetail({handleClick}) {
 
             </div>
 
-            {/* <div style={locationTextDivStyle}> */}
             <CardContent>
             
                 {categoryArray}
@@ -156,7 +128,6 @@ export default function LocationDetail({handleClick}) {
                 <div style={{width: '100%', margin: '5px'}}>
                     {phoneArray}
                 </div>
-            {/* </div>   */}
                 <Divider variant="middle"/>                
                 <Button onClick={() => window.open(locationDetailState.url)} style={{margin: '5px'}} color="primary" variant="outlined" startIcon={<LaunchIcon/>}>Open in Yelp</Button>
             </CardContent>

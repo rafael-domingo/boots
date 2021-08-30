@@ -7,7 +7,6 @@ import Card from '@material-ui/core/Card';
 
 export default function List({ locations, handleClick, travelTime, reorderList }) {
     const dispatch = useDispatch();
-    const [reorder, setReorder] = React.useState(true);
 
     const onDragEnd = (result) => {
         if (!result.destination) {

@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from '@material-ui/core/Button'
-import { Icon, IconButton, FormControl, InputLabel, Input } from '@material-ui/core';
+import { FormControl, InputLabel, Input } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { setEmail, setPhone, setTripList, setUid, setUserName, setView } from '../redux/user';
 import { SvgIcon } from '@material-ui/core';
@@ -9,7 +9,6 @@ import { getUser, signInWithGoogle } from '../util/Firebase';
 import NumberFormat from 'react-number-format';
 import { signInWithPhone } from '../util/Firebase';
 import firebase from 'firebase';
-import LargeMap from '../components/LargeMap';
 
 function PhoneNumberFormat(props) {
   const { inputRef, onChange, ...other } = props;

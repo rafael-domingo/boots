@@ -1,7 +1,6 @@
 import React from 'react';
 import SearchView from './searchView';
 import { useSelector, useDispatch } from 'react-redux';
-import Maps from '../components/Maps';
 import { setCityLocation, setCityLocationArray, setDirections, setFitBounds, setSearchLocationArray, setTransportation, setTripLocationArray, setZoom } from '../redux/maps';
 import { setAutoComplete, setAutoCompleteResults, setSearchResults, setSearchTerm } from '../redux/currentTrip';
 import Fab from '@material-ui/core/Fab';
@@ -11,10 +10,9 @@ import TripView from './tripView';
 
 export default function DayTripView() {
     const [search, setSearch] = React.useState(false);
-    const [detail, setDetail] = React.useState(false);   
     const currentTripListState = useSelector(state => state.currentTrip);
-
     const dispatch = useDispatch();
+    
     React.useEffect(() => {
         console.log('useeffect')
         dispatch(setTripLocationArray(currentTripListState.destinations))
@@ -39,45 +37,17 @@ export default function DayTripView() {
         // flexWrap: 'wrap'
     }
 
-    const mapDivStyle = {
-        height: 'auto',
-        width: '50%',        
-        overflow: 'hidden'
-    }
-
-    const locationsDivStyle = {
-        width: '50%',
-        height: '100%',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexWrap: 'nowrap',
-        overflowY: 'scroll',
-        overflowX: 'hidden',
-        flexDirection: 'column'
-    }
-
     const searchButtonStyle = {
         position: 'absolute',
         bottom: '5em',
         right: '3em'
     }
 
-    const handleClick = () => {
-        setDetail(!detail);
-    }    
-  
-
     if (search) {
         dispatch(setDirections(false))
         return (
             <div style={divStyle}>
-                <div style={mapDivStyle}>
-                    <Maps handleClick={handleClick}/>
-                </div>
-                <div style={locationsDivStyle}>
-                    <SearchView />               
-                </div>                 
+                <SearchView />               
                 <Fab
                     style={searchButtonStyle}
                     color="secondary"

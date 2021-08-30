@@ -44,7 +44,10 @@ export default function Maps({ handleClick, edit, setEdit}) {
   var searchLocation = [];
   if (mapState.searchLocationArray.length > 0) {
     mapState.searchLocationArray.map(item => {
-      searchLocation.push(item);
+      searchLocation.push({
+        lat: item.coordinates.latitude,
+        lng: item.coordinates.longitude
+      });
     })
   } 
 
@@ -67,14 +70,12 @@ export default function Maps({ handleClick, edit, setEdit}) {
     boxShadow: '0px 2px 4px 0px rgba(0,0,0,0.5)'
   }
   
-  React.useEffect(() => {
-  
+  React.useEffect(() => {  
     const loader = new Loader({
       apiKey: apiKey,
       id: '2d',
       version: "beta",
     })
-    console.log(googleMap)
     // Prevent redundant API calls by checking if googleMap is null
     if (googleMapRef.current === null || googleMap.current === null) {
       loader.load().then(() => {
@@ -370,14 +371,12 @@ export default function Maps({ handleClick, edit, setEdit}) {
           })
           // Make marker clickable so detail view shows up
           marker.addListener('click', () => {
-            const locationDetail = mapState.tripLocationArray[index]
+            const locationDetail = mapState.searchLocationArray[index]
             dispatch(setLocationDetail(locationDetail))
             handleClick()            
           })
           searchMarkers.current.push(marker)
-
-        }
-        
+        }        
       })
      
     }
@@ -385,7 +384,7 @@ export default function Maps({ handleClick, edit, setEdit}) {
     const removeMarkers = (markers) => {      
       for (let i = 0; i < markers.length; i++) {
         markers[i].setMap(null);
-        // markers[i].removeListener()
+        
       }      
       return markers
     }
@@ -425,9 +424,7 @@ export default function Maps({ handleClick, edit, setEdit}) {
       directionRender.current.setMap(googleMap.current);
             directionRender.current.setOptions({
               preserveViewport: true
-            })
-            
-      console.log(legs)
+            })                 
     }
 
     const centerMap = (location, zoom) => {

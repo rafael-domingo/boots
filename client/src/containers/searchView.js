@@ -1,14 +1,14 @@
 import React from 'react';
-import LargeMap from '../components/LargeMap';
 import SearchBox from '../components/SearchBox';
 import SearchResults from '../components/SearchResults';
 import { useSelector, useDispatch } from 'react-redux';
 import Maps from '../components/Maps';
-import { setCenter, setCityLocationArray, setDirections, setFitBounds, setSearchLocationArray, setTripLocationArray, setZoom } from '../redux/maps';
+import { setCenter, setDirections, setFitBounds, setSearchLocationArray, setZoom } from '../redux/maps';
 
 export default function SearchView() {
     const currenttripListState = useSelector(state => state.currentTrip);
     const [mapLocation, setMapLocation] = React.useState(currenttripListState.coordinates)
+    const [detail, setDetail] = React.useState(false)    
     const dispatch = useDispatch();
 
     dispatch(setCenter(mapLocation));
@@ -18,20 +18,13 @@ export default function SearchView() {
     React.useEffect(() => {
         dispatch(setSearchLocationArray({}))
     }, [0])
-    const divStyle = {
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'flex-start',
-        flexWrap: 'wrap',
-        // position: 'absolute',
-        height: '100%',
-        width: '100%',
-        top: '0',
-        right: '0'
-    }
+    const handleClick = () => {        
+        setDetail(!detail);
+        // dispatch(setFitBounds(detail)) 
+    }    
 
     const mapDivStyle = {
-        height: '100vh',
+        height: 'auto',
         width: '50%',       
         display: 'flex',
         justifyContent: 'center',
@@ -63,23 +56,20 @@ export default function SearchView() {
             locArray.push(location)
         })
         console.log(locArray)
-        dispatch(setSearchLocationArray(locArray));
+        dispatch(setSearchLocationArray(results));
     }
     return (
-        <div style={divStyle}>
-{/* 
+        <>
             <div style={mapDivStyle}>
-                <Maps />
-            </div> */}
-            <div style={{display: 'flex', justifyContent: 'center', flexWrap: 'wrap', width: '100%'}}>
-                <SearchBox handleResults={handleResults}/>
-                <div style={searchDivStyle}>
-                    <SearchResults handleResults={handleResults}/>
-
-                </div>
+                <Maps handleClick={handleClick}/>
             </div>
-           
-
-        </div>
+            
+            <div style={{display: 'flex', justifyContent: 'center', flexWrap: 'wrap', width: '50%'}}>                
+                <SearchBox handleResults={handleResults}/>
+                    <div style={searchDivStyle}>
+                        <SearchResults handleResults={handleResults} detail={detail} setDetail={setDetail}/>
+                    </div>                    
+            </div>           
+        </>
     )
 }

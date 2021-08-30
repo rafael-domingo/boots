@@ -4,10 +4,12 @@ import Card from '@material-ui/core/Card';
 import Button from '@material-ui/core/Button';
 import LibraryAddIcon from '@material-ui/icons/LibraryAdd';
 import Chip from '@material-ui/core/Chip';
+import CheckIcon from '@material-ui/icons/Check';
 import { addDestinations } from '../redux/currentTrip';
 import { setLocationDetail } from '../redux/user';
 export default function SearchCard({ name, picture, location, locationInfo, handleClick}) {
     const dispatch = useDispatch();
+    const [selected, setSelected] = React.useState(false);
     const divStyle = {
         height: '100%',
         width: '100%',
@@ -91,7 +93,25 @@ export default function SearchCard({ name, picture, location, locationInfo, hand
                     
                 </div>
                 <div style={{display: 'flex', justifyContent: 'flex-end', width: '20%', alignItems: 'flex-end', margin: '1em'}}>
-                    <Button style={{height: '2em'}} startIcon={<LibraryAddIcon/>} color="primary" onClick={() => dispatch(addDestinations(locationInfo))}>Add To Trip</Button>
+                    {
+                        !selected && (
+                            <Button style={{height: '2em'}} startIcon={<LibraryAddIcon/>} color="primary" onClick={() => {
+                                dispatch(addDestinations(locationInfo))
+                                setSelected(true)
+                            }}
+                            >
+                                Add To Trip
+                            </Button>
+                        )
+                    }
+                    {
+                        selected && (
+                            <Button style={{height: '2em', color: 'green'}} startIcon={<CheckIcon/>} color="primary" 
+                            >
+                                Added
+                            </Button>                        
+                        )
+                    }
                 </div>
 
             </Card>

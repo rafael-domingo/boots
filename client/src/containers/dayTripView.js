@@ -164,7 +164,7 @@ export default function DayTripView() {
                             <ArrowBackIcon />
                         </Fab>
                     <div style={mapDivStyle}>
-                        <Maps />
+                        <Maps handleClick={handleClick} />
 
                     </div>
                     <div style={locationsDivStyle} onClick={() => handleClick()}>
@@ -193,26 +193,9 @@ export default function DayTripView() {
             dispatch(setDirections(true))
             return (
                 <div style={divStyle}>
-                      <Fab
-                        style={backButtonStyle}
-                        color="primary"
-                        aria-label="previous"
-                        onClick={() => {
-                            dispatch(setView('UserHome'))
-                            if (tripBuilder.selectedCity.length > 0) {
-                                dispatch(addTripList(currentTripListState))
-                                dispatch(resetTripBuilder())
-                            } else {
-                                console.log('logged')
-
-                                dispatch(updateTripList(currentTripListState))
-                            }
-                        }}  
-                        >
-                            <ArrowBackIcon />
-                        </Fab>
+                  
                     <div style={mapDivStyle}>
-                        <Maps />
+                        <Maps handleClick={handleClick} />
 
                     </div>
 

@@ -4,10 +4,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import maps, { setDirections } from '../redux/maps';
 import { setAutoComplete } from '../redux/tripBuilder';
 import { setTravelTime } from '../redux/currentTrip';
+import { setLocationDetail } from '../redux/user';
 
 require('dotenv').config();
 
-export default function Maps({ }) {
+export default function Maps({ handleClick}) {
 
   // USE REFS
   const apiKey = `${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`;
@@ -22,6 +23,7 @@ export default function Maps({ }) {
   // STATE MANAGEMENT
   const dispatch = useDispatch();
   const mapState = useSelector(state => state.map);
+  const tripState = useSelector(state => state.currentTrip);
 
   // Set up trip location array to draw markers
   var location = [];
@@ -75,26 +77,38 @@ export default function Maps({ }) {
     if (googleMap.current === null) {
       loader.load().then(() => {
         // instantiate instance of google map
-        googleMap.current = createGoogleMap(location)       
-        // create bounds for map to use for markers 
-        bounds.current = new window.google.maps.LatLngBounds();         
+        if (location.length === 0) {
+          googleMap.current = createGoogleMap(tripState.coordinates) 
+          bounds.current = new window.google.maps.LatLngBounds(); 
+      
+        } else {
+          googleMap.current = createGoogleMap(location)      
+          // create bounds for map to use for markers 
+          bounds.current = new window.google.maps.LatLngBounds(); 
+          fitBounds()
+
+        }
+        directionService.current = new window.google.maps.DirectionsService();
+        directionRender.current = new window.google.maps.DirectionsRenderer({ suppressMarkers: true });
+                 
         if (directions === true) {
           // instantiate directions service and renderer
-          directionService.current = new window.google.maps.DirectionsService();
-          directionRender.current = new window.google.maps.DirectionsRenderer({ suppressMarkers: true });
+        
           createDirections(location)
          
 
         }
         createMarker(location, 'trip');
         // Auto fit and Auto zoom based on markers (with 500px padding)
-        fitBounds()
+
+        
       }).catch((error) => {
         console.log(error)
       })
     } 
     // If googleMap is not null, modify the map with updated views or markers
-    else {          
+    else {       
+         
       if (searchMarkers.current.length > 0) {
         removeMarkers(searchMarkers.current)
       } 
@@ -113,13 +127,17 @@ export default function Maps({ }) {
         createMarker(searchLocation, 'search')       
       } 
       // Determine how to set viewport
-      if (setFitBounds) {        
+      if (location.length === 0 && searchLocation.length === 0) {
+        centerMap(tripState.coordinates, 12)
+      }
+      else if (setFitBounds) {        
         fitBounds()
       } else {       
         centerMap(center, zoom)
       }    
     }   
-  }, [location, mapState, center, searchLocation])
+
+  }, [location, mapState, center, searchLocation, tripState])
 
 
     const createGoogleMap = (location) => {
@@ -286,7 +304,7 @@ export default function Maps({ }) {
     ]
     const mapOptions = {
       center: location,
-      zoom: 8,
+      zoom: 12,
       styles: styles,
       disableDefaultUI: true
     }
@@ -298,6 +316,7 @@ export default function Maps({ }) {
         // add location to bounds for map to consider
         bounds.current.extend(loc)
        
+        // Create label for marker
         var label = index + 1
         label = label.toString()
 
@@ -308,8 +327,11 @@ export default function Maps({ }) {
             label: label,            
             map: googleMap.current
           })
+          // Make marker clickable so detail view shows up
           marker.addListener('click', () => {
-            console.log(`${marker.label} marker`)
+            const locationDetail = mapState.tripLocationArray[index]
+            dispatch(setLocationDetail(locationDetail))
+            handleClick()            
           })
           tripMarkers.current.push(marker)
         } 
@@ -323,8 +345,11 @@ export default function Maps({ }) {
             },            
             map: googleMap.current
           })
+          // Make marker clickable so detail view shows up
           marker.addListener('click', () => {
-            console.log(`${marker.label} marker`)
+            const locationDetail = mapState.tripLocationArray[index]
+            dispatch(setLocationDetail(locationDetail))
+            handleClick()            
           })
           searchMarkers.current.push(marker)
 
@@ -385,16 +410,12 @@ export default function Maps({ }) {
 
     const centerMap = (location, zoom) => {
       googleMap.current.panTo(location)
-      googleMap.current.setZoom(zoom);  
-    
+      googleMap.current.setZoom(zoom);      
     }
 
     const fitBounds = () => {
       googleMap.current.panToBounds(bounds.current)
-      googleMap.current.fitBounds(bounds.current)
-      
-
-
+      googleMap.current.fitBounds(bounds.current)      
     }
 
 

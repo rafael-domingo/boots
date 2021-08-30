@@ -2,7 +2,7 @@ import React from 'react';
 import Button from '@material-ui/core/Button'
 import { FormControl, InputLabel, Input } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
-import { setEmail, setPhone, setTripList, setUid, setUserName, setView } from '../redux/user';
+import { setEmail, setPhone, setProfilePicture, setTripList, setUid, setUserName, setView } from '../redux/user';
 import { SvgIcon } from '@material-ui/core';
 import PhoneIcon from '@material-ui/icons/Phone';
 import { getUser, signInWithGoogle } from '../util/Firebase';
@@ -89,11 +89,13 @@ export default function Home() {
 
     const handleSignInGoogle = () => {
       setSignInVisible(false)
-      signInWithGoogle().then(result => {
+      signInWithGoogle().then(result => {        
         dispatch(setUserName(result.user.displayName))
         dispatch(setEmail(result.user.email))
         dispatch(setUid(result.user.uid))
+        dispatch(setProfilePicture(result.user.photoURL))
         getUser().then(result => {
+          console.log(result)
           if (result.trips !== undefined) {
             dispatch(setTripList(result.trips))
             dispatch(setView('UserHome'))

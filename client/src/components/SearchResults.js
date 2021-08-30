@@ -1,17 +1,12 @@
 import React from 'react';
-import LocationCard from './LocationCard';
 import { useSelector, useDispatch } from 'react-redux';
-import { setSearchTerm, setSearchResults, setAutoCompleteResults } from '../redux/currentTrip';
-import { Yelp } from '../util/Yelp';
 import LocationDetail from './LocationDetail';
-import { setFitBounds, setSearchLocationArray, setZoom } from '../redux/maps';
+import { setFitBounds, setZoom } from '../redux/maps';
 import SearchCard from './SearchCard';
 
 export default function SearchResults({ handleResults, detail, setDetail }) {
     const dispatch = useDispatch();
     const searchResults = useSelector(state => state.currentTrip.searchResults);  
-    const coordinates = useSelector(state => state.currentTrip.coordinates);
-    const currentDestinations = useSelector(state => state.currentTrip.destinations);
     
     dispatch(setZoom(12))
     dispatch(setFitBounds(true))
@@ -57,9 +52,8 @@ export default function SearchResults({ handleResults, detail, setDetail }) {
     } 
      else {
         return (
-            <div>
-                Loading
-            </div>
+            <>
+            </>
         )
     }
    

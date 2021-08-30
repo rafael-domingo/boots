@@ -7,7 +7,7 @@ export const userSlice = createSlice({
         email: '',
         phone: '',
         uid: '',
-        profilePicture: {},
+        profilePicture: '',
         tripList: [
             // {
             //     name: 'Baton Rouge',

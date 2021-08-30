@@ -1,8 +1,6 @@
 import React, { useRef } from 'react';
 import { Loader } from '@googlemaps/js-api-loader';
 import { useSelector, useDispatch } from 'react-redux';
-import maps, { setDirections } from '../redux/maps';
-import { setAutoComplete } from '../redux/tripBuilder';
 import { setTravelTime } from '../redux/currentTrip';
 import { setLocationDetail } from '../redux/user';
 
@@ -79,44 +77,34 @@ export default function Maps({ handleClick, edit, setEdit}) {
     // Prevent redundant API calls by checking if googleMap is null
     if (googleMapRef.current === null || googleMap.current === null) {
       loader.load().then(() => {
-        console.log('null')
-        console.log(googleMapRef)
-        // instantiate instance of google map
+        // instantiate instance of google map based on if there's markers to show
         if (location.length === 0 && searchLocation.length === 0) {
           googleMap.current = createGoogleMap(mapState.cityLocation) 
           bounds.current = new window.google.maps.LatLngBounds(); 
-      
         } else {
           googleMap.current = createGoogleMap(mapState.cityLocation)      
           // create bounds for map to use for markers 
           bounds.current = new window.google.maps.LatLngBounds(); 
           createMarker(location, 'trip');
-          // Auto fit and Auto zoom based on markers (with 500px padding)
+
+          // Auto fit and Auto zoom based on markers
           if (setFitBounds) {        
             fitBounds()
           } else {       
             centerMap(center, zoom)
           }    
         }
+        // instantiate directions service
         directionService.current = new window.google.maps.DirectionsService();
-        directionRender.current = new window.google.maps.DirectionsRenderer({ suppressMarkers: true });
-                 
-        if (directions === true) {
-          // instantiate directions service and renderer
-          if (trackState) {
+        directionRender.current = new window.google.maps.DirectionsRenderer({ suppressMarkers: true });                 
+        if (directions === true) {                    
             createDirections(location)
-            // setTrackState(!trackState)
-          }
-          
-         
-
-        }
-    
-        
+        }          
       }).catch((error) => {
         console.log(error)
       })
     } 
+    // handle if we're editing the current trip -- edit prop prevents re-rendering after dispatching Trip times to Redux store
     else if (edit) {
       // reset bounds so viewport is correct
       bounds.current = new window.google.maps.LatLngBounds(); 
@@ -127,12 +115,12 @@ export default function Maps({ handleClick, edit, setEdit}) {
         createMarker(location, 'trip')      
       }
       createDirections(location)      
+      // prevent re-rendering of createDirections method by setting edit to false
       setEdit(false)
       fitBounds()
     }
-    // If googleMap is not null, modify the map with updated views or markers
+    // handle updates to the map that isn't related to directions
     else {       
-      console.log('not null')
       // reset bounds so viewport is correct
       bounds.current = new window.google.maps.LatLngBounds(); 
       if (searchMarkers.current.length > 0) {

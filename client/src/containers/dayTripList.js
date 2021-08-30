@@ -73,11 +73,13 @@ export default function DayTripList() {
         dispatch(setView('Trip'))
         dispatch(setTripBuilder(trip.tripBuilder))
     }
-    dispatch(setCityLocationArray(tripListState))
-    dispatch(setTripLocationArray([]))
-    dispatch(setWindowWidth(window.innerWidth))
-    dispatch(setDirections(false))
- 
+
+    React.useEffect(() => {
+        dispatch(setCityLocationArray(tripListState))
+        dispatch(setTripLocationArray([]))
+        dispatch(setWindowWidth(window.innerWidth))
+        dispatch(setDirections(false))
+    })
 
     return (
         <div style={divStyle}>                        

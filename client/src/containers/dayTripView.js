@@ -21,8 +21,10 @@ export default function DayTripView() {
         dispatch(setZoom(12))
         dispatch(setFitBounds(true))
         dispatch(setCityLocation(currentTripListState.coordinates))
-    }, [currentTripListState])
 
+    }, [currentTripListState])
+    dispatch(setSearchLocationArray({}))
+    dispatch(setDirections(true))
     const divStyle = {
         height: '90vh',
         width: '100%',
@@ -44,7 +46,6 @@ export default function DayTripView() {
     }
 
     if (search) {
-        dispatch(setDirections(false))
         return (
             <div style={divStyle}>
                 <SearchView />               
@@ -67,8 +68,7 @@ export default function DayTripView() {
     }
     
     else {
-        dispatch(setSearchLocationArray({}))
-        dispatch(setDirections(true))
+        
         return (
             <div style={divStyle}>               
                 <TripView />

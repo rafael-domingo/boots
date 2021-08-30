@@ -81,6 +81,7 @@ export const getUser = async () => {
 export const deleteUser = () => {
     firestore.collection("users").doc(auth.currentUser.uid).delete().then(() => {
         console.log('User delete successfully')
+        return auth.currentUser
     }).catch((error) => {
         console.log('Error in deleting user')
     })

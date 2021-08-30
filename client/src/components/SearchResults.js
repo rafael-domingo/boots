@@ -64,7 +64,7 @@ export default function SearchResults({ handleResults }) {
         if (detail) {
             return (
                 <div style={divStyle} onClick={() => handleClick()}>
-                    <LocationDetail />
+                    <LocationDetail handleClick={handleClick}/>
                 </div>
             )
         

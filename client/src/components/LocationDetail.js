@@ -13,15 +13,18 @@ import Divider from '@material-ui/core/Divider';
 import LaunchIcon from '@material-ui/icons/Launch';
 import Fab from '@material-ui/core/Fab';
 import CloseIcon from '@material-ui/icons/Close';
-export default function LocationDetail() {
+export default function LocationDetail({handleClick}) {
     const locationDetailState = useSelector(state => state.user.locationDetail);
     const dispatch = useDispatch()
+    React.useEffect(() => {
     dispatch(setFitBounds(false))
     dispatch(setCenter({
         lat: locationDetailState.coordinates.latitude,
         lng: locationDetailState.coordinates.longitude
     }))
     dispatch(setZoom(18))
+    }, [])
+    
     const divStyle = {
         width: '100%',
         height: '90%',
@@ -119,7 +122,7 @@ export default function LocationDetail() {
     return (
         <Card style={{color: 'rgb(64, 112, 191)', width: '80%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
             <div style={{display: 'flex', height: '100%', width: '50%'}}>
-            <Fab style={{left: '10%', zIndex: '100'}} color="primary" variant="contained">
+            <Fab style={{left: '10%', zIndex: '100'}} color="primary" variant="contained" onClick={() => handleClick()}>
                     <CloseIcon/>
                 </Fab>
 

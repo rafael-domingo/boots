@@ -11,7 +11,8 @@ export const mapSlice = createSlice({
         transportation: 'DRIVING',
         center: {},
         zoom: 8,
-        fitBounds: true
+        fitBounds: true,
+        cityLocation: {}
     },
     reducers: {
         setCityLocationArray: (state, action) => {
@@ -40,6 +41,9 @@ export const mapSlice = createSlice({
         },
         setTransportation: (state, action) => {
             state.transportation = action.payload
+        },
+        setCityLocation: (state, action) => {
+            state.cityLocation = action.payload
         }
     
     }
@@ -55,5 +59,6 @@ export const {
     setZoom,
     setFitBounds,
     setTransportation,
+    setCityLocation
 } = mapSlice.actions;
 export default mapSlice.reducer

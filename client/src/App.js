@@ -10,7 +10,7 @@ import AppDrawer from './containers/drawer';
 import Location from './containers/location';
 import Questions from './containers/questions';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import SearchView from './containers/searchView';
+
 import { setView } from './redux/user';
 import { useDispatch, useSelector } from 'react-redux';
 import LargeMap from './components/LargeMap';

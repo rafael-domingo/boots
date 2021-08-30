@@ -8,7 +8,7 @@ import { setLocationDetail } from '../redux/user';
 
 require('dotenv').config();
 
-export default function Maps({ handleClick}) {
+export default function Maps({ handleClick, edit, setEdit}) {
 
   // USE REFS
   const apiKey = `${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`;
@@ -19,11 +19,11 @@ export default function Maps({ handleClick}) {
   const bounds = useRef(null);
   const directionService = useRef(null);
   const directionRender = useRef(null);
+  const [trackState, setTrackState] = React.useState(true);
 
   // STATE MANAGEMENT
   const dispatch = useDispatch();
   const mapState = useSelector(state => state.map);
-  const tripState = useSelector(state => state.currentTrip);
 
   // Set up trip location array to draw markers
   var location = [];
@@ -68,47 +68,72 @@ export default function Maps({ handleClick}) {
   }
   
   React.useEffect(() => {
+  
     const loader = new Loader({
       apiKey: apiKey,
       id: '2d',
       version: "beta",
     })
+    console.log(googleMap)
     // Prevent redundant API calls by checking if googleMap is null
-    if (googleMap.current === null) {
+    if (googleMapRef.current === null || googleMap.current === null) {
       loader.load().then(() => {
+        console.log('null')
+        console.log(googleMapRef)
         // instantiate instance of google map
-        if (location.length === 0) {
-          googleMap.current = createGoogleMap(tripState.coordinates) 
+        if (location.length === 0 && searchLocation.length === 0) {
+          googleMap.current = createGoogleMap(mapState.cityLocation) 
           bounds.current = new window.google.maps.LatLngBounds(); 
       
         } else {
-          googleMap.current = createGoogleMap(location)      
+          googleMap.current = createGoogleMap(mapState.cityLocation)      
           // create bounds for map to use for markers 
           bounds.current = new window.google.maps.LatLngBounds(); 
-          fitBounds()
-
+          createMarker(location, 'trip');
+          // Auto fit and Auto zoom based on markers (with 500px padding)
+          if (setFitBounds) {        
+            fitBounds()
+          } else {       
+            centerMap(center, zoom)
+          }    
         }
         directionService.current = new window.google.maps.DirectionsService();
         directionRender.current = new window.google.maps.DirectionsRenderer({ suppressMarkers: true });
                  
         if (directions === true) {
           // instantiate directions service and renderer
-        
-          createDirections(location)
+          if (trackState) {
+            createDirections(location)
+            // setTrackState(!trackState)
+          }
+          
          
 
         }
-        createMarker(location, 'trip');
-        // Auto fit and Auto zoom based on markers (with 500px padding)
-
+    
         
       }).catch((error) => {
         console.log(error)
       })
     } 
+    else if (edit) {
+      // reset bounds so viewport is correct
+      bounds.current = new window.google.maps.LatLngBounds(); 
+      if (tripMarkers.current.length > 0) {
+        removeMarkers(tripMarkers.current)
+      } 
+      if (location.length > 0) {
+        createMarker(location, 'trip')      
+      }
+      createDirections(location)      
+      setEdit(false)
+      fitBounds()
+    }
     // If googleMap is not null, modify the map with updated views or markers
     else {       
-         
+      console.log('not null')
+      // reset bounds so viewport is correct
+      bounds.current = new window.google.maps.LatLngBounds(); 
       if (searchMarkers.current.length > 0) {
         removeMarkers(searchMarkers.current)
       } 
@@ -118,17 +143,13 @@ export default function Maps({ handleClick}) {
       if (location.length > 0) {
         createMarker(location, 'trip')      
       }
-      if (directions === true) {
-         createDirections(location)         
-         console.log(directionRender)        
-         console.log(directionService)
-      }    
+
       if (searchLocation.length > 0) {        
         createMarker(searchLocation, 'search')       
       } 
       // Determine how to set viewport
       if (location.length === 0 && searchLocation.length === 0) {
-        centerMap(tripState.coordinates, 12)
+        centerMap(mapState.cityLocation, 12)
       }
       else if (setFitBounds) {        
         fitBounds()
@@ -137,10 +158,12 @@ export default function Maps({ handleClick}) {
       }    
     }   
 
-  }, [location, mapState, center, searchLocation, tripState])
+  }, [location, mapState, center, searchLocation])
+
 
 
     const createGoogleMap = (location) => {
+      console.log(location)
       // map styles generated from Google tool 
     const styles = [
       {
@@ -359,13 +382,11 @@ export default function Maps({ handleClick}) {
      
     }
 
-    const removeMarkers = (markers) => {
-      console.log(markers)
+    const removeMarkers = (markers) => {      
       for (let i = 0; i < markers.length; i++) {
         markers[i].setMap(null);
         // markers[i].removeListener()
-      }
-      console.log(markers)
+      }      
       return markers
     }
 
@@ -398,13 +419,14 @@ export default function Maps({ handleClick}) {
             })
           })
           directionRender.current.setDirections(result)
+          dispatch(setTravelTime(legs))
         }
       })
       directionRender.current.setMap(googleMap.current);
             directionRender.current.setOptions({
-              // preserveViewport: true
+              preserveViewport: true
             })
-
+            
       console.log(legs)
     }
 

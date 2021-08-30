@@ -4,7 +4,7 @@ import SearchBox from '../components/SearchBox';
 import SearchResults from '../components/SearchResults';
 import { useSelector, useDispatch } from 'react-redux';
 import Maps from '../components/Maps';
-import { setCenter, setCityLocationArray, setFitBounds, setSearchLocationArray, setTripLocationArray, setZoom } from '../redux/maps';
+import { setCenter, setCityLocationArray, setDirections, setFitBounds, setSearchLocationArray, setTripLocationArray, setZoom } from '../redux/maps';
 
 export default function SearchView() {
     const currenttripListState = useSelector(state => state.currentTrip);
@@ -14,7 +14,7 @@ export default function SearchView() {
     dispatch(setCenter(mapLocation));
     dispatch(setZoom(12))
     dispatch(setFitBounds(true))
-
+    dispatch(setDirections(false))
     React.useEffect(() => {
         dispatch(setSearchLocationArray({}))
     }, [0])

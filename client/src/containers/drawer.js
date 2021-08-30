@@ -6,12 +6,15 @@ import Logo from '../components/Logo';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { signOut } from '../util/Firebase';
-import { useDispatch } from 'react-redux';
-import { setEmail, setTripList, setUid, setUserName, setView } from '../redux/user';
+import { useDispatch, useSelector } from 'react-redux';
+import { addTripList, setEmail, setTripList, setUid, setUserName, setView, updateTripList } from '../redux/user';
+import { resetTripBuilder } from '../redux/tripBuilder';
 
 export default function AppDrawer({drawer, setDrawer}) {
     const dispatch = useDispatch();
-    
+    const tripBuilder = useSelector(state => state.tripBuilder)
+    const currentTripListState = useSelector(state => state.currentTrip);
+
     const divStyle = {
         width: '25vw',
         height: '100%',
@@ -68,8 +71,18 @@ export default function AppDrawer({drawer, setDrawer}) {
                         startIcon={<AccountCircleIcon/>}
                         style={{color: 'white'}}
                         size="large"
+                        onClick={() => {
+                            if (tripBuilder.selectedCity.length > 0) {
+                                dispatch(addTripList(currentTripListState))
+                                dispatch(resetTripBuilder())
+                            } else {
+                                console.log('logged')
+                                dispatch(updateTripList(currentTripListState))
+                            }
+                            dispatch(setView('UserHome'))
+                        }}
                     >
-                        Profile
+                        Your Trips
                     </Button>
                 </div>
                 <div style={{width: '100%', display: 'flex', justifyContent: 'center', margin: '20px'}}>            

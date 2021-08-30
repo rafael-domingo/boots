@@ -33,8 +33,7 @@ function App() {
   else if (viewState === 'UserHome') {
     return (
       <div>        
-      <AppDrawer drawer={drawer} setDrawer={setDrawer}/>
-        
+      <AppDrawer drawer={drawer} setDrawer={setDrawer}/>        
       <Logo setDrawer={setDrawer} drawer={drawer}/>
       <DayTripList/>
     </div>

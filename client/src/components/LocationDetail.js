@@ -13,9 +13,11 @@ import Divider from '@material-ui/core/Divider';
 import LaunchIcon from '@material-ui/icons/Launch';
 import Fab from '@material-ui/core/Fab';
 import CloseIcon from '@material-ui/icons/Close';
+import { Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
 export default function LocationDetail({handleClick}) {
     const locationDetailState = useSelector(state => state.user.locationDetail);
     const dispatch = useDispatch()
+    const windowWidth = window.innerWidth
     React.useEffect(() => {
     dispatch(setFitBounds(false))
     dispatch(setCenter({
@@ -91,48 +93,91 @@ export default function LocationDetail({handleClick}) {
         })
        
     }
-   
-    return (
-        <Card style={{color: 'rgb(64, 112, 191)', width: '80%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-            <div style={{display: 'flex', height: '100%', width: '50%'}}>
-            <Fab style={{left: '10%', zIndex: '100'}} color="primary" variant="contained" onClick={() => handleClick()}>
-                    <CloseIcon/>
-                </Fab>
+    if (windowWidth < 400) {
+        return (
+            <div style={{color: 'rgb(64, 112, 191)'}}>
 
-            <img style={locationImageStyle} src={locationDetailState.image_url} />
-
+            <Dialog  open={true} onClose={handleClick}>
+                <DialogTitle>
+                {locationDetailState.name}                
+                </DialogTitle>
+                <DialogContent>
+              
+                <img style={locationImageStyle} src={locationDetailState.image_url} />
+                {categoryArray}
+                {
+                        locationDetailState.location.display_address.map(item => {
+                            return (
+                                <p>{item}</p>
+                            )
+                        })
+                    }                                                         
+                    <Divider variant="middle"/>                          
+                    <div style={{color: 'rgba(65, 112,191)', width: '100%', margin: '5px'}}>
+                    {priceArray}
+                    </div>
+    
+                    <div style={{color: 'rgba(65, 112,191)', width: '100%', margin: '5px'}}>
+                    {ratingArray}
+                    </div>
+                    <div style={{color: 'rgba(65, 112,191)', width: '100%', margin: '5px'}}>
+                        {phoneArray}
+                    </div>
+                    <Divider variant="middle"/>   
+                    <DialogActions>
+                        <Button onClick={() => window.open(locationDetailState.url)} style={{margin: '5px'}} color="primary" variant="outlined" startIcon={<LaunchIcon/>}>Open in Yelp</Button>
+                        <Button variant="contained" color="primary" onClick={() => handleClick()} >Close</Button>
+                    </DialogActions>             
+                    
+                </DialogContent>
+            </Dialog>
             </div>
 
-            <CardContent>
-            
-                {categoryArray}
+        )
+    } else {
+        return (
+            <Card style={{color: 'rgb(64, 112, 191)', width: '80%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                <div style={{display: 'flex', height: '100%', width: '50%'}}>
+                <Fab style={{left: '10%', zIndex: '100'}} color="primary" variant="contained" onClick={() => handleClick()}>
+                        <CloseIcon/>
+                    </Fab>
+    
+                <img style={locationImageStyle} src={locationDetailState.image_url} />
+    
+                </div>
+    
+                <CardContent>
                 
-                <Divider variant="middle"/>
-
-                <p style={locationNameStyle}>{locationDetailState.name}</p>
-                {
-                    locationDetailState.location.display_address.map(item => {
-                        return (
-                            <p style={locationAddressStyle}>{item}</p>
-                        )
-                    })
-                }
-                <Divider variant="middle"/>
-                <div style={{width: '100%', margin: '5px'}}>
-                {priceArray}
-                </div>
-
-                <div style={{width: '100%', margin: '5px'}}>
-                {ratingArray}
-                </div>
-                <div style={{width: '100%', margin: '5px'}}>
-                    {phoneArray}
-                </div>
-                <Divider variant="middle"/>                
-                <Button onClick={() => window.open(locationDetailState.url)} style={{margin: '5px'}} color="primary" variant="outlined" startIcon={<LaunchIcon/>}>Open in Yelp</Button>
-            </CardContent>
- 
-        </Card>
-       
-    )
+                    {categoryArray}
+                    
+                    <Divider variant="middle"/>
+    
+                    <p style={locationNameStyle}>{locationDetailState.name}</p>
+                    {
+                        locationDetailState.location.display_address.map(item => {
+                            return (
+                                <p style={locationAddressStyle}>{item}</p>
+                            )
+                        })
+                    }
+                    <Divider variant="middle"/>
+                    <div style={{width: '100%', margin: '5px'}}>
+                    {priceArray}
+                    </div>
+    
+                    <div style={{width: '100%', margin: '5px'}}>
+                    {ratingArray}
+                    </div>
+                    <div style={{width: '100%', margin: '5px'}}>
+                        {phoneArray}
+                    </div>
+                    <Divider variant="middle"/>                
+                    <Button onClick={() => window.open(locationDetailState.url)} style={{margin: '5px'}} color="primary" variant="outlined" startIcon={<LaunchIcon/>}>Open in Yelp</Button>
+                </CardContent>
+     
+            </Card>
+           
+        )
+    }
+  
 }

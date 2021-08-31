@@ -4,11 +4,16 @@ import IconButton from '@material-ui/core/IconButton';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 export default function Logo({setDrawer, drawer, color="rgba(64, 112, 191)", back=false}) {
+    const windowWidth = window.innerWidth
     const divStyle = {
         display: 'flex',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        width: '100%'
+        width: '100%',
+        zIndex: '100',
+        position: 'absolute',
+        left: '0',
+        top: '0'
     }
 
     const logoStyle = {
@@ -35,7 +40,10 @@ export default function Logo({setDrawer, drawer, color="rgba(64, 112, 191)", bac
                     )
                 }
             </IconButton>
-            <h1 style={logoStyle}>BOOTS</h1>
+            {
+                windowWidth > 400 ? (<h1 style={logoStyle}>BOOTS</h1>) : null
+            }    
+            
         </div>
     )
 }

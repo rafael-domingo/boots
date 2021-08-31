@@ -13,6 +13,7 @@ export default function TripView() {
     const [reorder, setReorder] = React.useState(false)
     const [detail, setDetail] = React.useState(false)    
     const [edit, setEdit] = React.useState(false)
+    const windowWidth = window.innerWidth
     const dispatch = useDispatch()
     const handleDialog = () => {
         setDialog(!dialog)
@@ -23,14 +24,15 @@ export default function TripView() {
     }    
 
     const mapDivStyle = {
-        height: 'auto',
-        width: '50%',        
+        height: windowWidth < 400 ? null : 'auto',
+        width: windowWidth < 400 ? null : '50%',        
         overflow: 'hidden'
     }
 
     const locationsDivStyle = {
-        width: '50%',
-        height: '100%',
+        width: windowWidth < 400 ? '100%' : '50%',
+        marginTop: windowWidth < 400 ? '50%' : '0',  
+        height: windowWidth < 400 ? 'auto' :'auto',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -44,8 +46,8 @@ export default function TripView() {
 
     const cityNameStyle = {
         color: 'rgb(64, 112, 191)',
-        fontSize: '3em',
-        fontWeight: 'normal',
+        fontSize: windowWidth < 400 ? '2em' : '3em',
+        fontWeight: 'bold',
   
     }
 
@@ -56,7 +58,7 @@ export default function TripView() {
         width: '100%'
     }
     return (
-        <>
+        <div style={{display: 'flex', width: '100%', height: '100vh'}}>
             <div style={mapDivStyle}>
                 <Maps handleClick={handleClick} edit={edit} setEdit={setEdit}/>
             </div>
@@ -84,6 +86,6 @@ export default function TripView() {
                
             </div>     
 
-        </>
+        </div>
     )
 }

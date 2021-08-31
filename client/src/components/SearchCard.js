@@ -10,6 +10,7 @@ import { setLocationDetail } from '../redux/user';
 export default function SearchCard({ name, picture, location, locationInfo, handleClick}) {
     const dispatch = useDispatch();
     const [selected, setSelected] = React.useState(false);
+    const windowWidth = window.innerWidth
     const divStyle = {
         height: '100%',
         width: '100%',
@@ -23,9 +24,10 @@ export default function SearchCard({ name, picture, location, locationInfo, hand
     }
     const textDivStyle = {
         width: '100%',
+        height: '100%',
         color: 'rgb(64, 112, 191)',      
-        fontSize: '1.5em',
-        lineHeight: '0',
+        fontSize: windowWidth < 400 ? '1em' : '1.5em',    
+        // lineHeight: '0',
         display: 'flex',
         justifyContent: 'flex-start',
         alignItems: 'center',
@@ -46,13 +48,13 @@ export default function SearchCard({ name, picture, location, locationInfo, hand
     const imgStyle = {
         // borderRadius: '2em',
         width: '100%',
-        height: '100%',
+        height: windowWidth < 400 ? '5em': '10em',
         objectFit: 'cover'
 
     }
     const imgDivStyle = {
-        width: '20%',
-        height: '10em',
+        width: '30%',
+        height: '100%',
         display: 'flex',
         justifyContent: 'flex-start',
         alignItems: 'center'
@@ -72,12 +74,12 @@ export default function SearchCard({ name, picture, location, locationInfo, hand
         <div 
             style={divStyle} 
         >
-            <Card style={{display: 'flex', width: '100%', justifyContent: 'flex-start'}}>
+            <Card style={{display: 'flex', width: '100%', height: '100%', justifyContent: 'flex-start', alignItems: 'center'}}>
                 <div style={imgDivStyle}>
                     <img style={imgStyle}src={picture} />
                 </div>
                 <div 
-                    style={{display: 'flex', justifyContent: 'flex-start', flexWrap: 'wrap', width: '60%', alignItems: 'center', margin: '1em'}}
+                    style={{display: 'flex', justifyContent: 'flex-start', flexWrap: 'wrap', width: '100%', height: '100%', alignItems: 'center', margin: '1em'}}
                     onClick={() => {
                     dispatch(setLocationDetail(locationInfo))
                     handleClick()}}
@@ -87,28 +89,37 @@ export default function SearchCard({ name, picture, location, locationInfo, hand
                         <p style={nameStyle}>{name}</p>
                         <p style={addressStyle}>{location}</p>                                        
                     </div>
-                    <div style={{width: '100%'}}>
-                        {categoryArray}
-                    </div>
+                    {
+                        windowWidth < 400 ? null : (
+                        <div style={{width: '100%'}}>
+                            {categoryArray}
+                        </div>
+                        )
+                    }
+                    
                     
                 </div>
                 <div style={{display: 'flex', justifyContent: 'flex-end', width: '20%', alignItems: 'flex-end', margin: '1em'}}>
                     {
                         !selected && (
-                            <Button style={{height: '2em'}} startIcon={<LibraryAddIcon/>} color="primary" onClick={() => {
+                            <Button size="small" style={{height: '1em', display: 'flex', justifyContent: 'flex-end'}} startIcon={<LibraryAddIcon/>} color="primary" onClick={() => {
                                 dispatch(addDestinations(locationInfo))
                                 setSelected(true)
                             }}
                             >
-                                Add To Trip
+                                {
+                                    windowWidth > 400 ? 'Add To Trip' : ''
+                                }
                             </Button>
                         )
                     }
                     {
                         selected && (
-                            <Button style={{height: '2em', color: 'green'}} startIcon={<CheckIcon/>} color="primary" 
+                            <Button size="small" style={{height: '1em', color: 'green',  display: 'flex', justifyContent: 'flex-end'}} startIcon={<CheckIcon/>} color="primary" 
                             >
-                                Added
+                                {
+                                    windowWidth > 400 ? 'Added' : ''
+                                }
                             </Button>                        
                         )
                     }

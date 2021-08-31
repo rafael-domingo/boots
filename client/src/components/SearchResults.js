@@ -18,7 +18,8 @@ export default function SearchResults({ handleResults, detail, setDetail }) {
         justifyContent: 'center',
         alignItems: 'center',
         flexWrap: 'wrap',
-        paddingTop: '2em'
+        paddingTop: '2em',
+        
     }
 
     const handleClick = () => {

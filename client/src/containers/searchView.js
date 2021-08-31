@@ -9,6 +9,7 @@ export default function SearchView() {
     const currenttripListState = useSelector(state => state.currentTrip);
     const [mapLocation, setMapLocation] = React.useState(currenttripListState.coordinates)
     const [detail, setDetail] = React.useState(false)    
+    const windowWidth = window.innerWidth
     const dispatch = useDispatch();
 
     dispatch(setCenter(mapLocation));
@@ -23,25 +24,34 @@ export default function SearchView() {
         // dispatch(setFitBounds(detail)) 
     }    
 
+    
     const mapDivStyle = {
-        height: 'auto',
-        width: '50%',       
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'flex-start' 
-        // overflow: 'scroll'
+        height: windowWidth < 400 ? null : 'auto',
+        width: windowWidth < 400 ? null : '50%',        
+        overflow: 'hidden'
     }
 
 
     const searchDivStyle = {
         width: '100%',
-        height: '85vh',
+        height: '100%',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         flexWrap: 'wrap',
-        overflow: 'scroll'
+        overflowY: 'scroll',
+        overflowX: 'hidden'
 
+    }
+
+    const outerSearchDivStyle = {
+        display: 'flex', 
+        justifyContent: 'center', 
+        flexWrap: 'wrap', 
+        width: windowWidth < 400 ? '100%' : '50%',
+        height: windowWidth < 400 ? '65%' : '90%',
+        // overflow: 'scroll',
+        marginTop: windowWidth < 400 ? '50%' : '0',
     }
 
     const handleResults = (results) => {
@@ -59,17 +69,17 @@ export default function SearchView() {
         dispatch(setSearchLocationArray(results));
     }
     return (
-        <>
+        <div style={{display: 'flex', width: '100%', height: '100vh'}}>            
             <div style={mapDivStyle}>
                 <Maps handleClick={handleClick}/>
             </div>
             
-            <div style={{display: 'flex', justifyContent: 'center', flexWrap: 'wrap', width: '50%'}}>                
+            <div style={outerSearchDivStyle}>                
                 <SearchBox handleResults={handleResults}/>
                     <div style={searchDivStyle}>
                         <SearchResults handleResults={handleResults} detail={detail} setDetail={setDetail}/>
                     </div>                    
             </div>           
-        </>
+        </div>
     )
 }

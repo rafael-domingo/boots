@@ -17,7 +17,7 @@ export default function Maps({ handleClick, edit, setEdit}) {
   const bounds = useRef(null);
   const directionService = useRef(null);
   const directionRender = useRef(null);
-
+  const windowWidth = window.innerWidth
   // STATE MANAGEMENT
   const dispatch = useDispatch();
   const mapState = useSelector(state => state.map);
@@ -56,16 +56,30 @@ export default function Maps({ handleClick, edit, setEdit}) {
   const transportation = mapState.transportation;
 
   // Map component styling
-  const mapStyle = {
-    width: '45%',
-    height: '90%',
-    borderRadius: '2em',
-    left: '2.5%',
-    top: '5%',
-    bottom: '5%',
-    position: 'absolute',
-    boxShadow: '0px 2px 4px 0px rgba(0,0,0,0.5)'
+  if (windowWidth < 400) {
+    var mapStyle = {
+      width: '100%',
+      height: '25%',
+      // borderRadius: '2em',
+      left: '0',
+      top: '0',
+      // bottom: '5%',
+      position: 'absolute',
+      // boxShadow: '0px 2px 4px 0px rgba(0,0,0,0.5)'
+    }
+  } else {
+    var mapStyle = {
+      width: '45%',
+      height: '90%',
+      borderRadius: '2em',
+      left: '2.5%',
+      top: '5%',
+      bottom: '5%',
+      position: 'absolute',
+      boxShadow: '0px 2px 4px 0px rgba(0,0,0,0.5)'
+    }
   }
+ 
   
   React.useEffect(() => {  
     const loader = new Loader({

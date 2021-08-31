@@ -25,7 +25,7 @@ export default function AppDrawer({drawer, setDrawer}) {
         backgroundColor: 'rgba(103, 140, 203, 0.8)',
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'flex-start',
+        alignItems: 'center',
         flexWrap: 'wrap'
 
     }

@@ -15,9 +15,9 @@ export default function DayTripList() {
     const user = useSelector(state => state.user);
     updateUser(user.username, user.email, user.uid, tripListState)
     const dispatch = useDispatch();
-
+    const windowWidth = window.innerWidth
     const divStyle = {
-        height: '90vh',
+        height: '100vh',
         width: '100vw',
         display: 'flex',
         justifyContent: 'flex-end',
@@ -29,24 +29,22 @@ export default function DayTripList() {
 
     const tripCardStyle = {
         display: 'flex',
-        // marginTop: '100px',
-        // height: '90vh',
-        width: '50%',        
-        justifyContent: 'flex-start',
+        marginTop: windowWidth < 400 ? '50%' : '0',       
+        width: windowWidth < 400 ? '100%' : '50%',        
+        justifyContent: windowWidth < 400 ? 'center' : 'flex-start',
         alignItems: 'flex-start',
         flexWrap: 'wrap',
-        
-        // position: 'absolute',        
+       
     }
   
     const cardStyle = {
         display: 'flex', 
         justifyContent: 'center', 
-        alignItems: 'center', 
-        width: '175px', 
-        height: '175px', 
+        alignItems: 'center',         
+        width: windowWidth < 400 ? '125px' : '175px', 
+        height: windowWidth < 400 ? '125px' : '175px', 
         borderRadius: '50%', 
-        margin: '1em', 
+        margin: windowWidth < 400 ? '0.5em' : '1em', 
         backgroundColor: 'rgba(64,112,191,1)', 
         boxShadow: '0px 2px 4px 0px rgba(0,0,0,0.5)'
     }

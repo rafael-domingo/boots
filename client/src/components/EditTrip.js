@@ -8,16 +8,19 @@ import { deleteTrip, setView } from '../redux/user';
 
 export default function EditTrip({ reorder, setReorder, currentTripListState, setDialog, edit, setEdit}) {
     const dispatch = useDispatch()
+    const windowWidth = window.innerWidth
     const divStyle = {
         display: 'flex',
         width: '100%',
         justifyContent: 'flex-end',
-        alignItems: 'center'
+        alignItems: 'center',
+
     }
 
     return (
         <div style={divStyle}>
             <Button 
+                size="small"
                 style={reorder ? {display: 'none'} : {marginRight: '1em'}} 
                 startIcon={<EditIcon/>}
                 color="primary"
@@ -26,21 +29,24 @@ export default function EditTrip({ reorder, setReorder, currentTripListState, se
                     setEdit(true)
                 }}
             >
-                Edit
+                <p style={{fontSize: windowWidth < 400 ? '0.75em' : '1em'}}>Edit</p>
             </Button>
             <Button
+                size="small"
                 style={reorder ? {marginRight: '1em'} : {display: 'none'}}
                 variant="contained"
                 startIcon={<DeleteIcon/>}
-                color="primary"
+                color="secondary"
                 onClick={() => {
                     dispatch(deleteTrip(currentTripListState.tripId))
                     dispatch(setView('UserHome'))
                 }}
             >
-                Delete This Trip
+                <p style={{fontSize: windowWidth < 400 ? '0.75em' : '1em'}}>Delete This Trip</p>
+                
             </Button>
             <Button
+                size="small"
                 style={reorder ? {marginRight: '1em'} : {display: 'none'}}
                 variant="outlined"
                 startIcon={<BuildIcon/>}
@@ -49,9 +55,10 @@ export default function EditTrip({ reorder, setReorder, currentTripListState, se
                     setDialog(true)
                 }}
             >
-                Trip Builder
+                <p style={{fontSize: windowWidth < 400 ? '0.75em' : '1em'}}>Trip Builder</p>
             </Button>
             <Button
+                size="small"
                 style={reorder ? {marginRight: '1em'} : {display: 'none'}}
                 variant="contained"
                 startIcon={<EditIcon/>}
@@ -61,7 +68,7 @@ export default function EditTrip({ reorder, setReorder, currentTripListState, se
                     setEdit(true)
                 }}
             >
-                Done
+                <p style={{fontSize: windowWidth < 400 ? '0.75em' : '1em'}}>Done</p>
             </Button>
             
         </div>

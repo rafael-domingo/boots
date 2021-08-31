@@ -25,27 +25,27 @@ export default function Maps({ handleClick, edit, setEdit}) {
   // Set up trip location array to draw markers
   var location = [];
   if (mapState.tripLocationArray.length >  0) {
-    mapState.tripLocationArray.map(item => {
+    mapState.tripLocationArray.map(item => (
       location.push({
         lat: item.coordinates.latitude,
         lng: item.coordinates.longitude
-      });
-    })
+      })
+    ))
   } else if (mapState.cityLocationArray.length > 0) {
-    mapState.cityLocationArray.map(item => {
-      location.push(item.location);
-    })
+    mapState.cityLocationArray.map(item => (
+      location.push(item.location)
+    ))
   } 
 
   // Set up search location array to draw markers
   var searchLocation = [];
   if (mapState.searchLocationArray.length > 0) {
-    mapState.searchLocationArray.map(item => {
+    mapState.searchLocationArray.map(item => (
       searchLocation.push({
         lat: item.coordinates.latitude,
         lng: item.coordinates.longitude
-      });
-    })
+      })
+    ))
   } 
 
   // Set up state variables
@@ -55,10 +55,10 @@ export default function Maps({ handleClick, edit, setEdit}) {
   const setFitBounds = mapState.fitBounds;
   const transportation = mapState.transportation;
 
-  // var mapStyle = {}
+  var mapStyle = {}
   // Map component styling
   if (windowWidth < 400) {
-    var mapStyle = {
+    mapStyle = {
       width: '100%',
       height: '25%',
       // borderRadius: '2em',
@@ -69,7 +69,7 @@ export default function Maps({ handleClick, edit, setEdit}) {
       // boxShadow: '0px 2px 4px 0px rgba(0,0,0,0.5)'
     }
   } else {
-    var mapStyle = {
+    mapStyle = {
       width: '45%',
       height: '90%',
       borderRadius: '2em',
@@ -91,7 +91,6 @@ export default function Maps({ handleClick, edit, setEdit}) {
     // Prevent redundant API calls by checking if googleMap is null
     if (googleMapRef.current === null || googleMap.current === null) {
       loader.load().then(() => {
-        console.log('1')
         // instantiate instance of google map based on if there's markers to show
         if (location.length === 0 && searchLocation.length === 0) {
           googleMap.current = createGoogleMap(mapState.cityLocation)
@@ -126,8 +125,7 @@ export default function Maps({ handleClick, edit, setEdit}) {
       })
     } 
     // handle if we're editing the current trip -- edit prop prevents re-rendering after dispatching Trip times to Redux store
-    else if (edit) {
-      console.log('2')
+    else if (edit) {      
       // reset bounds so viewport is correct
       bounds.current = new window.google.maps.LatLngBounds(); 
       if (tripMarkers.current.length > 0) {
@@ -142,8 +140,7 @@ export default function Maps({ handleClick, edit, setEdit}) {
       fitBounds()
     }
     // handle updates to the map that isn't related to directions
-    else {       
-      console.log('3')
+    else {             
       // reset bounds so viewport is correct
       bounds.current = new window.google.maps.LatLngBounds(); 
       if (searchMarkers.current.length > 0) {
@@ -175,7 +172,6 @@ export default function Maps({ handleClick, edit, setEdit}) {
 
 
     const createGoogleMap = (location) => {
-      console.log(location)
       // map styles generated from Google tool 
     const styles = [
       {
@@ -347,7 +343,7 @@ export default function Maps({ handleClick, edit, setEdit}) {
     }
 
     const createMarker = (location, type) => {
-      location.map((loc, index) => {
+      location.forEach((loc, index) => {
         // add location to bounds for map to consider
         bounds.current.extend(loc)
        
@@ -421,13 +417,13 @@ export default function Maps({ handleClick, edit, setEdit}) {
         travelMode: transportation
       }
       directionService.current.route(request, function(result, status) {
-        if (status == 'OK') {
-          result.routes[0].legs.map(leg => {
+        if (status === 'OK') {
+          result.routes[0].legs.map(leg => (
             legs.push({
               duration: leg.duration.text,
               distance: leg.distance.text
             })
-          })
+          ))
           directionRender.current.setDirections(result)
           dispatch(setTravelTime(legs))
         }

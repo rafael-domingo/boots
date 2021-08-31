@@ -62,7 +62,7 @@ export const Yelp = {
 
         // build search term array based on trip builder inputs
         var searchTermArray = [];        
-        intineraryArray.map(section => {
+        intineraryArray.forEach(section => {
             if (section.food !== null) {
                 searchTermArray.push(section.food)
             }

@@ -63,11 +63,11 @@ export default function SearchCard({ name, picture, location, locationInfo, hand
     // create JSX for categories
     var categoryArray = [];
     if (locationInfo.categories !== undefined) {
-        locationInfo.categories.map(category => {
+        locationInfo.categories.map(category => (
             categoryArray.push(
                 <Chip style={{marginRight: '5px'}} label={category.title} />
                 )
-        })
+        ))
        
     }
     return (

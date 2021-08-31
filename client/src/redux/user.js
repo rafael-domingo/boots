@@ -260,7 +260,7 @@ export const userSlice = createSlice({
             console.log(destinations)
             console.log(name)
             // set a new trip list array 
-            const tripListArray = state.tripList.map((item) => {
+            const tripListArray = state.tripList.forEach((item) => {
                 // check to see what city to update
                 if (item.tripId !== tripId) {
                     return item
@@ -290,7 +290,7 @@ export const userSlice = createSlice({
         },
         deleteTrip: (state, action) => {
             const newTripListArray = [];
-            state.tripList.map((item) => {
+            state.tripList.forEach((item) => {
                 if (item.tripId !== action.payload) {
                     newTripListArray.push(item)
                 }

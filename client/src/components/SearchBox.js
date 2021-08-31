@@ -37,11 +37,11 @@ export default function SearchBox({ handleResults }) {
             {
                 var resultsArray = [];
                 var destinationsArray = [];
-                currentDestinations.map(item => {
+                currentDestinations.forEach(item => {
                     destinationsArray.push(item.id)
                 })
                 // filter out results that are already in trip
-                results.businesses.map(resultItem => {
+                results.businesses.forEach(resultItem => {
                     if (destinationsArray.includes(resultItem.id)) {
                         return
                     } else {

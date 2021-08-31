@@ -83,8 +83,7 @@ export default function City({ sessionToken, showSearch, handleSearch }) {
                     style={showSearch ? questionDivStyle : {display: 'none'}}
                     options={tripBuilderState.autoComplete}                         
                     getOptionLabel={(option) => option.description}              
-                    onChange={(event, newValue) => {
-                        console.log(event)
+                    onChange={(event, newValue) => {                        
                         handleSelected(newValue)
                     }}                    
                     renderInput={(params) => (

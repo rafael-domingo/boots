@@ -1,7 +1,7 @@
 import React from 'react';
 import SearchView from './searchView';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCityLocation, setCityLocationArray, setDirections, setFitBounds, setSearchLocationArray, setTransportation, setTripLocationArray, setZoom } from '../redux/maps';
+import { setCenter, setCityLocation, setCityLocationArray, setDirections, setFitBounds, setSearchLocationArray, setTransportation, setTripLocationArray, setZoom } from '../redux/maps';
 import { setAutoComplete, setAutoCompleteResults, setSearchResults, setSearchTerm } from '../redux/currentTrip';
 import Fab from '@material-ui/core/Fab';
 import SearchIcon from '@material-ui/icons/Search';
@@ -15,14 +15,13 @@ export default function DayTripView() {
     const dispatch = useDispatch();
     
     React.useEffect(() => {
-        console.log('useeffect')
         dispatch(setTripLocationArray(currentTripListState.destinations))
         dispatch(setCityLocationArray([]))        
         dispatch(setTransportation(currentTripListState.tripBuilder.transportation))
         dispatch(setZoom(12))
         dispatch(setFitBounds(true))
         dispatch(setCityLocation(currentTripListState.coordinates))
-
+        dispatch(setCenter(currentTripListState.coordinates))
     }, [currentTripListState])
     React.useEffect(() => {
         dispatch(setSearchLocationArray({}))

@@ -53,7 +53,7 @@ export default function SearchView() {
 
     const handleResults = (results) => {
         var locArray = []
-        results.map(business => {
+        results.forEach(business => {
             const latitude = business.coordinates.latitude;
             const longitude = business.coordinates.longitude;
             const location = {
@@ -62,7 +62,7 @@ export default function SearchView() {
             }
             locArray.push(location)
         })
-        console.log(locArray)
+        
         dispatch(setSearchLocationArray(results));
     }
     return (

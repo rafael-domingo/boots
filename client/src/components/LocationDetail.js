@@ -82,7 +82,7 @@ export default function LocationDetail({handleClick}) {
     // create JSX for categories
     var categoryArray = [];
     if (locationDetailState.categories !== undefined) {
-        locationDetailState.categories.map(category => {         
+        locationDetailState.categories.map(category => (         
             categoryArray.push(
                 <Chip
                     label={category.title}
@@ -92,7 +92,7 @@ export default function LocationDetail({handleClick}) {
                 />
                 )
                 
-            })
+        ))
        
     }
     if (windowWidth < 400) {
@@ -110,7 +110,7 @@ export default function LocationDetail({handleClick}) {
                 {
                         locationDetailState.location.display_address.map(item => {
                             return (
-                                <p>{item}</p>
+                                <p key={item}>{item}</p>
                             )
                         })
                     }                                                         
@@ -158,7 +158,7 @@ export default function LocationDetail({handleClick}) {
                     {
                         locationDetailState.location.display_address.map(item => {
                             return (
-                                <p style={locationAddressStyle}>{item}</p>
+                                <p key={item} style={locationAddressStyle}>{item}</p>
                             )
                         })
                     }

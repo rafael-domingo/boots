@@ -97,8 +97,7 @@ export default function Home() {
         dispatch(setEmail(result.user.email))
         dispatch(setUid(result.user.uid))
         dispatch(setProfilePicture(result.user.photoURL))
-        getUser().then(result => {
-          console.log(result)
+        getUser().then(result => {          
           if (result.trips !== undefined) {
             dispatch(setTripList(result.trips))
             dispatch(setView('UserHome'))
@@ -130,14 +129,14 @@ export default function Home() {
             'size': 'invisible',
             'callback': (response) => {
               // reCAPTCHA solved, allow signInWithPhoneNumber.
-              console.log('signin')
+              
              
             }
         });
         // format phone number for Firebase Auth
         let number = '+1 ' + event.target.value
         signInWithPhone(number, recaptcha).then(() => {
-          console.log(window.result)
+          
           setPhoneVisible(false)
           setCodeVisible(true)
         }) 
@@ -152,7 +151,7 @@ export default function Home() {
       if (event.target.value.length === 6 && codeVisible) {
         window.result.confirm(event.target.value).then(result => {
           console.log('code successful')
-          console.log(result)
+          
           dispatch(setUserName(result.user.displayName))
           dispatch(setEmail(result.user.email))
           dispatch(setPhone(result.user.phoneNumber))

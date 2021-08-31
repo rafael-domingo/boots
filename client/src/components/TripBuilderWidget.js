@@ -35,8 +35,10 @@ export default function TripBuilderWidget({open, handleOpen}) {
     const [sightsee, setSightsee] = React.useState(tripConfiguration.activities.sightsee);
     const [drink, setDrink] = React.useState(tripConfiguration.activities.drink);
     const [load, setLoad] = React.useState(false);
+    const windowWidth = window.innerWidth
     const buttonStyle = {
-        marginRight: '5px'
+        marginRight: '5px',
+        marginBottom: '5px'
     }
 
     const dialogText = {
@@ -99,6 +101,7 @@ export default function TripBuilderWidget({open, handleOpen}) {
                     How are you traveling?
                 </DialogContentText>
                 <Button
+                    size="small"
                     variant={transportation === 'DRIVING' ? "contained" : "outlined"}
                     color="primary"
                     startIcon={<DirectionsCarIcon/>}
@@ -108,6 +111,7 @@ export default function TripBuilderWidget({open, handleOpen}) {
                     Car
                 </Button>
                 <Button
+                    size="small"
                     variant={transportation === 'BICYCLING' ? "contained" : "outlined"}
                     color="primary"
                     startIcon={<DirectionsBikeIcon/>}
@@ -117,6 +121,7 @@ export default function TripBuilderWidget({open, handleOpen}) {
                     Bike
                 </Button>
                 <Button
+                    size="small"
                     variant={transportation === 'WALKING' ? "contained" : "outlined"}
                     color="primary"
                     startIcon={<DirectionsWalkIcon/>}
@@ -129,6 +134,7 @@ export default function TripBuilderWidget({open, handleOpen}) {
                     Auto Trip Builder
                 </DialogContentText>
                 <Button 
+                    size="small"
                     variant={autoBuild === true ? "contained" : "outlined"}
                     color="primary"
                     style={buttonStyle}
@@ -137,6 +143,7 @@ export default function TripBuilderWidget({open, handleOpen}) {
                     Enabled
                 </Button>
                 <Button 
+                    size="small"
                     variant={autoBuild === false ? "contained" : "outlined"}
                     color="primary"
                     style={buttonStyle}
@@ -148,6 +155,7 @@ export default function TripBuilderWidget({open, handleOpen}) {
                     Time of day
                 </DialogContentText>
                 <Button
+                    size="small"
                     disabled={autoBuild ? false : true}
                     variant={morning === true ? "contained" : "outlined"}
                     color="primary"
@@ -158,6 +166,7 @@ export default function TripBuilderWidget({open, handleOpen}) {
                     Morning
                 </Button>
                 <Button
+                    size="small"
                     disabled={autoBuild ? false : true}
                     variant={midDay === true ? "contained" : "outlined"}
                     color="primary"
@@ -168,6 +177,7 @@ export default function TripBuilderWidget({open, handleOpen}) {
                     Mid-Day
                 </Button>
                 <Button
+                    size="small"
                     disabled={autoBuild ? false : true}
                     variant={evening === true ? "contained" : "outlined"}
                     color="primary"
@@ -181,6 +191,7 @@ export default function TripBuilderWidget({open, handleOpen}) {
                     Activities for your trip
                 </DialogContentText>
                 <Button
+                    size="small"
                     disabled={autoBuild ? false : true}
                     variant={eat === true ? "contained" : "outlined"}
                     color="primary"
@@ -191,6 +202,7 @@ export default function TripBuilderWidget({open, handleOpen}) {
                     Eat
                 </Button>
                 <Button
+                    size="small"
                     disabled={autoBuild ? false : true}
                     variant={shop === true ? "contained" : "outlined"}
                     color="primary"
@@ -201,6 +213,7 @@ export default function TripBuilderWidget({open, handleOpen}) {
                     Shop
                 </Button>
                 <Button
+                    size="small"
                     disabled={autoBuild ? false : true}
                     variant={coffee === true ? "contained" : "outlined"}
                     color="primary"
@@ -211,6 +224,7 @@ export default function TripBuilderWidget({open, handleOpen}) {
                     Coffee
                 </Button>
                 <Button
+                    size="small"
                     disabled={autoBuild ? false : true}
                     variant={sightsee === true ? "contained" : "outlined"}
                     color="primary"
@@ -221,6 +235,7 @@ export default function TripBuilderWidget({open, handleOpen}) {
                     Sight-see
                 </Button>
                 <Button
+                    size="small"
                     disabled={autoBuild ? false : true}
                     variant={drink === true ? "contained" : "outlined"}
                     color="primary"
@@ -235,6 +250,7 @@ export default function TripBuilderWidget({open, handleOpen}) {
             <Divider variant="middle"/>
             <DialogActions>
                     <Button 
+                        size="small"
                         color="primary"
                         onClick={() => {
                             handleOpen()
@@ -243,6 +259,7 @@ export default function TripBuilderWidget({open, handleOpen}) {
                         Cancel
                     </Button>
                     <Button 
+                        size="small"
                         color="secondary" 
                         variant="contained"
                         onClick={() => {
@@ -253,6 +270,7 @@ export default function TripBuilderWidget({open, handleOpen}) {
                         Save
                     </Button>                    
                     <Button 
+                        size="small"
                         disabled={autoBuild ? false : true}
                         color="secondary" 
                         variant="outlined"

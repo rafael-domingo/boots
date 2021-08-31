@@ -94,7 +94,7 @@ export default function AppDrawer({drawer, setDrawer}) {
                                 if (tripBuilder.selectedCity.length > 0) {
                                     dispatch(addTripList(currentTripListState))
                                     dispatch(resetTripBuilder())
-                                } else {
+                                } else if (user.view === 'Trip') {
                                     console.log('logged')
                                     dispatch(updateTripList(currentTripListState))
                                 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from '@material-ui/core/Button'
-import { FormControl, InputLabel, Input } from '@material-ui/core';
+import { FormControl, InputLabel, Input, Dialog, DialogContent, DialogActions, Fab, Divider } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { setEmail, setPhone, setProfilePicture, setTripList, setUid, setUserName, setView } from '../redux/user';
 import { SvgIcon } from '@material-ui/core';
@@ -62,6 +62,8 @@ export default function Home() {
     const [phoneVisible, setPhoneVisible] = React.useState(false)
     const [codeVisible, setCodeVisible] = React.useState(false)
     const [signInVisible, setSignInVisible] = React.useState(true)
+    const [dialog, setDialog] = React.useState(false)
+    const windowWidth = window.innerWidth
     const divStyle = {
         height: '100vh',
         width: '100vw',
@@ -69,7 +71,7 @@ export default function Home() {
         justifyContent: 'center',
         alignItems: 'center',
         flexWrap: 'wrap',
-        backgroundColor: 'rgba(64, 112, 191, 0.6)'
+        backgroundColor: 'rgba(64, 112, 191, 0.6)',        
       }
 
     const buttonStyle = {
@@ -79,16 +81,25 @@ export default function Home() {
     }
 
     const inputStyle = {
-      fontSize: '2em',
-      color: 'white'
+      fontSize: '3em',
+      textAlign: 'center',      
+      width: '100%',
+      color: 'rgb(64,112,191)',
+      // color: 'white'
     }
 
+    const inputStyle1 = {
+      fontSize: windowWidth < 400 ? '2em' : '3em',
+      textAlign: 'center',      
+      width: '100%',
+      color: 'rgb(64,112,191)',
+    }
     const inputLabelStyle = {
-      color: 'white'
+      // color: 'white'
     }
 
     const handleSignInGoogle = () => {
-      setSignInVisible(false)
+      // setSignInVisible(false)
       signInWithGoogle().then(result => {        
         dispatch(setUserName(result.user.displayName))
         dispatch(setEmail(result.user.email))
@@ -112,8 +123,9 @@ export default function Home() {
     }
 
     const handleSignInPhone = () => {
-      setSignInVisible(false)
+      // setSignInVisible(false)
       setPhoneVisible(true)
+      setDialog(true)
     }
     
 
@@ -176,33 +188,42 @@ export default function Home() {
       return (
         <div className="App">
           <div style={divStyle}>
-            <div style={{color: 'white', fontFamily: 'phosphate'}}>
-              <h1>Boots</h1>
-              <p>Plan your day trip</p>
+            <div style={{color: 'white'}}>
+              <h1 style={{fontSize: '4em', fontFamily: 'phosphate'}}>Boots</h1>
+              <p style={{fontSize: '2em', fontFamily: 'phosphate'}}>Plan your day trip</p>
+              <Divider style={{backgroundColor: 'white'}}/>
               <div style={signInVisible ? {} : {display: 'none'}}>
                 <div style={{width: '100%'}}>
-                <Button style={buttonStyle} onClick={() => handleSignInGoogle()}>
-                  <SvgIcon>
-                  <path d="M21.35,11.1H12.18V13.83H18.69C18.36,17.64 15.19,19.27 12.19,19.27C8.36,19.27 5,16.25 5,12C5,7.9 8.2,4.73 12.2,4.73C15.29,4.73 17.1,6.7 17.1,6.7L19,4.72C19,4.72 16.56,2 12.1,2C6.42,2 2.03,6.8 2.03,12C2.03,17.05 6.16,22 12.25,22C17.6,22 21.5,18.33 21.5,12.91C21.5,11.76 21.35,11.1 21.35,11.1V11.1Z" />
-                  </SvgIcon>
-                  Sign In with Google
-                </Button>
+                  <p style={{fontSize: '1.5em'}}>Sign in</p>
                 </div>
                 <div style={{width: '100%'}}>
-                  <Button style={buttonStyle} onClick={() => handleSignInPhone()}>
+                  <Fab 
+                    style={{backgroundColor: '#3f51b5', color: 'white', margin: '5px'}}
+                    onClick={() => handleSignInGoogle()}
+                  >
+                    <SvgIcon>
+                    <path d="M21.35,11.1H12.18V13.83H18.69C18.36,17.64 15.19,19.27 12.19,19.27C8.36,19.27 5,16.25 5,12C5,7.9 8.2,4.73 12.2,4.73C15.29,4.73 17.1,6.7 17.1,6.7L19,4.72C19,4.72 16.56,2 12.1,2C6.42,2 2.03,6.8 2.03,12C2.03,17.05 6.16,22 12.25,22C17.6,22 21.5,18.33 21.5,12.91C21.5,11.76 21.35,11.1 21.35,11.1V11.1Z" />
+                    </SvgIcon>
+                  </Fab>
+                  <Fab
+                    color="primary"
+                    onClick={() => handleSignInPhone()}
+                    style={{margin: '5px'}}
+                  >
                     <PhoneIcon/>
-                    Sign In with Phone Number
-                  </Button>
+                  </Fab>
+                
                             
                 </div>
               </div>
-              
-              <FormControl variant="outlined">
+              <Dialog open={dialog}>
+                <DialogContent>
+                <FormControl variant="outlined">
                   <div style={phoneVisible ? {} : {display: 'none'}} >
-                    <InputLabel style={inputLabelStyle} htmlFor="formatted-text-mask-input">Enter phone number</InputLabel>
+                    <InputLabel style={inputLabelStyle} htmlFor="formatted-text-mask-input">Enter phone number to sign in</InputLabel>
                     <Input
-                    disableUnderline={false}
-                    style={inputStyle}
+                    disableUnderline={true}
+                    style={inputStyle1}
                     value={phoneInput}
                     onChange={handlePhoneChange}
                     name="textmask"
@@ -214,10 +235,11 @@ export default function Home() {
                  
                 </FormControl>    
                 <FormControl>
-                  <div style={codeVisible ? {} : {display: 'none'}}>
+                  <div style={codeVisible ? {display:'flex', justifyContent: 'center'} : {display: 'none'}}>
                       <InputLabel style={inputLabelStyle} htmlFor="formatted-text-mask-input1">Enter verification code</InputLabel>
                         <Input
-                        style={inputStyle}
+                        disableUnderline={true}
+                        style={inputStyle}                  
                         value={verificationCode}
                         onChange={handleCodeChange}
                         name="verificatonCode"
@@ -226,6 +248,24 @@ export default function Home() {
                         />
                     </div>
                 </FormControl>
+                </DialogContent>
+                <DialogActions>
+                  <Button 
+                    color="primary"
+                    variant="contained"
+                    onClick={() => {
+                      setDialog(false)
+                      setPhoneInput('')
+                      setVerificationCode('')
+                      setCodeVisible(false)
+                      setPhoneVisible(false)
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                </DialogActions>
+              </Dialog>
+              
             </div>
           </div>
          

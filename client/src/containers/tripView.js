@@ -21,6 +21,7 @@ export default function TripView() {
     const handleClick = () => {        
         setDetail(!detail);
         dispatch(setFitBounds(detail)) 
+
     }    
 
     const mapDivStyle = {

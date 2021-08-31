@@ -69,6 +69,7 @@ export default function DayTripList() {
         dispatch(setTripId(trip.tripId))
         dispatch(setView('Trip'))
         dispatch(setTripBuilder(trip.tripBuilder))
+        dispatch(setCenter(trip.location))
     }
 
     React.useEffect(() => {

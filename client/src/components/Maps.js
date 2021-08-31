@@ -55,10 +55,10 @@ export default function Maps({ handleClick, edit, setEdit}) {
   const setFitBounds = mapState.fitBounds;
   const transportation = mapState.transportation;
 
-  var mapStyle = {}
+  // var mapStyle = {}
   // Map component styling
   if (windowWidth < 400) {
-    mapStyle = {
+    var mapStyle = {
       width: '100%',
       height: '25%',
       // borderRadius: '2em',
@@ -69,7 +69,7 @@ export default function Maps({ handleClick, edit, setEdit}) {
       // boxShadow: '0px 2px 4px 0px rgba(0,0,0,0.5)'
     }
   } else {
-    mapStyle = {
+    var mapStyle = {
       width: '45%',
       height: '90%',
       borderRadius: '2em',
@@ -91,9 +91,10 @@ export default function Maps({ handleClick, edit, setEdit}) {
     // Prevent redundant API calls by checking if googleMap is null
     if (googleMapRef.current === null || googleMap.current === null) {
       loader.load().then(() => {
+        console.log('1')
         // instantiate instance of google map based on if there's markers to show
         if (location.length === 0 && searchLocation.length === 0) {
-          googleMap.current = createGoogleMap(mapState.cityLocation) 
+          googleMap.current = createGoogleMap(mapState.cityLocation)
           bounds.current = new window.google.maps.LatLngBounds(); 
         } else if (location.length === 1) {
           googleMap.current = createGoogleMap(location[0])
@@ -102,7 +103,7 @@ export default function Maps({ handleClick, edit, setEdit}) {
           createMarker(location, 'trip');
 
         } else {
-          googleMap.current = createGoogleMap(mapState.cityLocation)      
+          googleMap.current = createGoogleMap(mapState.cityLocation)
           // create bounds for map to use for markers 
           bounds.current = new window.google.maps.LatLngBounds(); 
           createMarker(location, 'trip');
@@ -126,6 +127,7 @@ export default function Maps({ handleClick, edit, setEdit}) {
     } 
     // handle if we're editing the current trip -- edit prop prevents re-rendering after dispatching Trip times to Redux store
     else if (edit) {
+      console.log('2')
       // reset bounds so viewport is correct
       bounds.current = new window.google.maps.LatLngBounds(); 
       if (tripMarkers.current.length > 0) {
@@ -141,6 +143,7 @@ export default function Maps({ handleClick, edit, setEdit}) {
     }
     // handle updates to the map that isn't related to directions
     else {       
+      console.log('3')
       // reset bounds so viewport is correct
       bounds.current = new window.google.maps.LatLngBounds(); 
       if (searchMarkers.current.length > 0) {
@@ -169,7 +172,6 @@ export default function Maps({ handleClick, edit, setEdit}) {
     }   
 
   }, [location, mapState, center, searchLocation])
-
 
 
     const createGoogleMap = (location) => {
@@ -419,7 +421,7 @@ export default function Maps({ handleClick, edit, setEdit}) {
         travelMode: transportation
       }
       directionService.current.route(request, function(result, status) {
-        if (status === 'OK') {
+        if (status == 'OK') {
           result.routes[0].legs.map(leg => {
             legs.push({
               duration: leg.duration.text,

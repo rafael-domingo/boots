@@ -25,7 +25,6 @@ export default function List({ locations, handleClick, travelTime, reorderList }
                                     <ul style={{listStyleType: 'none', margin: '0', padding: '0', width: '100%', height: '100%'}} {...provided.droppableProps} ref={provided.innerRef}>
                                         {
                                             locations.map((item, i) => {
-                                                console.log(i)
                                                 var distance = ''
                                                 var time = ''
                                                 if (i >= 1 && i <= travelTime.length) {
@@ -37,7 +36,6 @@ export default function List({ locations, handleClick, travelTime, reorderList }
                                                 }
                                                 var index = i + 1
                                                 index.toString()
-                                                console.log(travelTime[i])
                                                 return (
                                                     <Draggable key={item.id} draggableId={item.id} index={i} isDragDisabled={!reorderList}>
                                                         {(provided) => (

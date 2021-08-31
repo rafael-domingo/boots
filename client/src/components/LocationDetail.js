@@ -82,16 +82,17 @@ export default function LocationDetail({handleClick}) {
     // create JSX for categories
     var categoryArray = [];
     if (locationDetailState.categories !== undefined) {
-        locationDetailState.categories.map(category => {            
+        locationDetailState.categories.map(category => {         
             categoryArray.push(
                 <Chip
                     label={category.title}
                     color="primary"
                     style={{margin: '5px'}}
+                    key={category.title}
                 />
                 )
                 
-        })
+            })
        
     }
     if (windowWidth < 400) {
@@ -139,7 +140,7 @@ export default function LocationDetail({handleClick}) {
         return (
             <Card style={{color: 'rgb(64, 112, 191)', width: '80%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                 <div style={{display: 'flex', height: '100%', width: '50%'}}>
-                <Fab style={{left: '10%', zIndex: '100'}} color="primary" variant="contained" onClick={() => handleClick()}>
+                <Fab style={{left: '10%', zIndex: '100'}} color="primary" onClick={() => handleClick()}>
                         <CloseIcon/>
                     </Fab>
     

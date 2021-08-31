@@ -15,9 +15,7 @@ export default function SearchView() {
     dispatch(setZoom(12))
     dispatch(setFitBounds(true))
     dispatch(setDirections(false))
-    React.useEffect(() => {
-        dispatch(setSearchLocationArray({}))
-    })
+
     const handleClick = () => {        
         setDetail(!detail);
         // dispatch(setFitBounds(detail)) 

@@ -14,7 +14,6 @@ export default function DayTripList() {
     const tripListState = useSelector(state => state.user.tripList);
     const user = useSelector(state => state.user);
     updateUser(user.username, user.email, user.uid, tripListState)
-    
     const dispatch = useDispatch();
 
     const divStyle = {

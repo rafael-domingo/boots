@@ -79,7 +79,7 @@ export default function Home() {
     }
 
     const inputStyle = {
-      fontSize: '5em',
+      fontSize: '2em',
       color: 'white'
     }
 

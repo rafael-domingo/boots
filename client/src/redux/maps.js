@@ -10,9 +10,12 @@ export const mapSlice = createSlice({
         directions: false,
         transportation: 'DRIVING',
         center: {},
-        zoom: 8,
+        zoom: 5,
         fitBounds: true,
-        cityLocation: {}
+        cityLocation: {
+            lat: 37.7726611,
+            lng: -100.0603993
+        }
     },
     reducers: {
         setCityLocationArray: (state, action) => {

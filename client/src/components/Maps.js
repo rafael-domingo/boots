@@ -17,7 +17,6 @@ export default function Maps({ handleClick, edit, setEdit}) {
   const bounds = useRef(null);
   const directionService = useRef(null);
   const directionRender = useRef(null);
-  const [trackState, setTrackState] = React.useState(true);
 
   // STATE MANAGEMENT
   const dispatch = useDispatch();
@@ -81,6 +80,12 @@ export default function Maps({ handleClick, edit, setEdit}) {
         if (location.length === 0 && searchLocation.length === 0) {
           googleMap.current = createGoogleMap(mapState.cityLocation) 
           bounds.current = new window.google.maps.LatLngBounds(); 
+        } else if (location.length === 1) {
+          googleMap.current = createGoogleMap(location[0])
+          centerMap(location[0], 5)
+          bounds.current = new window.google.maps.LatLngBounds(); 
+          createMarker(location, 'trip');
+
         } else {
           googleMap.current = createGoogleMap(mapState.cityLocation)      
           // create bounds for map to use for markers 
@@ -138,9 +143,10 @@ export default function Maps({ handleClick, edit, setEdit}) {
       } 
       // Determine how to set viewport
       if (location.length === 0 && searchLocation.length === 0) {
-        centerMap(mapState.cityLocation, 12)
-      }
-      else if (setFitBounds) {        
+        centerMap(mapState.cityLocation, zoom)
+      } else if (location.length === 1) {
+        centerMap(location[0], 8)
+      } else if (setFitBounds) {        
         fitBounds()
       } else {       
         centerMap(center, zoom)
@@ -316,7 +322,7 @@ export default function Maps({ handleClick, edit, setEdit}) {
     ]
     const mapOptions = {
       center: location,
-      zoom: 12,
+      zoom: zoom,
       styles: styles,
       disableDefaultUI: true
     }

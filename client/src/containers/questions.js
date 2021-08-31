@@ -95,7 +95,7 @@ export default function Questions() {
                     color="primary" 
                     aria-label="next"
                     onClick={() => {
-                        if (autoBuild === false || state + 1 == views.length) {
+                        if (autoBuild === false || state + 1 === views.length) {
                             setFormComplete(true)
                         } else {
                             setState(state + 1)

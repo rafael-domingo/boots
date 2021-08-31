@@ -39,10 +39,6 @@ export default function City({ sessionToken, showSearch, handleSearch }) {
 
     }
 
-    const textBoxStyle = {
-        width: '50%'
-    }
-    
     const resultsDivStyle = {
         color: 'rgb(103, 140, 203)',
         minWidth: '350px',
@@ -84,7 +80,6 @@ export default function City({ sessionToken, showSearch, handleSearch }) {
                     freeSolo
                     id="searchCity"
                     disableClearable
-                    style={textBoxStyle}
                     style={showSearch ? questionDivStyle : {display: 'none'}}
                     options={tripBuilderState.autoComplete}                         
                     getOptionLabel={(option) => option.description}              

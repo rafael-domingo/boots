@@ -256,7 +256,7 @@ export const userSlice = createSlice({
         },
         updateTripList: (state, action) => {
             // object destructuring from payload
-            const {name, tripId, city, coordinates, destinations, tripBuilder} = action.payload;
+            const {name, tripId, destinations, tripBuilder} = action.payload;
             console.log(destinations)
             console.log(name)
             // set a new trip list array 
@@ -279,7 +279,7 @@ export const userSlice = createSlice({
             }
         },
         addTripList: (state, action) => {
-            const {name, city, tripId, coordinates, destinations, tripBuilder} = action.payload;
+            const {name, tripId, coordinates, destinations, tripBuilder} = action.payload;
             state.tripList.push({
                 name: name,
                 tripId: tripId,

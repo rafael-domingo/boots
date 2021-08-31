@@ -1,7 +1,4 @@
 import React from 'react';
-import Sunrise from '../../assets/sunrise.png';
-import Sunset from '../../assets/sunset.png';
-import Midday from '../../assets/midday.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTimeDay } from '../../redux/tripBuilder';
 import Button from '@material-ui/core/Button';

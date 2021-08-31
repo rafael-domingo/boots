@@ -26,12 +26,14 @@ export default function List({ locations, handleClick, travelTime, reorderList }
                                         {
                                             locations.map((item, i) => {
                                                 console.log(i)
+                                                var distance = ''
+                                                var time = ''
                                                 if (i >= 1 && i <= travelTime.length) {
-                                                    var distance = travelTime[i-1].distance
-                                                    var time = travelTime[i-1].duration
+                                                    distance = travelTime[i-1].distance
+                                                    time = travelTime[i-1].duration
                                                 } else {
-                                                    var distance = ''
-                                                    var time = ''
+                                                    distance = ''
+                                                    time = ''
                                                 }
                                                 var index = i + 1
                                                 index.toString()

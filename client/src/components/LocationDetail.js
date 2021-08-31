@@ -82,7 +82,7 @@ export default function LocationDetail({handleClick}) {
     // create JSX for categories
     var categoryArray = [];
     if (locationDetailState.categories !== undefined) {
-        locationDetailState.categories.map(category => {
+        locationDetailState.categories.map(category => {            
             categoryArray.push(
                 <Chip
                     label={category.title}
@@ -90,6 +90,7 @@ export default function LocationDetail({handleClick}) {
                     style={{margin: '5px'}}
                 />
                 )
+                
         })
        
     }
@@ -103,7 +104,7 @@ export default function LocationDetail({handleClick}) {
                 </DialogTitle>
                 <DialogContent>
               
-                <img style={locationImageStyle} src={locationDetailState.image_url} />
+                <img alt={`location-${locationDetailState.name}`} style={locationImageStyle} src={locationDetailState.image_url} />
                 {categoryArray}
                 {
                         locationDetailState.location.display_address.map(item => {
@@ -142,7 +143,7 @@ export default function LocationDetail({handleClick}) {
                         <CloseIcon/>
                     </Fab>
     
-                <img style={locationImageStyle} src={locationDetailState.image_url} />
+                <img alt={`location-${locationDetailState.name}`} style={locationImageStyle} src={locationDetailState.image_url} />
     
                 </div>
     

@@ -61,7 +61,6 @@ export default function Home() {
     const [verificationCode, setVerificationCode] = React.useState()
     const [phoneVisible, setPhoneVisible] = React.useState(false)
     const [codeVisible, setCodeVisible] = React.useState(false)
-    const [signInVisible, setSignInVisible] = React.useState(true)
     const [dialog, setDialog] = React.useState(false)
     const windowWidth = window.innerWidth
     const divStyle = {
@@ -73,12 +72,6 @@ export default function Home() {
         flexWrap: 'wrap',
         backgroundColor: 'rgba(64, 112, 191, 0.6)',        
       }
-
-    const buttonStyle = {
-      backgroundColor: 'rgb(64,112,191)',
-      color: 'white',
-      margin: '20px'
-    }
 
     const inputStyle = {
       fontSize: '3em',
@@ -99,7 +92,6 @@ export default function Home() {
     }
 
     const handleSignInGoogle = () => {
-      // setSignInVisible(false)
       signInWithGoogle().then(result => {        
         dispatch(setUserName(result.user.displayName))
         dispatch(setEmail(result.user.email))
@@ -123,7 +115,6 @@ export default function Home() {
     }
 
     const handleSignInPhone = () => {
-      // setSignInVisible(false)
       setPhoneVisible(true)
       setDialog(true)
     }
@@ -192,7 +183,7 @@ export default function Home() {
               <h1 style={{fontSize: '4em', fontFamily: 'phosphate'}}>Boots</h1>
               <p style={{fontSize: '2em', fontFamily: 'phosphate'}}>Plan your day trip</p>
               <Divider style={{backgroundColor: 'white'}}/>
-              <div style={signInVisible ? {} : {display: 'none'}}>
+              <div>
                 <div style={{width: '100%'}}>
                   <p style={{fontSize: '1.5em'}}>Sign in</p>
                 </div>

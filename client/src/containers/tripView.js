@@ -5,7 +5,7 @@ import TripBuilderWidget from '../components/TripBuilderWidget';
 import List from '../components/List';
 import EditTrip from '../components/EditTrip';
 import LocationDetail from '../components/LocationDetail';
-import { setCenter, setFitBounds, setZoom } from '../redux/maps';
+import { setFitBounds } from '../redux/maps';
 
 export default function TripView() {
     const currentTripListState = useSelector(state => state.currentTrip)

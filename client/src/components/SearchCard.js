@@ -76,7 +76,7 @@ export default function SearchCard({ name, picture, location, locationInfo, hand
         >
             <Card style={{display: 'flex', width: '100%', height: '100%', justifyContent: 'flex-start', alignItems: 'center'}}>
                 <div style={imgDivStyle}>
-                    <img style={imgStyle}src={picture} />
+                    <img alt={`location-${name}`} style={imgStyle}src={picture} />
                 </div>
                 <div 
                     style={{display: 'flex', justifyContent: 'flex-start', flexWrap: 'wrap', width: '100%', height: '100%', alignItems: 'center', margin: '1em'}}

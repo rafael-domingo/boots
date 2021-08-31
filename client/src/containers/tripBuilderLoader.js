@@ -1,7 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setName, setCity, setCoordinates, setDestinations, setTravelTime, setTripBuilder, setTripId } from '../redux/currentTrip';
-import { resetTripBuilder } from '../redux/tripBuilder';
 import { setView } from '../redux/user';
 import { Yelp } from '../util/Yelp';
 import CircularProgress from '@material-ui/core/CircularProgress';

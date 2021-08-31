@@ -70,7 +70,7 @@ export default function LocationCard({ name, picture, location, locationInfo, ha
             }}
         >
             <div style={imgDivStyle}>
-                <img style={imgStyle}src={picture} />
+                <img alt={`location-${name}`} style={imgStyle}src={picture} />
             </div>
             <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '75%'}}>
                 <div style={textDivStyle}>

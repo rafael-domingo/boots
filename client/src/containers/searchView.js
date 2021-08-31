@@ -7,18 +7,17 @@ import { setCenter, setDirections, setFitBounds, setSearchLocationArray, setZoom
 
 export default function SearchView() {
     const currenttripListState = useSelector(state => state.currentTrip);
-    const [mapLocation, setMapLocation] = React.useState(currenttripListState.coordinates)
     const [detail, setDetail] = React.useState(false)    
     const windowWidth = window.innerWidth
     const dispatch = useDispatch();
 
-    dispatch(setCenter(mapLocation));
+    dispatch(setCenter(currenttripListState.coordinates));
     dispatch(setZoom(12))
     dispatch(setFitBounds(true))
     dispatch(setDirections(false))
     React.useEffect(() => {
         dispatch(setSearchLocationArray({}))
-    }, [0])
+    })
     const handleClick = () => {        
         setDetail(!detail);
         // dispatch(setFitBounds(detail)) 

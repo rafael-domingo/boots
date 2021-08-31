@@ -35,7 +35,7 @@ export default function TripBuilderWidget({open, handleOpen}) {
     const [sightsee, setSightsee] = React.useState(tripConfiguration.activities.sightsee);
     const [drink, setDrink] = React.useState(tripConfiguration.activities.drink);
     const [load, setLoad] = React.useState(false);
-    const windowWidth = window.innerWidth
+    
     const buttonStyle = {
         marginRight: '5px',
         marginBottom: '5px'

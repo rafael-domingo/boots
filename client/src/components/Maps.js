@@ -55,9 +55,10 @@ export default function Maps({ handleClick, edit, setEdit}) {
   const setFitBounds = mapState.fitBounds;
   const transportation = mapState.transportation;
 
+  var mapStyle = {}
   // Map component styling
   if (windowWidth < 400) {
-    var mapStyle = {
+    mapStyle = {
       width: '100%',
       height: '25%',
       // borderRadius: '2em',
@@ -68,7 +69,7 @@ export default function Maps({ handleClick, edit, setEdit}) {
       // boxShadow: '0px 2px 4px 0px rgba(0,0,0,0.5)'
     }
   } else {
-    var mapStyle = {
+    mapStyle = {
       width: '45%',
       height: '90%',
       borderRadius: '2em',
@@ -372,7 +373,7 @@ export default function Maps({ handleClick, edit, setEdit}) {
             position: loc,
             label: label,
             icon: {
-              url: "http://maps.google.com/mapfiles/ms/icons/blue.png",
+              url: "https://maps.google.com/mapfiles/ms/icons/blue.png",
               labelOrigin: new window.google.maps.Point(15,10)
             },            
             map: googleMap.current
@@ -418,7 +419,7 @@ export default function Maps({ handleClick, edit, setEdit}) {
         travelMode: transportation
       }
       directionService.current.route(request, function(result, status) {
-        if (status == 'OK') {
+        if (status === 'OK') {
           result.routes[0].legs.map(leg => {
             legs.push({
               duration: leg.duration.text,

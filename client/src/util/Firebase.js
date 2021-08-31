@@ -27,7 +27,7 @@ export const signInWithGoogle = async () => {
 };
 
 export const signInWithPhone = async (phoneNumber, appVerifier) => {
-    const result = await auth.signInWithPhoneNumber(phoneNumber, appVerifier).then(result => {
+    await auth.signInWithPhoneNumber(phoneNumber, appVerifier).then(result => {
         // let code = prompt('enter the otp', '');
         // if (code === null) {
         //     console.log(result)
@@ -44,7 +44,7 @@ export const signInWithPhone = async (phoneNumber, appVerifier) => {
 }
   
 export const signOut = async () => {
-    const result = await auth.signOut().then(() => {
+    await auth.signOut().then(() => {
         console.log('Signed Out')
         console.log(auth.currentUser)
         return auth.currentUser

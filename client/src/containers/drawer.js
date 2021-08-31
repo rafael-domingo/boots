@@ -11,7 +11,7 @@ import { resetTripBuilder } from '../redux/tripBuilder';
 import Avatar from '@material-ui/core/Avatar';
 import FaceIcon from '@material-ui/icons/Face';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import { Card, CardActions, CardContent, CardHeader, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
+import { Card, CardActions, CardHeader, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
 export default function AppDrawer({drawer, setDrawer}) {
     const dispatch = useDispatch()
     const tripBuilder = useSelector(state => state.tripBuilder)

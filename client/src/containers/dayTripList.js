@@ -86,7 +86,7 @@ export default function DayTripList() {
                 {
                     tripListState.map(trip => {
                         return (
-                        <Card style={cardStyle}>
+                        <Card style={cardStyle} key={trip.tripId}>
                             <TripCard 
                                 handleHoverExit={handleHoverExit} 
                                 handleHover={handleHover} 

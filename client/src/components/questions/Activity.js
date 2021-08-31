@@ -1,9 +1,4 @@
 import React from 'react';
-import Eat from '../../assets/eat.png';
-import Shop from '../../assets/shop.png';
-import Caffeinate from '../../assets/caffeinate.png';
-import Sightsee from '../../assets/sightsee.png';
-import Drink from '../../assets/drink.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { setActivities } from '../../redux/tripBuilder';
 import Button from '@material-ui/core/Button';

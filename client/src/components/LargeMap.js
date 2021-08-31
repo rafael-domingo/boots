@@ -47,7 +47,7 @@ export default class LargeMap extends Component {
     tilt: 0,
     heading: 0,
     zoom: 17,
-    center: { lat: 35.6594945, lng: 139.6999859 },
+    center: { lat: 37.7878281, lng: -122.4028766 },
     mapId: "15431d2b469f209e",
     // disable interactions due to animation loop and moveCamera
     disableDefaultUI: true,
@@ -58,29 +58,29 @@ export default class LargeMap extends Component {
 
   map = new window.google.maps.Map(this.googleMapRef.current, mapOptions);
 
-  const scene = new Scene();
+  // const scene = new Scene();
 
-  const box = new Mesh(
-    new BoxBufferGeometry(10, 50, 10),
-    new MeshNormalMaterial(),
-  );
+  // const box = new Mesh(
+  //   new BoxBufferGeometry(10, 50, 10),
+  //   new MeshNormalMaterial(),
+  // );
 
-  box.position.copy(latLngToVector3(mapOptions.center));
-  box.position.setY(25);
-  scene.add(box);
+  // box.position.copy(latLngToVector3(mapOptions.center));
+  // box.position.setY(25);
+  // scene.add(box);
 
-  const box1 = new Mesh(
-    new BoxBufferGeometry(10, 50, 10),
-    new MeshNormalMaterial(),
-  );
+  // const box1 = new Mesh(
+  //   new BoxBufferGeometry(10, 50, 10),
+  //   new MeshNormalMaterial(),
+  // );
 
-  box1.position.copy(latLngToVector3(mapOptions.center));
-  box1.position.setY(100);
-  scene.add(box1);
+  // box1.position.copy(latLngToVector3(mapOptions.center));
+  // box1.position.setY(100);
+  // scene.add(box1);
   
-  new ThreeJSOverlayView({
-    scene, map
-  });
+  // new ThreeJSOverlayView({
+  //   scene, map
+  // });
     var { tilt, heading, zoom } = mapOptions;
 
      const animate = () => {

@@ -32,7 +32,8 @@ export default function Travel() {
         width: '100%',
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        flexWrap: 'wrap'
     }
     const buttonStyle = {
         margin: '2em'

@@ -26,12 +26,12 @@ export default function City({ sessionToken, showSearch, handleSearch }) {
         justifyContent: 'center',
         alignItems: 'center',
         flexWrap: 'wrap',
-        minWidth: '350px',
+        minWidth: '250px',
         height: 'auto'
     }
     
     const questionStyle = {
-        width: '80%',
+        width: '100%',
         color: 'rgb(103, 140, 203)',
         fontSize: '2em',
         textAlign: 'center',

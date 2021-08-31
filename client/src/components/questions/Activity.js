@@ -44,7 +44,7 @@ export default function Activity() {
     const answersDivStyle = {
         width: '100%',
         display: 'flex',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         alignItems: 'center',
         flexWrap: 'wrap'
     }

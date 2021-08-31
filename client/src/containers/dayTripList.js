@@ -20,7 +20,7 @@ export default function DayTripList() {
         height: '100vh',
         width: '100vw',
         display: 'flex',
-        justifyContent: 'flex-end',
+        justifyContent: windowWidth < 400 ? 'center' : 'flex-end',
         alignItems: 'flex-start',
         flexWrap: 'wrap',
         overflowY: 'scroll',
@@ -29,9 +29,9 @@ export default function DayTripList() {
 
     const tripCardStyle = {
         display: 'flex',
-        marginTop: windowWidth < 400 ? '50%' : '0',       
-        width: windowWidth < 400 ? '100%' : '50%',        
-        justifyContent: windowWidth < 400 ? 'center' : 'flex-start',
+        marginTop: windowWidth < 400 ? '55%' : '10%',       
+        width: windowWidth < 400 ? '95%' : '50%',        
+        justifyContent: windowWidth < 400 ? 'flex-start' : 'flex-start',
         alignItems: 'flex-start',
         flexWrap: 'wrap',
        
@@ -41,9 +41,9 @@ export default function DayTripList() {
         display: 'flex', 
         justifyContent: 'center', 
         alignItems: 'center',         
-        width: windowWidth < 400 ? '125px' : '175px', 
-        height: windowWidth < 400 ? '125px' : '175px', 
-        borderRadius: '50%', 
+        width: windowWidth < 400 ? '45%' : '175px', 
+        height: windowWidth < 400 ? '150px' : '175px', 
+        borderRadius: windowWidth < 400 ? '0%' : '50%', 
         margin: windowWidth < 400 ? '0.5em' : '1em', 
         backgroundColor: 'rgba(64,112,191,1)', 
         boxShadow: '0px 2px 4px 0px rgba(0,0,0,0.5)'
@@ -82,7 +82,7 @@ export default function DayTripList() {
         <div style={divStyle}>                        
             <Maps />                        
             <div style={tripCardStyle}>
-                <h1 style={{width: '100%'}}>Your Trips</h1>
+                <h1 style={{color: 'rgb(64, 112, 191)', width: '100%', marginLeft: '10px', marginTop: '10px'}}>Your Trips</h1>
                 {
                     tripListState.map(trip => {
                         return (

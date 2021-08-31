@@ -38,8 +38,9 @@ export default function Time() {
     const answersDivStyle = {
         width: '100%',
         display: 'flex',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         alignItems: 'center',
+        flexWrap: 'wrap'
     }
 
     const buttonStyle = {

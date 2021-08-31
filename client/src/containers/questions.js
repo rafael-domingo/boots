@@ -15,6 +15,7 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import CloseIcon from '@material-ui/icons/Close';
 import { setView } from '../redux/user';
+import { resetTripBuilder } from '../redux/tripBuilder';
 
 export default function Questions() {
     // STATE MANAGEMENT
@@ -42,7 +43,7 @@ export default function Questions() {
 
     const questionsDivStyle = {
         padding: '2em',
-        width: '70%'
+        width: '50%'
     }
 
   
@@ -56,7 +57,10 @@ export default function Questions() {
                 <Fab
                     color="secondary"
                     aria-label="close"
-                    onClick={() => dispatch(setView('UserHome'))} 
+                    onClick={() => {
+                        dispatch(setView('UserHome'))
+                        dispatch(resetTripBuilder())
+                    }} 
                     style={state === 0 ? null : {display: 'none'} }
                 >
                     <CloseIcon />

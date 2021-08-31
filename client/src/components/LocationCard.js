@@ -17,7 +17,7 @@ export default function LocationCard({ name, picture, location, locationInfo, ha
         height: '100%',
         width: '100%',
         display: 'flex',
-        justifyContent: 'flex-start',
+        justifyContent: 'space-between',
         alignItems: 'center',
         flexWrap: 'wrap',
         margin: '10px',
@@ -71,12 +71,13 @@ export default function LocationCard({ name, picture, location, locationInfo, ha
             <div style={imgDivStyle}>
                 <img style={imgStyle}src={picture} />
             </div>
-            <div style={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center', width: '75%'}}>
+            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '75%'}}>
                 <div style={textDivStyle}>
                     <p style={nameStyle}>{name}</p>
-                    <p style={addressStyle}>{location}</p>                
+                    <p style={addressStyle}>{location}</p>     
+     
                 </div>
-                <div style={{display: 'flex', justifyContent: 'flex-end', width: '30%'}}>
+                <div style={{display: 'flex', justifyContent: 'flex-start', width: '25%'}}>
                     {
                         !reorder && (
                             <div>

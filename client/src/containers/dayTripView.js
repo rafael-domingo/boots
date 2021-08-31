@@ -23,7 +23,10 @@ export default function DayTripView() {
         dispatch(setCityLocation(currentTripListState.coordinates))
 
     }, [currentTripListState])
-    dispatch(setSearchLocationArray({}))
+    React.useEffect(() => {
+        dispatch(setSearchLocationArray({}))
+    }, [search])
+    
     dispatch(setDirections(true))
     const divStyle = {
         height: '90vh',

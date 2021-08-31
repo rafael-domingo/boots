@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import LocationDetail from './LocationDetail';
 import { setFitBounds, setZoom } from '../redux/maps';
 import SearchCard from './SearchCard';
+import { Badge } from '@material-ui/core';
 
 export default function SearchResults({ handleResults, detail, setDetail }) {
     const dispatch = useDispatch();
@@ -11,11 +12,13 @@ export default function SearchResults({ handleResults, detail, setDetail }) {
     dispatch(setZoom(12))
     dispatch(setFitBounds(true))
     const divStyle = {
-        width: '100%',
+        width: '90%',
+        height: '100%',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         flexWrap: 'wrap',
+        paddingTop: '2em'
     }
 
     const handleClick = () => {
@@ -33,8 +36,19 @@ export default function SearchResults({ handleResults, detail, setDetail }) {
             return (
                 <div style={divStyle}>
                     {
-                        searchResults.map(item => {
+                        searchResults.map((item, index) => {
+                            const i = index + 1
+                            i.toString()
                             return (
+                                <Badge
+                                    style={{width: '100%'}}
+                                    badgeContent={i}
+                                    color="primary"
+                                    anchorOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'left'
+                                    }}
+                                >                                
                                 <SearchCard 
                                     name={item.name} 
                                     picture={item.image_url} 
@@ -42,6 +56,7 @@ export default function SearchResults({ handleResults, detail, setDetail }) {
                                     locationInfo={item}
                                     handleClick={handleClick}
                                 />
+                                </Badge>
                             )
                         })
                     }

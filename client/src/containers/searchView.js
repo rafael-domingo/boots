@@ -35,7 +35,7 @@ export default function SearchView() {
 
     const searchDivStyle = {
         width: '100%',
-        height: '90vh',
+        height: '85vh',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',

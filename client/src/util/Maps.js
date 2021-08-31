@@ -3,7 +3,7 @@ require('dotenv').config();
 
 export const Maps = {
     autoComplete(searchTerm, sessionToken) {
-       return fetch('http://localhost:5000/maps/autocomplete', {
+       return fetch('/maps/autocomplete', {
            method: 'POST',
            headers: {
                'Content-Type': 'application/json',
@@ -19,7 +19,7 @@ export const Maps = {
     },
 
     placeDetails(placeId, sessionToken) {
-        return fetch('http://localhost:5000/maps/placeDetails', {
+        return fetch('/maps/placeDetails', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -2,7 +2,7 @@ import fetch from 'node-fetch';
 
 export const Yelp = {
     search(searchTerm, location) {
-        return fetch('http://localhost:5000/yelp/search', {
+        return fetch('/yelp/search', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -23,7 +23,7 @@ export const Yelp = {
 
     autoComplete(searchTerm) {
         if (searchTerm.length > 1) {
-            return fetch('http://localhost:5000/yelp/autocomplete', {
+            return fetch('/yelp/autocomplete', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

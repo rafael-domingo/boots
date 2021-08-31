@@ -1,21 +1,22 @@
 import firebase from 'firebase/app';
 import "firebase/auth";
 import 'firebase/firestore';
+require('dotenv').config();
+
 const firebaseConfig = {
-    apiKey: "AIzaSyDR60DEacc2LyalXSgd9kHZA6MMGlrSZgE",
+    apiKey: `${process.env.REACT_APP_FIREBASE_API_KEY}`,
     authDomain: "boots-da11f.firebaseapp.com",
     databaseURL: "https://boots-da11f-default-rtdb.firebaseio.com",
     projectId: "boots-da11f",
     storageBucket: "boots-da11f.appspot.com",
-    messagingSenderId: "84237747459",
-    appId: "1:84237747459:web:8d7a3ad06cb089296ed536",
+    messagingSenderId: `${process.env.REACT_APP_FIREBASE_SENDER_ID}`,
+    appId: `${process.env.REACT_APP_FIREBASE_APP_ID}`,
     measurementId: "G-8L6SB885RB"
   };
 
 firebase.initializeApp(firebaseConfig);
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
-
 
 const provider = new firebase.auth.GoogleAuthProvider();
 export const signInWithGoogle = async () => {

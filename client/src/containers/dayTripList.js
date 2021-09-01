@@ -17,7 +17,7 @@ export default function DayTripList() {
     const dispatch = useDispatch();
     const mobile = useSelector(state => state.map.windowWidth)
     const divStyle = {
-        height: '100vh',
+        height: '100%',
         width: '100%',
         display: 'flex',
         justifyContent: mobile ? 'center' : 'flex-start',

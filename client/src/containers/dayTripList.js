@@ -15,25 +15,29 @@ export default function DayTripList() {
     const user = useSelector(state => state.user);
     updateUser(user.username, user.email, user.uid, tripListState)
     const dispatch = useDispatch();
-    const windowWidth = window.innerWidth
+    const mobile = useSelector(state => state.map.windowWidth)
     const divStyle = {
         height: '100vh',
-        width: '100vw',
+        width: '100%',
         display: 'flex',
-        justifyContent: windowWidth < 400 ? 'center' : 'flex-end',
+        justifyContent: mobile ? 'center' : 'flex-start',
         alignItems: 'flex-start',
         flexWrap: 'wrap',
-        overflowY: 'scroll',
+        overflowY: 'hidden',
 
     }
 
     const tripCardStyle = {
         display: 'flex',
-        marginTop: windowWidth < 400 ? '55%' : '10%',       
-        width: windowWidth < 400 ? '95%' : '50%',        
-        justifyContent: windowWidth < 400 ? 'flex-start' : 'flex-start',
-        alignItems: 'flex-start',
-        flexWrap: 'wrap',
+        marginTop: mobile ? '25vh' : '5vh',       
+        width: mobile ? '100%' : '50%',  
+        height: '100%',      
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        flexWrap: 'nowrap',        
+        overflowY: 'hidden',
+        overflowX: 'hidden',
+        flexDirection: 'column'
        
     }
   
@@ -41,13 +45,31 @@ export default function DayTripList() {
         display: 'flex', 
         justifyContent: 'center', 
         alignItems: 'center',         
-        width: windowWidth < 400 ? '45%' : '175px', 
-        height: windowWidth < 400 ? '150px' : '175px', 
-        borderRadius: windowWidth < 400 ? '0%' : '50%', 
-        margin: windowWidth < 400 ? '0.5em' : '1em', 
+        width: mobile ? '45vw' : '12vw', 
+        height: mobile ? '150px' : '12vw', 
+        borderRadius: mobile ? '0%' : '50%', 
+        margin: mobile ? '0.5vw' : '1vw', 
         backgroundColor: 'rgba(64,112,191,1)', 
         boxShadow: '0px 2px 4px 0px rgba(0,0,0,0.5)'
     }
+
+    const listDivStyle = {
+        display: 'flex',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        flexWrap: 'wrap',
+        overflowY: 'scroll',
+        overflowX: 'hidden',
+        height: mobile ? '65vh': '85vh',
+        width: '95%'
+    }
+
+    const mapDivStyle = {
+        height: mobile ? null : 'auto',
+        width: mobile ? null : '50%',        
+        overflow: 'hidden'
+    }
+
 
     const handleHover = (location) => {
         console.log(location)
@@ -74,16 +96,18 @@ export default function DayTripList() {
 
     React.useEffect(() => {
         dispatch(setCityLocationArray(tripListState))
-        dispatch(setTripLocationArray([]))
-        dispatch(setWindowWidth(window.innerWidth))
+        dispatch(setTripLocationArray([]))        
         dispatch(setDirections(false))
     })
 
     return (
-        <div style={divStyle}>                        
-            <Maps />                        
+        <div style={divStyle}>            
+            <div style={mapDivStyle}>            
+            <Maps />                 
+            </div>       
             <div style={tripCardStyle}>
-                <h1 style={{color: 'rgb(64, 112, 191)', width: '100%', marginLeft: '10px', marginTop: '10px'}}>Your Trips</h1>
+                <h1 style={{color: 'rgb(64, 112, 191)', width: '100%', height: '5vh'}}>Your Trips</h1>
+                <div style={listDivStyle}>
                 {
                     tripListState.map(trip => {
                         return (
@@ -97,7 +121,9 @@ export default function DayTripList() {
                         </Card>
                         )
                     })
-                }                                       
+                }        
+                </div>
+                                          
             </div>
             <Fab 
                 color="secondary" 

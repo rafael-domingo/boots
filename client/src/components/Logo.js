@@ -2,9 +2,10 @@ import React from 'react';
 import MenuIcon from '@material-ui/icons/Menu';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { useSelector } from 'react-redux';
 
 export default function Logo({setDrawer, drawer, color="rgba(64, 112, 191)", back=false}) {
-    const windowWidth = window.innerWidth
+    const mobile = useSelector(state => state.map.windowWidth)
     const divStyle = {
         display: 'flex',
         justifyContent: 'flex-start',
@@ -17,7 +18,7 @@ export default function Logo({setDrawer, drawer, color="rgba(64, 112, 191)", bac
     }
 
     const logoStyle = {
-        fontFamily: 'phosphate',
+        fontFamily: 'Plaster, cursive',
         color: color,
         // position: 'relative',
         // left: '20px',
@@ -41,7 +42,7 @@ export default function Logo({setDrawer, drawer, color="rgba(64, 112, 191)", bac
                 }
             </IconButton>
             {
-                windowWidth > 400 ? (<h1 style={logoStyle}>BOOTS</h1>) : null
+                !mobile ? (<h1 style={logoStyle}>BOOTS</h1>) : null
             }    
             
         </div>

@@ -8,7 +8,7 @@ import { setCenter, setDirections, setFitBounds, setSearchLocationArray, setZoom
 export default function SearchView() {
     const currenttripListState = useSelector(state => state.currentTrip);
     const [detail, setDetail] = React.useState(false)    
-    const windowWidth = window.innerWidth
+    const mobile = useSelector(state => state.map.windowWidth)
     const dispatch = useDispatch();
 
     dispatch(setCenter(currenttripListState.coordinates));
@@ -23,8 +23,8 @@ export default function SearchView() {
 
     
     const mapDivStyle = {
-        height: windowWidth < 400 ? null : 'auto',
-        width: windowWidth < 400 ? null : '50%',        
+        height: mobile ? null : 'auto',
+        width: mobile ? null : '50%',        
         overflow: 'hidden'
     }
 
@@ -45,10 +45,10 @@ export default function SearchView() {
         display: 'flex', 
         justifyContent: 'center', 
         flexWrap: 'wrap', 
-        width: windowWidth < 400 ? '100%' : '50%',
-        height: windowWidth < 400 ? '65%' : '90%',
+        width: mobile ? '100%' : '50%',
+        height: mobile ? '65%' : '85%',
         // overflow: 'scroll',
-        marginTop: windowWidth < 400 ? '50%' : '0',
+        marginTop: mobile ? '22vh' : '5vh',
     }
 
     const handleResults = (results) => {

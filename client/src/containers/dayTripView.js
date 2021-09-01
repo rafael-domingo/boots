@@ -11,7 +11,7 @@ import TripView from './tripView';
 export default function DayTripView() {
     const [search, setSearch] = React.useState(false);
     const currentTripListState = useSelector(state => state.currentTrip);
-    const windowWidth = window.innerWidth
+    const mobile = useSelector(state => state.map.windowWidth)
     const dispatch = useDispatch();
     
     React.useEffect(() => {
@@ -29,7 +29,7 @@ export default function DayTripView() {
     
     dispatch(setDirections(true))
     const divStyle = {
-        height: windowWidth < 400 ? null : '100vh',
+        height: mobile ? null : '100vh',
         width: '100%',
         display: 'flex',
         justifyContent: 'space-between',

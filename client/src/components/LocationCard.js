@@ -13,7 +13,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 export default function LocationCard({ name, picture, location, locationInfo, handleClick, time, distance, reorder }) {
     const dispatch = useDispatch();
     const currentTripListState = useSelector(state => state.currentTrip);   
-    const windowWidth = window.innerWidth
+    const mobile = useSelector(state => state.map.windowWidth)
     const divStyle = {
         height: '100%',
         width: '90%',
@@ -27,7 +27,7 @@ export default function LocationCard({ name, picture, location, locationInfo, ha
     const textDivStyle = {
         width: '100%',
         color: 'rgb(64, 112, 191)',      
-        fontSize: windowWidth < 400 ? '1em' : '1.5em',        
+        fontSize: mobile ? '1em' : '1.5em',        
         // lineHeight: '0',
         display: 'flex',
         justifyContent: 'flex-start',
@@ -54,7 +54,7 @@ export default function LocationCard({ name, picture, location, locationInfo, ha
     }
     const imgDivStyle = {
         width: '20%',
-        height: windowWidth < 400 ? '5em': '10em',
+        height: mobile ? '5em': '10em',
         display: 'flex',
         justifyContent: 'flex-start',
         alignItems: 'center'

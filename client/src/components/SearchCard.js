@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Card from '@material-ui/core/Card';
 import Button from '@material-ui/core/Button';
 import LibraryAddIcon from '@material-ui/icons/LibraryAdd';
@@ -10,7 +10,7 @@ import { setLocationDetail } from '../redux/user';
 export default function SearchCard({ name, picture, location, locationInfo, handleClick}) {
     const dispatch = useDispatch();
     const [selected, setSelected] = React.useState(false);
-    const windowWidth = window.innerWidth
+    const mobile = useSelector(state => state.map.windowWidth)
     const divStyle = {
         height: '100%',
         width: '100%',
@@ -26,7 +26,7 @@ export default function SearchCard({ name, picture, location, locationInfo, hand
         width: '100%',
         height: '100%',
         color: 'rgb(64, 112, 191)',      
-        fontSize: windowWidth < 400 ? '1em' : '1.5em',    
+        fontSize: mobile ? '1em' : '1.5em',    
         // lineHeight: '0',
         display: 'flex',
         justifyContent: 'flex-start',
@@ -48,7 +48,7 @@ export default function SearchCard({ name, picture, location, locationInfo, hand
     const imgStyle = {
         // borderRadius: '2em',
         width: '100%',
-        height: windowWidth < 400 ? '5em': '10em',
+        height: mobile ? '5em': '10em',
         objectFit: 'cover'
 
     }
@@ -90,7 +90,7 @@ export default function SearchCard({ name, picture, location, locationInfo, hand
                         <p style={addressStyle}>{location}</p>                                        
                     </div>
                     {
-                        windowWidth < 400 ? null : (
+                        mobile ? null : (
                         <div style={{width: '100%'}}>
                             {categoryArray}
                         </div>
@@ -108,7 +108,7 @@ export default function SearchCard({ name, picture, location, locationInfo, hand
                             }}
                             >
                                 {
-                                    windowWidth > 400 ? 'Add To Trip' : ''
+                                    mobile ? 'Add To Trip' : ''
                                 }
                             </Button>
                         )
@@ -118,7 +118,7 @@ export default function SearchCard({ name, picture, location, locationInfo, hand
                             <Button size="small" style={{height: '1em', color: 'green',  display: 'flex', justifyContent: 'flex-end'}} startIcon={<CheckIcon/>} color="primary" 
                             >
                                 {
-                                    windowWidth > 400 ? 'Added' : ''
+                                    mobile ? 'Added' : ''
                                 }
                             </Button>                        
                         )

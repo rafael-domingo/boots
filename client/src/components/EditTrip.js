@@ -3,12 +3,12 @@ import React from 'react';
 import EditIcon from '@material-ui/icons/Edit';
 import BuildIcon from '@material-ui/icons/Build';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { deleteTrip, setView } from '../redux/user';
 
 export default function EditTrip({ reorder, setReorder, currentTripListState, setDialog, edit, setEdit}) {
     const dispatch = useDispatch()
-    const windowWidth = window.innerWidth
+    const mobile = useSelector(state => state.map.windowWidth)
     const divStyle = {
         display: 'flex',
         width: '100%',
@@ -29,7 +29,7 @@ export default function EditTrip({ reorder, setReorder, currentTripListState, se
                     setEdit(true)
                 }}
             >
-                <p style={{fontSize: windowWidth < 400 ? '0.75em' : '1em'}}>Edit</p>
+                <p style={{fontSize: mobile ? '0.75em' : '1em'}}>Edit</p>
             </Button>
             <Button
                 size="small"
@@ -42,7 +42,7 @@ export default function EditTrip({ reorder, setReorder, currentTripListState, se
                     dispatch(setView('UserHome'))
                 }}
             >
-                <p style={{fontSize: windowWidth < 400 ? '0.75em' : '1em'}}>Delete This Trip</p>
+                <p style={{fontSize: mobile ? '0.75em' : '1em'}}>Delete This Trip</p>
                 
             </Button>
             <Button
@@ -55,7 +55,7 @@ export default function EditTrip({ reorder, setReorder, currentTripListState, se
                     setDialog(true)
                 }}
             >
-                <p style={{fontSize: windowWidth < 400 ? '0.75em' : '1em'}}>Trip Builder</p>
+                <p style={{fontSize: mobile ? '0.75em' : '1em'}}>Trip Builder</p>
             </Button>
             <Button
                 size="small"
@@ -68,7 +68,7 @@ export default function EditTrip({ reorder, setReorder, currentTripListState, se
                     setEdit(true)
                 }}
             >
-                <p style={{fontSize: windowWidth < 400 ? '0.75em' : '1em'}}>Done</p>
+                <p style={{fontSize: mobile ? '0.75em' : '1em'}}>Done</p>
             </Button>
             
         </div>

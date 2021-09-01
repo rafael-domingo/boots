@@ -17,7 +17,7 @@ export default function Maps({ handleClick, edit, setEdit}) {
   const bounds = useRef(null);
   const directionService = useRef(null);
   const directionRender = useRef(null);
-  const windowWidth = window.innerWidth
+  const mobile = useSelector(state => state.map.windowWidth)
   // STATE MANAGEMENT
   const dispatch = useDispatch();
   const mapState = useSelector(state => state.map);
@@ -57,7 +57,7 @@ export default function Maps({ handleClick, edit, setEdit}) {
 
   var mapStyle = {}
   // Map component styling
-  if (windowWidth < 400) {
+  if (mobile) {
     mapStyle = {
       width: '100%',
       height: '25%',

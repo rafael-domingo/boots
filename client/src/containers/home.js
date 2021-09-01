@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from '@material-ui/core/Button'
 import { FormControl, InputLabel, Input, Dialog, DialogContent, DialogActions, Fab, Divider } from '@material-ui/core';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setEmail, setPhone, setProfilePicture, setTripList, setUid, setUserName, setView } from '../redux/user';
 import { SvgIcon } from '@material-ui/core';
 import PhoneIcon from '@material-ui/icons/Phone';
@@ -62,7 +62,7 @@ export default function Home() {
     const [phoneVisible, setPhoneVisible] = React.useState(false)
     const [codeVisible, setCodeVisible] = React.useState(false)
     const [dialog, setDialog] = React.useState(false)
-    const windowWidth = window.innerWidth
+    const mobile = useSelector(state => state.map.windowWidth)
     const divStyle = {
         height: '100vh',
         width: '100vw',
@@ -82,7 +82,7 @@ export default function Home() {
     }
 
     const inputStyle1 = {
-      fontSize: windowWidth < 400 ? '2em' : '3em',
+      fontSize: mobile ? '2em' : '3em',
       textAlign: 'center',      
       width: '100%',
       color: 'rgb(64,112,191)',
@@ -179,8 +179,8 @@ export default function Home() {
         <div className="App">
           <div style={divStyle}>
             <div style={{color: 'white'}}>
-              <h1 style={{fontSize: '4em', fontFamily: 'phosphate'}}>Boots</h1>
-              <p style={{fontSize: '2em', fontFamily: 'phosphate'}}>Plan your day trip</p>
+              <h1 style={{fontSize: '4em', fontFamily: 'Plaster, cursive'}}>BOOTS</h1>
+              <p style={{fontSize: '2em', fontFamily: 'Orbitron, sans-serif'}}>plan your day trip</p>
               <Divider style={{backgroundColor: 'white'}}/>
               <div>
                 <div style={{width: '100%'}}>

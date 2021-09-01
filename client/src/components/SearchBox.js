@@ -15,7 +15,7 @@ export default function SearchBox({ handleResults }) {
     
     const divStyle = {
         position: 'relative',
-        top: '0px',
+        top: '0',
         marginBottom: '10px',
         width: '90%',
         display: 'flex',

@@ -17,7 +17,7 @@ import { Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/
 export default function LocationDetail({handleClick}) {
     const locationDetailState = useSelector(state => state.user.locationDetail);
     const dispatch = useDispatch()
-    const windowWidth = window.innerWidth
+    const mobile = useSelector(state => state.map.windowWidth)
     React.useEffect(() => {
     dispatch(setFitBounds(false))
     dispatch(setCenter({
@@ -95,7 +95,7 @@ export default function LocationDetail({handleClick}) {
         ))
        
     }
-    if (windowWidth < 400) {
+    if (mobile) {
         return (
             <div style={{color: 'rgb(64, 112, 191)'}}>
 

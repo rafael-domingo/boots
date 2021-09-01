@@ -6,14 +6,26 @@ import Logo from './components/Logo';
 import DayTripView from './containers/dayTripView';
 import AppDrawer from './containers/drawer';
 import Questions from './containers/questions';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import LargeMap from './components/LargeMap';
+import { setWindowWidth } from './redux/maps';
 
 function App() {
   const [drawer, setDrawer] = React.useState(false)
   const viewState = useSelector(state => state.user.view)
+  const dispatch = useDispatch()
 
-  if (viewState === 'Home') {
+  React.useEffect(() => {
+ 
+    window.addEventListener('resize', () => {
+      if (window.innerWidth < 1000) {
+        dispatch(setWindowWidth(true))
+      } else {
+        dispatch(setWindowWidth(false))
+      }
+    })
+  })
+   if (viewState === 'Home') {
     return (
       <div>
         <LargeMap />

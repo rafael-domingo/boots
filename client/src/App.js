@@ -16,13 +16,13 @@ function App() {
   const dispatch = useDispatch()
 
   React.useEffect(() => {
- 
     window.addEventListener('resize', () => {
       if (document.body.clientWidth < 1000) {
         dispatch(setWindowWidth(true))
       } else {
         dispatch(setWindowWidth(false))
       }
+      document.body.style.height = window.innerHeight + "px"
     })
   })
    if (viewState === 'Home') {

@@ -6,7 +6,7 @@ export const mapSlice = createSlice({
         cityLocationArray: [],
         tripLocationArray: [],
         searchLocationArray: [],
-        windowWidth: '',
+        windowWidth: true,
         directions: false,
         transportation: 'DRIVING',
         center: {},

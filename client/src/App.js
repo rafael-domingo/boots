@@ -18,7 +18,7 @@ function App() {
   React.useEffect(() => {
  
     window.addEventListener('resize', () => {
-      if (window.innerWidth < 1000) {
+      if (document.body.clientWidth < 1000) {
         dispatch(setWindowWidth(true))
       } else {
         dispatch(setWindowWidth(false))
